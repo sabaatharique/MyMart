@@ -1,0 +1,48 @@
+# depslib dependency file v1.0
+1584205420 source:c:\users\user\desktop\mymart\mymart\main.cpp
+	<iostream>
+
+1731841249 source:c:\users\user\desktop\mymart\mymart\src\employee.cpp
+	"employee.h"
+
+1731841239 c:\users\user\desktop\mymart\mymart\include\employee.h
+	<iostream>
+
+1731843233 source:c:\users\user\desktop\mymart\mymart\src\cashier.cpp
+	"cashier.h"
+
+1731848593 c:\users\user\desktop\mymart\mymart\include\cashier.h
+	<employee.h>
+	<product.h>
+	<iostream>
+
+1731842363 source:c:\users\user\desktop\mymart\mymart\src\product.cpp
+	"product.h"
+
+1731842374 c:\users\user\desktop\mymart\mymart\include\product.h
+	<iostream>
+
+1731846593 source:c:\users\user\desktop\mymart\mymart\src\stockclerk.cpp
+	"stockclerk.h"
+
+1731846505 c:\users\user\desktop\mymart\mymart\include\stockclerk.h
+	<employee.h>
+	<product.h>
+	<perishableproducts.h>
+	<iostream>
+
+1731846460 source:c:\users\user\desktop\mymart\mymart\src\perishableproducts.cpp
+	"perishableproducts.h"
+
+1731846489 c:\users\user\desktop\mymart\mymart\include\perishableproducts.h
+	<product.h>
+	<iostream>
+
+1731848935 source:c:\users\user\desktop\mymart\mymart\src\customer.cpp
+	"customer.h"
+
+1731848406 c:\users\user\desktop\mymart\mymart\include\customer.h
+	<product.h>
+	<iostream>
+	<vector>
+
