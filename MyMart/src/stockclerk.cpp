@@ -1,16 +1,8 @@
 #include "stockclerk.h"
 
-StockClerk::StockClerk(int n, string x, double s = 0) : Employee(n, x, s)
-{
+StockClerk::StockClerk(int n, string x, double s = 0) : Employee(n, x, s) {}
 
-}
-
-StockClerk::~StockClerk()
-{
-
-}
-
-
+StockClerk::~StockClerk() {}
 
 bool StockClerk::CheckExpiry(PerishableProducts* p, Date today)
 {

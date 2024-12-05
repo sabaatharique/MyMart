@@ -1,15 +1,14 @@
 # depslib dependency file v1.0
-1733305169 source:c:\users\user\desktop\mymart\mymart\main.cpp
+1733421092 source:c:\users\user\desktop\mymart\mymart\main.cpp
 	<iostream>
-	<sqlite3.h>
 
-1731841249 source:c:\users\user\desktop\mymart\mymart\src\employee.cpp
+1733306675 source:c:\users\user\desktop\mymart\mymart\src\employee.cpp
 	"employee.h"
 
 1731841239 c:\users\user\desktop\mymart\mymart\include\employee.h
 	<iostream>
 
-1731848945 source:c:\users\user\desktop\mymart\mymart\src\cashier.cpp
+1733306577 source:c:\users\user\desktop\mymart\mymart\src\cashier.cpp
 	"cashier.h"
 
 1731848945 c:\users\user\desktop\mymart\mymart\include\cashier.h
@@ -17,13 +16,13 @@
 	<product.h>
 	<iostream>
 
-1731842363 source:c:\users\user\desktop\mymart\mymart\src\product.cpp
+1733306722 source:c:\users\user\desktop\mymart\mymart\src\product.cpp
 	"product.h"
 
 1731842374 c:\users\user\desktop\mymart\mymart\include\product.h
 	<iostream>
 
-1731846593 source:c:\users\user\desktop\mymart\mymart\src\stockclerk.cpp
+1733306778 source:c:\users\user\desktop\mymart\mymart\src\stockclerk.cpp
 	"stockclerk.h"
 
 1731846505 c:\users\user\desktop\mymart\mymart\include\stockclerk.h
@@ -32,17 +31,17 @@
 	<perishableproducts.h>
 	<iostream>
 
-1731846460 source:c:\users\user\desktop\mymart\mymart\src\perishableproducts.cpp
+1733306700 source:c:\users\user\desktop\mymart\mymart\src\perishableproducts.cpp
 	"perishableproducts.h"
 
 1731846489 c:\users\user\desktop\mymart\mymart\include\perishableproducts.h
 	<product.h>
 	<iostream>
 
-1731848935 source:c:\users\user\desktop\mymart\mymart\src\customer.cpp
+1733306595 source:c:\users\user\desktop\mymart\mymart\src\customer.cpp
 	"customer.h"
 
-1731848406 c:\users\user\desktop\mymart\mymart\include\customer.h
+1733407668 c:\users\user\desktop\mymart\mymart\include\customer.h
 	<product.h>
 	<iostream>
 	<vector>
@@ -111,4 +110,13 @@
 	<unicode/ubrk.h>
 	<unicode/utf16.h>
 	<math.h>
+
+1733418469 source:c:\users\user\desktop\mymart\mymart\src\database.cpp
+	"database.h"
+
+1733395082 c:\users\user\desktop\mymart\mymart\include\database.h
+	<iostream>
+	<string>
+	<iomanip>
+	<sqlite3.h>
 

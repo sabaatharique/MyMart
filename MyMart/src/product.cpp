@@ -1,14 +1,8 @@
 #include "product.h"
 
-Product::Product(int n, string x, double p, double c, int s) : ProductID(n), ProductName(x), SellingPrice(p), BuyingCost(c), QuantityInStock(s)
-{
-    //ctor
-}
+Product::Product(int n, string x, double p, double c, int s) : ProductID(n), ProductName(x), SellingPrice(p), BuyingCost(c), QuantityInStock(s) {}
 
-Product::~Product()
-{
-    //dtor
-}
+Product::~Product() {}
 
 int Product::GetProductID() { return ProductID; }
 

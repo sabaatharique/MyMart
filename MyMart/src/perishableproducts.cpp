@@ -1,14 +1,8 @@
 #include "perishableproducts.h"
 
-PerishableProducts::PerishableProducts(int n, string x, double p, double c, int s, Date e) : Product(n, x, p, c, s), ExpiryDate(e)
-{
+PerishableProducts::PerishableProducts(int n, string x, double p, double c, int s, Date e) : Product(n, x, p, c, s), ExpiryDate(e){}
 
-}
-
-PerishableProducts::~PerishableProducts()
-{
-    //dtor
-}
+PerishableProducts::~PerishableProducts() {}
 
 Date PerishableProducts::GetExpiryDate() { return ExpiryDate; }
 

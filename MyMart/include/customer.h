@@ -28,8 +28,8 @@ class Customer
     protected:
 
     private:
-        string CustomerName;
         int CustomerID;
+        string CustomerName;
         vector<Product*> ShoppingCart;
         double TotalAmountSpent;
 };

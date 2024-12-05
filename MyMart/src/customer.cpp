@@ -1,14 +1,8 @@
 #include "customer.h"
 
-Customer::Customer(string x, int n) : CustomerName(x), CustomerID(n), TotalAmountSpent(0)
-{
+Customer::Customer(string x, int n) : CustomerName(x), CustomerID(n), TotalAmountSpent(0) {}
 
-}
-
-Customer::~Customer()
-{
-
-}
+Customer::~Customer() {}
 
 string Customer::GetCustomerName()
 {
