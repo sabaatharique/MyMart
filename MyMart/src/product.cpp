@@ -6,6 +6,32 @@ Product::Product(int n, string x, double p, double c, int s) : ProductID(n), Pro
 
 Product::~Product() {}
 
+int Product::GetProductID() const
+{
+    return ProductID;
+}
+
+string Product::GetProductName() const
+{
+    return ProductName;
+}
+
+double Product::GetSellingPrice() const
+{
+    return SellingPrice;
+}
+
+double Product::GetBuyingCost() const
+{
+    return BuyingCost;
+}
+
+int Product::GetQuantityInStock() const
+{
+    return QuantityInStock;
+}
+
+
 Product Product::GetProductByID(Database& db, int ID)
 {
     string query = "SELECT * FROM PRODUCTS WHERE ID = " + to_string(ID) + ";";
@@ -48,10 +74,6 @@ void Product::DisplayDetails()
 
 bool Product::AddProduct(Database& db)
 {
-    string query = "INSERT INTO PRODUCTS VALUES(" + to_string(ProductID) + ", '" + ProductName + "', " + to_string(SellingPrice) + ", " + to_string(BuyingCost) + ", " + to_string(QuantityInStock) + ");";
+    string query = "INSERT INTO PRODUCTS VALUES(" + to_string(ProductID) + ", '" + ProductName + "', " + to_string(SellingPrice) + ", " + to_string(BuyingCost) + ", " + to_string(QuantityInStock) + ", NULL);";
     return db.executeQuery(query);
 }
-
-
-
-

@@ -13,6 +13,12 @@ class Product
         Product(int n, string x, double p, double c, int s);
         virtual ~Product();
 
+        int GetProductID() const;
+        string GetProductName() const;
+        double GetSellingPrice() const;
+        double GetBuyingCost() const;
+        int GetQuantityInStock() const;
+
         Product GetProductByID(Database &db, int ID);
         void DisplayDetails();
         bool AddProduct(Database &db);

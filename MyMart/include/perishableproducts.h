@@ -2,30 +2,10 @@
 #define PERISHABLEPRODUCTS_H
 
 #include <product.h>
+#include <Date.h>
 #include <iostream>
 
 using namespace std;
-
-enum Months {
-    january,
-    february,
-    march,
-    april,
-    may,
-    june,
-    july,
-    august,
-    september,
-    october,
-    november,
-    december
-};
-
-struct Date {
-    int day;
-    Months month;
-    int year;
-};
 
 class PerishableProducts : public Product
 {

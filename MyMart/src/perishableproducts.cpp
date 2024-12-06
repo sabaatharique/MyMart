@@ -13,19 +13,22 @@ void PerishableProducts::SetExpiryDate(Date val) { ExpiryDate = val; }
 
 bool PerishableProducts::operator>(Date today)
 {
-    if (ExpiryDate.year > today.year)
+    if (ExpiryDate.GetYear() > today.GetYear())
         return true;
-    if (ExpiryDate.year < today.year)
+    if (ExpiryDate.GetYear() < today.GetYear())
         return false;
 
-    if (ExpiryDate.month > today.month)
+    int ExpiryDate_month = static_cast<int>(ExpiryDate.GetMonth());
+    int today_month = static_cast<int>(today.GetMonth());
+
+    if (ExpiryDate_month > today_month)
         return true;
-    if (ExpiryDate.month < today.month)
+    if (ExpiryDate_month < today_month)
         return false;
 
-    if (ExpiryDate.day >= today.day)
+    if (ExpiryDate.GetDay() >= today.GetDay())
         return true;
-    if (ExpiryDate.day < today.day)
+    if (ExpiryDate.GetDay() < today.GetDay())
         return false;
 }
 
@@ -53,9 +56,7 @@ PerishableProducts PerishableProducts::GetProductByID(Database& db, int ID)
 
         // converting string to date struct
         Date date;
-        date.day = (expDate[0] - '0')*10 + (expDate[1] - '0');
-        date.month = static_cast<Months>((expDate[3] - '0')*10 + (expDate[4] - '0'));
-        date.year = (expDate[6] - '0')*10 + (expDate[7] - '0');
+        date.ToDate(expDate);
 
         PerishableProducts prod(id, name, sPrice, bCost, quantity, date);
         return prod;
@@ -71,12 +72,13 @@ PerishableProducts PerishableProducts::GetProductByID(Database& db, int ID)
 void PerishableProducts::DisplayDetails()
 {
     Product::DisplayDetails();
-    cout << "Expiry date: " << ExpiryDate.day << "-" << ExpiryDate.month << "-" << ExpiryDate.year << endl;
+    cout << "Expiry date: " << ExpiryDate.ToString() << endl;
 }
 
 
 bool PerishableProducts::AddProduct(Database& db)
 {
+    string query = "INSERT INTO PRODUCTS VALUES(" + to_string(GetProductID()) + ", '" + GetProductName() + "', " + to_string(GetSellingPrice()) + ", " + to_string(GetBuyingCost()) + ", " + to_string(GetQuantityInStock()) + ", '" + ExpiryDate.ToString() + "');";
     return db.executeQuery(query);
 }
 
