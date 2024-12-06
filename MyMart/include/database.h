@@ -16,6 +16,8 @@ class Database
 
         bool openDatabase(string fileName);
 
+        sqlite3* getDatabase();
+
         bool executeQuery(string query);
 
         bool displayTable(string table);

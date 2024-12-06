@@ -16,11 +16,12 @@
 	<product.h>
 	<iostream>
 
-1733306722 source:c:\users\user\desktop\mymart\mymart\src\product.cpp
+1733502981 source:c:\users\user\desktop\mymart\mymart\src\product.cpp
 	"product.h"
 
-1731842374 c:\users\user\desktop\mymart\mymart\include\product.h
+1733502989 c:\users\user\desktop\mymart\mymart\include\product.h
 	<iostream>
+	<database.h>
 
 1733306778 source:c:\users\user\desktop\mymart\mymart\src\stockclerk.cpp
 	"stockclerk.h"
@@ -31,14 +32,14 @@
 	<perishableproducts.h>
 	<iostream>
 
-1733306700 source:c:\users\user\desktop\mymart\mymart\src\perishableproducts.cpp
+1733502125 source:c:\users\user\desktop\mymart\mymart\src\perishableproducts.cpp
 	"perishableproducts.h"
 
-1731846489 c:\users\user\desktop\mymart\mymart\include\perishableproducts.h
+1733503077 c:\users\user\desktop\mymart\mymart\include\perishableproducts.h
 	<product.h>
 	<iostream>
 
-1733306595 source:c:\users\user\desktop\mymart\mymart\src\customer.cpp
+1733497521 source:c:\users\user\desktop\mymart\mymart\src\customer.cpp
 	"customer.h"
 
 1733407668 c:\users\user\desktop\mymart\mymart\include\customer.h
@@ -111,10 +112,10 @@
 	<unicode/utf16.h>
 	<math.h>
 
-1733418469 source:c:\users\user\desktop\mymart\mymart\src\database.cpp
+1733497488 source:c:\users\user\desktop\mymart\mymart\src\database.cpp
 	"database.h"
 
-1733395082 c:\users\user\desktop\mymart\mymart\include\database.h
+1733497466 c:\users\user\desktop\mymart\mymart\include\database.h
 	<iostream>
 	<string>
 	<iomanip>

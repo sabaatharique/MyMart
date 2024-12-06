@@ -27,7 +27,7 @@ double Customer::CheckOut()
 {
     double total = 0.0;
     for (auto i : ShoppingCart) {
-        total += i->GetSellingPrice();
+        //total += i->GetSellingPrice();
     }
     return total;
 }

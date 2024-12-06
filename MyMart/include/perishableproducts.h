@@ -30,6 +30,7 @@ struct Date {
 class PerishableProducts : public Product
 {
     public:
+        PerishableProducts();
         PerishableProducts(int n, string x, double p, double c, int s, Date e);
         ~PerishableProducts();
 
@@ -37,6 +38,10 @@ class PerishableProducts : public Product
         void SetExpiryDate(Date val);
 
         bool operator>(Date today);
+
+        PerishableProducts GetProductByID(Database &db, int ID);
+        void DisplayDetails();
+        bool AddProduct(Database & db);
 
     protected:
 

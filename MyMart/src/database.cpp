@@ -16,6 +16,12 @@ bool Database::openDatabase(string fileName)
     return true;
 }
 
+sqlite3* Database::getDatabase()
+{
+    return DB;
+}
+
+
 // used mainly to update, insert into, or alter tables
 bool Database::executeQuery(string query)
 {
