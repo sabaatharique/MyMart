@@ -41,6 +41,7 @@
 		<Unit filename="include/employee.h" />
 		<Unit filename="include/perishableproducts.h" />
 		<Unit filename="include/product.h" />
+		<Unit filename="include/shoppingcart.h" />
 		<Unit filename="include/sqlite3.h" />
 		<Unit filename="include/stockclerk.h" />
 		<Unit filename="main.cpp" />
@@ -51,6 +52,7 @@
 		<Unit filename="src/employee.cpp" />
 		<Unit filename="src/perishableproducts.cpp" />
 		<Unit filename="src/product.cpp" />
+		<Unit filename="src/shoppingcart.cpp" />
 		<Unit filename="src/sqlite3.c">
 			<Option compilerVar="CC" />
 		</Unit>

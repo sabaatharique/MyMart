@@ -14,14 +14,24 @@ class Product
         virtual ~Product();
 
         int GetProductID() const;
-        string GetProductName() const;
-        double GetSellingPrice() const;
-        double GetBuyingCost() const;
-        int GetQuantityInStock() const;
+        void SetProductID(int n);
 
-        Product GetProductByID(Database &db, int ID);
+        string GetProductName() const;
+        void SetProductName(string x);
+
+        double GetSellingPrice() const;
+        void SetSellingPrice(double p);
+
+        double GetBuyingCost() const;
+        void SetBuyingCost(int c);
+
+        double GetQuantityInStock() const;
+        void SetQuantityInStock(double s);
+
+        bool GetProductByID(Database &db, int ID);
         void DisplayDetails();
         bool AddProduct(Database &db);
+        bool DeleteProduct(Database& db);
 
     protected:
 
@@ -30,7 +40,7 @@ class Product
         string ProductName;
         double SellingPrice;
         double BuyingCost;
-        int QuantityInStock;
+        double QuantityInStock;
 };
 
 #endif // PRODUCT_H

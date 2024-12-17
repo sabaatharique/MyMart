@@ -1,14 +1,8 @@
 #include "Date.h"
 
-Date::Date()
-{
-    //ctor
-}
+Date::Date() {}
 
-Date::~Date()
-{
-    //dtor
-}
+Date::~Date() {}
 
 int Date::GetDay() const
 {
@@ -25,6 +19,15 @@ int Date::GetYear() const
     return year;
 }
 
+void Date::GetTodaysDate()
+{
+    time_t now = time(0);
+    tm *today = localtime(&now);
+
+    this->day = today->tm_mday;
+    this->month = static_cast<Months>(today->tm_mon);
+    this->year = today->tm_year;
+}
 
 string Date::ToString()
 {

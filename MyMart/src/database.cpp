@@ -36,6 +36,66 @@ bool Database::executeQuery(string query)
     return true;
 }
 
+bool Database::initialiseDatabase()
+{
+    if(!openDatabase("supermarket.db"))
+        return false;
+
+    string sql = "CREATE TABLE PRODUCTS("
+                 "ID INT PRIMARY KEY NOT NULL,"
+                 "NAME CHAR(25) NOT NULL,"
+                 "SELLING_PRICE REAL NOT NULL,"
+                 "BUYING_COST REAL NOT NULL,"
+                 "IN_STOCK INT NOT NULL,"
+                 "EXPIRY_DATE DATE);";
+    if(!executeQuery(sql))
+        return false;
+
+    sql = "INSERT INTO PRODUCTS VALUES(1000, 'APPLES RED', 150, 100, 50, '20-12-24');"
+          "INSERT INTO PRODUCTS VALUES(1001, 'SCISSORS', 500, 400, 5, NULL);"
+          "INSERT INTO PRODUCTS VALUES(1002, 'BANANAS', 125, 95, 80, '08-12-24');"
+          "INSERT INTO PRODUCTS VALUES(1003, 'COLOUR PENCILS', 275, 240, 15, NULL);"
+          "INSERT INTO PRODUCTS VALUES(1004, 'CARROTS', 100, 80, 60, '15-12-24');"
+          "INSERT INTO PRODUCTS VALUES(1005, 'BLACK PEN 12 PACK', 120, 100, 18, NULL);"
+          "INSERT INTO PRODUCTS VALUES(1006, 'GRAPES GREEN', 100, 85, 60, '12-12-24');"
+          "INSERT INTO PRODUCTS VALUES(1007, 'WHITE PAPER 500', 480, 400, 12, NULL);"
+          "INSERT INTO PRODUCTS VALUES(1008, 'TOMATOES', 80, 70, 60, '10-12-24');";
+    if(!executeQuery(sql))
+        return false;
+
+    sql = "CREATE TABLE EMPLOYEES("
+          "ID INT PRIMARY KEY NOT NULL,"
+          "NAME CHAR(25) NOT NULL,"
+          "TYPE CHAR(15) CHECK (TYPE IN ('MANAGER', 'CASHIER', 'STOCK CLERK')),"
+          "SALARY REAL NOT NULL);";
+    if(!executeQuery(sql))
+        return false;
+
+    sql = "INSERT INTO EMPLOYEES VALUES(1130, 'SABA ATHARIQUE', 'MANAGER', 40500);"
+          "INSERT INTO EMPLOYEES VALUES(1110, 'RIDITA ALAM', 'CASHIER', 35750);"
+          "INSERT INTO EMPLOYEES VALUES(1134, 'MISHKAT AHMED KHAN', 'STOCK CLERK', 27500);";
+    if(!executeQuery(sql))
+        return false;
+
+    sql = "CREATE TABLE CUSTOMERS("
+          "ID INT PRIMARY KEY NOT NULL,"
+          "NAME CHAR(25) NOT NULL,"
+          "TYPE CHAR(10) CHECK (TYPE IN ('LOYAL', 'REGULAR')),"
+          "TOTAL_SPENT REAL);";
+    if(!executeQuery(sql))
+        return false;
+
+    sql = "INSERT INTO CUSTOMERS VALUES(220041117, 'DIDHITI NAHID', 'REGULAR', 675);"
+          "INSERT INTO CUSTOMERS VALUES(220041101, 'ANJIM HOSSAIN', 'REGULAR', 20);"
+          "INSERT INTO CUSTOMERS VALUES(220041122, 'RAHATUT TAHRIM', 'LOYAL', 1250);"
+          "INSERT INTO CUSTOMERS VALUES(120041137, 'FAISAL HUSSAIN', 'LOYAL', 5675);";
+    if(!executeQuery(sql))
+        return false;
+
+    return true;
+}
+
+
 // used to display all results of a table after query
 bool Database::displayTable(string query)
 {
@@ -70,9 +130,22 @@ bool Database::displayTable(string query)
 }
 
 
-void Database::closeDatabase()
+bool Database::closeDatabase()
 {
+    string sql = "DROP TABLE PRODUCTS;";
+    if(!executeQuery(sql))
+        return false;
+
+    sql = "DROP TABLE CUSTOMERS;";
+    if(!executeQuery(sql))
+        return false;
+
+    sql = "DROP TABLE EMPLOYEES;";
+    if(!executeQuery(sql))
+        return false;
+
     sqlite3_close(DB);
+    return true;
 }
 
 

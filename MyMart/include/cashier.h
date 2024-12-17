@@ -2,7 +2,8 @@
 #define CASHIER_H
 
 #include <employee.h>
-#include <product.h>
+#include <shoppingcart.h>
+#include <cmath>
 #include <iostream>
 
 using namespace std;
@@ -12,12 +13,14 @@ using namespace std;
 class Cashier : public Employee
 {
     public:
-        Cashier(int n, string x, double s);
+        Cashier(int n, string x, double s = 0);
         ~Cashier();
 
         void GetEmployeeType();
 
-        int ProcessPayment();
+        ShoppingCart& ProcessCart(Database& db);
+
+        double MakeReceipt(ShoppingCart &cart);
 
     protected:
 

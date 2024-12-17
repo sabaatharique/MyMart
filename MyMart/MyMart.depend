@@ -1,6 +1,8 @@
 # depslib dependency file v1.0
-1733421092 source:c:\users\user\desktop\mymart\mymart\main.cpp
+1734432394 source:c:\users\user\desktop\mymart\mymart\main.cpp
 	<iostream>
+	<cashier.h>
+	<database.h>
 
 1733306675 source:c:\users\user\desktop\mymart\mymart\src\employee.cpp
 	"employee.h"
@@ -8,22 +10,23 @@
 1731841239 c:\users\user\desktop\mymart\mymart\include\employee.h
 	<iostream>
 
-1733306577 source:c:\users\user\desktop\mymart\mymart\src\cashier.cpp
+1734432310 source:c:\users\user\desktop\mymart\mymart\src\cashier.cpp
 	"cashier.h"
 
-1731848945 c:\users\user\desktop\mymart\mymart\include\cashier.h
+1734434234 c:\users\user\desktop\mymart\mymart\include\cashier.h
 	<employee.h>
-	<product.h>
+	<shoppingcart.h>
+	<cmath>
 	<iostream>
 
-1733502981 source:c:\users\user\desktop\mymart\mymart\src\product.cpp
+1734372170 source:c:\users\user\desktop\mymart\mymart\src\product.cpp
 	"product.h"
 
-1733502989 c:\users\user\desktop\mymart\mymart\include\product.h
+1734191567 c:\users\user\desktop\mymart\mymart\include\product.h
 	<iostream>
 	<database.h>
 
-1733306778 source:c:\users\user\desktop\mymart\mymart\src\stockclerk.cpp
+1734431616 source:c:\users\user\desktop\mymart\mymart\src\stockclerk.cpp
 	"stockclerk.h"
 
 1731846505 c:\users\user\desktop\mymart\mymart\include\stockclerk.h
@@ -32,11 +35,12 @@
 	<perishableproducts.h>
 	<iostream>
 
-1733502125 source:c:\users\user\desktop\mymart\mymart\src\perishableproducts.cpp
+1734369588 source:c:\users\user\desktop\mymart\mymart\src\perishableproducts.cpp
 	"perishableproducts.h"
 
-1733503077 c:\users\user\desktop\mymart\mymart\include\perishableproducts.h
+1733670396 c:\users\user\desktop\mymart\mymart\include\perishableproducts.h
 	<product.h>
+	<Date.h>
 	<iostream>
 
 1733497521 source:c:\users\user\desktop\mymart\mymart\src\customer.cpp
@@ -112,10 +116,10 @@
 	<unicode/utf16.h>
 	<math.h>
 
-1733497488 source:c:\users\user\desktop\mymart\mymart\src\database.cpp
+1734345789 source:c:\users\user\desktop\mymart\mymart\src\database.cpp
 	"database.h"
 
-1733497466 c:\users\user\desktop\mymart\mymart\include\database.h
+1734345667 c:\users\user\desktop\mymart\mymart\include\database.h
 	<iostream>
 	<string>
 	<iomanip>
@@ -249,4 +253,20 @@
 
 1733507564 source:d:\git\mymart\mymart\src\date.cpp
 	"Date.h"
+
+1734368855 source:c:\users\user\desktop\mymart\mymart\src\date.cpp
+	"Date.h"
+
+1734368743 c:\users\user\desktop\mymart\mymart\include\date.h
+	<iostream>
+	<ctime>
+
+1734433177 source:c:\users\user\desktop\mymart\mymart\src\shoppingcart.cpp
+	"shoppingcart.h"
+
+1734433167 c:\users\user\desktop\mymart\mymart\include\shoppingcart.h
+	<iostream>
+	<map>
+	<string>
+	<perishableproducts.h>
 

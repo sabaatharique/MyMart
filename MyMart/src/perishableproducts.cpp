@@ -2,8 +2,15 @@
 
 PerishableProducts::PerishableProducts(): Product() {}
 
+PerishableProducts::PerishableProducts(int n, string x, double p, double c, int s, Date e) : Product(n, x, p, c, s), ExpiryDate(e) {}
 
-PerishableProducts::PerishableProducts(int n, string x, double p, double c, int s, Date e) : Product(n, x, p, c, s), ExpiryDate(e){}
+PerishableProducts::PerishableProducts(int n, string x, double p, double c, int s, const char* e): Product(n, x, p, c, s)
+{
+    Date d;
+    d.ToDate(e);
+    ExpiryDate = d;
+}
+
 
 PerishableProducts::~PerishableProducts() {}
 
@@ -32,18 +39,17 @@ bool PerishableProducts::operator>(Date today)
         return false;
 }
 
-PerishableProducts PerishableProducts::GetProductByID(Database& db, int ID)
+bool PerishableProducts::GetProductByID(Database& db, int ID)
 {
     string query = "SELECT * FROM PRODUCTS WHERE ID = " + to_string(ID) + ";";
-    sqlite3* database = db.getDatabase();
     sqlite3_stmt* stmt;
 
 
-    int exitCode = sqlite3_prepare_v2(database, query.c_str(),-1, &stmt, NULL);
+    int exitCode = sqlite3_prepare_v2(db.getDatabase(), query.c_str(),-1, &stmt, NULL);
 
     if (exitCode != SQLITE_OK) {
-        cerr << "Could not prepare statement: " << sqlite3_errmsg(database) << endl;
-        return PerishableProducts();
+        cerr << "Could not prepare statement: " << sqlite3_errmsg(db.getDatabase()) << endl;
+        return false;
     }
 
     if (sqlite3_step(stmt) == SQLITE_ROW) {
@@ -58,15 +64,21 @@ PerishableProducts PerishableProducts::GetProductByID(Database& db, int ID)
         Date date;
         date.ToDate(expDate);
 
-        PerishableProducts prod(id, name, sPrice, bCost, quantity, date);
-        return prod;
+        this->SetProductID(id);
+        this->SetProductName(name);
+        this->SetSellingPrice(sPrice);
+        this->SetBuyingCost(bCost);
+        this->SetQuantityInStock(quantity);
+        this->ExpiryDate = date;
     }
     else {
         sqlite3_finalize(stmt);
         cout << "No product found with ID: " + to_string(ID) << endl;
-        return PerishableProducts();
+        return false;
     }
+
     sqlite3_finalize(stmt);
+    return true;
 }
 
 void PerishableProducts::DisplayDetails()

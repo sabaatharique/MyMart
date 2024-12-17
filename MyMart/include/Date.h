@@ -2,6 +2,7 @@
 #define DATE_H
 
 #include<iostream>
+#include <ctime>
 
 using namespace std;
 
@@ -29,6 +30,8 @@ class Date
         int GetDay() const;
         Months GetMonth() const;
         int GetYear() const;
+
+        void GetTodaysDate();
 
         string ToString();
 

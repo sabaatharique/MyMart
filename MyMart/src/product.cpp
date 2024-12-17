@@ -26,13 +26,37 @@ double Product::GetBuyingCost() const
     return BuyingCost;
 }
 
-int Product::GetQuantityInStock() const
+double Product::GetQuantityInStock() const
 {
     return QuantityInStock;
 }
 
+void Product::SetProductID(int n)
+{
+    ProductID = n;
+}
 
-Product Product::GetProductByID(Database& db, int ID)
+void Product::SetProductName(string x)
+{
+    ProductName = x;
+}
+
+void Product::SetSellingPrice(double p)
+{
+    SellingPrice = p;
+}
+
+void Product::SetBuyingCost(int c)
+{
+    BuyingCost = c;
+}
+
+void Product::SetQuantityInStock(double s)
+{
+    QuantityInStock = s;
+}
+
+bool Product::GetProductByID(Database& db, int ID)
 {
     string query = "SELECT * FROM PRODUCTS WHERE ID = " + to_string(ID) + ";";
     sqlite3_stmt* stmt;
@@ -42,7 +66,7 @@ Product Product::GetProductByID(Database& db, int ID)
 
     if (exitCode != SQLITE_OK) {
         cerr << "Could not prepare statement: " << sqlite3_errmsg(db.getDatabase()) << endl;
-        return Product();
+        return false;
     }
 
     if (sqlite3_step(stmt) == SQLITE_ROW) {
@@ -52,15 +76,20 @@ Product Product::GetProductByID(Database& db, int ID)
         double bCost = sqlite3_column_int(stmt, 3);
         int quantity = sqlite3_column_int(stmt, 4);
 
-        Product prod(id, name, sPrice, bCost, quantity);
-        return prod;
+        this->ProductID = id;
+        this->ProductName = name;
+        this->SellingPrice = sPrice;
+        this->BuyingCost = bCost;
+        this->QuantityInStock = quantity;
+
     }
     else {
         sqlite3_finalize(stmt);
         cout << "No product found with ID: " + to_string(ID) << endl;
-        return Product();
+        return false;
     }
     sqlite3_finalize(stmt);
+    return true;
 }
 
 void Product::DisplayDetails()
@@ -77,3 +106,10 @@ bool Product::AddProduct(Database& db)
     string query = "INSERT INTO PRODUCTS VALUES(" + to_string(ProductID) + ", '" + ProductName + "', " + to_string(SellingPrice) + ", " + to_string(BuyingCost) + ", " + to_string(QuantityInStock) + ", NULL);";
     return db.executeQuery(query);
 }
+
+bool Product::DeleteProduct(Database& db)
+{
+    string query = "DELETE FROM PRODUCTS WHERE ID = " + to_string(ProductID) + ";";
+    return db.executeQuery(query);
+}
+

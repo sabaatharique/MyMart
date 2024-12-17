@@ -20,9 +20,11 @@ class Database
 
         bool executeQuery(string query);
 
+        bool initialiseDatabase();
+
         bool displayTable(string table);
 
-        void closeDatabase();
+        bool closeDatabase();
 
     protected:
 
