@@ -51,7 +51,7 @@ bool Database::initialiseDatabase()
     if(!executeQuery(sql))
         return false;
 
-    sql = "INSERT INTO PRODUCTS VALUES(1000, 'APPLES RED', 150, 100, 50, '20-12-24');"
+    sql = "INSERT INTO PRODUCTS VALUES(1000, 'APPLES RED', 150, 100, 50, '19-12-24');"
           "INSERT INTO PRODUCTS VALUES(1001, 'SCISSORS', 500, 400, 5, NULL);"
           "INSERT INTO PRODUCTS VALUES(1002, 'BANANAS', 125, 95, 80, '08-12-24');"
           "INSERT INTO PRODUCTS VALUES(1003, 'COLOUR PENCILS', 275, 240, 15, NULL);"

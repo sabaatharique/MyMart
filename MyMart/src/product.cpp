@@ -74,7 +74,7 @@ bool Product::GetProductByID(Database& db, int ID)
         const char* name = reinterpret_cast<const char*>(sqlite3_column_text(stmt, 1));
         double sPrice = sqlite3_column_double(stmt, 2);
         double bCost = sqlite3_column_double(stmt, 3);
-        int quantity = sqlite3_column_double(stmt, 4);
+        double quantity = sqlite3_column_double(stmt, 4);
 
         this->ProductID = id;
         this->ProductName = name;

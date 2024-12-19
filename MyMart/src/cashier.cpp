@@ -13,14 +13,14 @@ ShoppingCart Cashier::ProcessCart(Database& db)
 {
     ShoppingCart cart;
 
-    int productID = 0;
-    double quantity = 0;
+    int productID;
+    double quantity;
     cout << "Scan product ID, enter -1 to end process." << endl;
 
     while(1){
         cout << "Enter ID to scan: " << endl;
         cin >> productID;
-        if(productID == -1)
+        if(productID < 0)
             break;
 
         // odd ID numbers indicate regular product, even indicates perishable
@@ -70,7 +70,8 @@ ShoppingCart Cashier::ProcessCart(Database& db)
             // check if expired
             Date today;
             today.GetTodaysDate();
-            if (*perishableProduct > today){
+            cout << today.ToString() << endl;
+            if (*perishableProduct < today){
                 cout << "Product expired, please refer to stock clerk." << endl;
                 continue;
             }
@@ -103,16 +104,17 @@ ShoppingCart Cashier::ProcessCart(Database& db)
 
 double Cashier::MakeReceipt(ShoppingCart& shoppingCart)
 {
-    vector<pair<Product*, double>> cart = shoppingCart.GetCart();
+    unordered_map<int, pair<Product*, double>> cart = shoppingCart.GetCart();
     double totalBill = shoppingCart.GetTotalBill();
 
-    cout << "------------ RECEIPT ------------" << endl;
+    cout << string(25, '-') << " RECEIPT " << string(25, '-') << endl;
     cout << "No.  Product Name     Qty     Price     Subtotal" << endl;
-    cout << "----------------------------------" << endl;
+    cout << string(59, '-') << endl;
 
-    for (int i = 0; i < cart.size(); i++) {
-        Product* product = cart[i].first; // Get the product pointer
-        double quantity = cart[i].second; // Get the quantity
+    int i = 1;
+    for (auto &prod : cart) {
+        Product* product = prod.second.first; // Get the product pointer
+        double quantity = prod.second.second; // Get the quantity
 
         if (product == nullptr) {
             cout << i + 1 << ". Invalid product in cart!" << endl;
@@ -127,9 +129,9 @@ double Cashier::MakeReceipt(ShoppingCart& shoppingCart)
              << quantity * product->GetSellingPrice() << endl;
     }
 
-    cout << "----------------------------------" << endl;
+    cout << string(59, '-') << endl;
     cout << "Total Bill: " << totalBill << endl;
-    cout << "----------------------------------" << endl;
+    cout << string(59, '-') << endl;
 
     return totalBill;
 }

@@ -17,7 +17,7 @@ class PerishableProducts : public Product
         Date GetExpiryDate();
         void SetExpiryDate(Date val);
 
-        bool operator>(Date today);
+        bool operator<(Date today);
 
         bool GetProductByID(Database &db, int ID) override;
         void DisplayDetails()override;

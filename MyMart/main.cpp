@@ -24,8 +24,8 @@ int main()
     cout << "RECEIPT" <<endl;
     saba.MakeReceipt(cart);
 
-    db.displayTable("SELECT * FROM PRODUCTS;");
-    cout << endl;
+    //db.displayTable("SELECT * FROM PRODUCTS;");
+    //cout << endl;
 
     db.closeDatabase();
 

@@ -2,7 +2,7 @@
 #define SHOPPINGCART_H
 
 #include <iostream>
-#include <vector>
+#include <unordered_map>
 #include <string>
 #include <perishableproducts.h>
 
@@ -12,7 +12,7 @@ class ShoppingCart
         ShoppingCart();
         ~ShoppingCart();
 
-        const vector<pair<Product*, double>>& GetCart();
+        const unordered_map<int, pair<Product*, double>>& GetCart();
         void AddToCart(Database& db, Product* p, double quantity);
 
         double GetTotalBill();
@@ -20,7 +20,7 @@ class ShoppingCart
     protected:
 
     private:
-        vector<pair<Product*, double>> Cart;
+        unordered_map<int, pair<Product*, double>> Cart;
         double TotalBill;
 };
 

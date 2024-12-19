@@ -16,24 +16,24 @@ Date PerishableProducts::GetExpiryDate() { return ExpiryDate; }
 
 void PerishableProducts::SetExpiryDate(Date val) { ExpiryDate = val; }
 
-bool PerishableProducts::operator>(Date today)
+bool PerishableProducts::operator<(Date today)
 {
-    if (ExpiryDate.GetYear() > today.GetYear())
-        return true;
     if (ExpiryDate.GetYear() < today.GetYear())
+        return true;
+    if (ExpiryDate.GetYear() > today.GetYear())
         return false;
 
     int ExpiryDate_month = static_cast<int>(ExpiryDate.GetMonth());
     int today_month = static_cast<int>(today.GetMonth());
 
-    if (ExpiryDate_month > today_month)
-        return true;
     if (ExpiryDate_month < today_month)
+        return true;
+    if (ExpiryDate_month > today_month)
         return false;
 
-    if (ExpiryDate.GetDay() >= today.GetDay())
-        return true;
     if (ExpiryDate.GetDay() < today.GetDay())
+        return true;
+    if (ExpiryDate.GetDay() >= today.GetDay())
         return false;
 }
 

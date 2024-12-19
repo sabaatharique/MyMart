@@ -26,7 +26,7 @@ void Date::GetTodaysDate()
 
     this->day = today->tm_mday;
     this->month = static_cast<Months>(today->tm_mon);
-    this->year = today->tm_year;
+    this->year = today->tm_year - 100;
 }
 
 string Date::ToString()

@@ -16,9 +16,11 @@ class StockClerk : public Employee
 
         bool CheckExpiry(PerishableProducts *p, Date today);
 
-        void CheckStock(Product *p);
-
-        void RestockProduct(Product *p);
+        void UpdateExpiryDate();
+        void UpdateStockByID(Database &db, int ID);
+        void ShowExpiredProducts(Database &db);
+        void ShowOutOfStockProducts(Database &db);
+        void ShowAllProducts(Database &db);
 
     protected:
 
