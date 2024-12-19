@@ -33,20 +33,21 @@ string Date::ToString()
 {
     string res = "";
 
-    if(day < 10) res += '0';
-    res += to_string(day) + '-';
+    res += to_string(year);
+
     int numericMonth = static_cast<int>(month) + 1;
     if(numericMonth < 10) res += '0';
     res += to_string(numericMonth) + '-';
-    if(year < 10) res += '0';
-    res += to_string(year);
+
+    if(day < 10) res += '0';
+    res += to_string(day) + '-';
 
     return res;
 }
 
 void Date::ToDate(const char* date)
 {
-    day = (date[0] - '0')*10 + (date[1] - '0');
-    month = static_cast<Months>((date[3] - '0')*10 + (date[4] - '0') - 1);
-    year = (date[6] - '0')*10 + (date[7] - '0');
+    year = (date[0] - '0')*1000 + (date[1] - '0')*100 + (date[2] - '0')*10 + (date[3] - '0');
+    month = static_cast<Months>((date[5] - '0')*10 + (date[6] - '0') - 1);
+    day = (date[8] - '0')*10 + (date[9] - '0');
 }

@@ -11,8 +11,10 @@ using namespace std;
 class StockClerk : public Employee
 {
     public:
-        StockClerk(int n, string x, double s);
+        StockClerk(int n, string x, double s = 0);
         ~StockClerk();
+
+        void GetEmployeeType();
 
         bool CheckExpiry(PerishableProducts *p, Date today);
 
@@ -21,6 +23,7 @@ class StockClerk : public Employee
         void ShowExpiredProducts(Database &db);
         void ShowOutOfStockProducts(Database &db);
         void ShowAllProducts(Database &db);
+        bool IsProductInTable(Database &db, int ID);
 
     protected:
 

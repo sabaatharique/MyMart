@@ -13,20 +13,20 @@ ShoppingCart Cashier::ProcessCart(Database& db)
 {
     ShoppingCart cart;
 
-    int productID;
+    string productID;
     double quantity;
     cout << "Scan product ID, enter -1 to end process." << endl;
 
     while(1){
         cout << "Enter ID to scan: " << endl;
         cin >> productID;
-        if(productID < 0)
+        if(productID == "-1")
             break;
 
-        // odd ID numbers indicate regular product, even indicates perishable
-        if (productID % 2) {
+        // first digit 1 indicates regular product, 21 indicates perishable but bought in kg and 22 indicates perishable but bought in unit
+        if (productID[0] == '1') {
             Product *product = new Product();
-            if(!product->GetProductByID(db, productID)){
+            if(!product->GetProductByID(db, stoi(productID))){
                 cout << "Could not add product to cart." << endl;
                 delete product;
                 continue;
@@ -59,7 +59,7 @@ ShoppingCart Cashier::ProcessCart(Database& db)
         // even number indicates perishable product
         else {
             PerishableProducts *perishableProduct = new PerishableProducts();
-            if(!perishableProduct->GetProductByID(db, productID)){
+            if(!perishableProduct->GetProductByID(db, stoi(productID))){
                 cout << "Could not add product to cart." << endl;
                 delete perishableProduct;
                 continue;
@@ -70,7 +70,6 @@ ShoppingCart Cashier::ProcessCart(Database& db)
             // check if expired
             Date today;
             today.GetTodaysDate();
-            cout << today.ToString() << endl;
             if (*perishableProduct < today){
                 cout << "Product expired, please refer to stock clerk." << endl;
                 continue;
@@ -81,13 +80,15 @@ ShoppingCart Cashier::ProcessCart(Database& db)
                 continue;
             }
 
+            // for perishable products
+            cout << "Enter " << ((productID[1] == '1') ? "kilograms" : "number") << " of item purchased: " << endl;
+
             // loop until valid input given
-            cout << "Enter kilograms of item purchased: " << endl;
             while(1)
             {
                 cin >> quantity;
 
-                if(quantity <= 0)
+                if(quantity <= 0 || (productID[1] == '2' && floor(quantity) != quantity))
                     cout << "Input invalid, try again." << endl;
                 else if (quantity > perishableProduct->GetQuantityInStock())
                     cout << "Not enough product in stock." << endl;
@@ -96,7 +97,7 @@ ShoppingCart Cashier::ProcessCart(Database& db)
             }
 
             cart.AddToCart(db, perishableProduct, quantity);
-            cout << quantity << "kg of " << perishableProduct->GetProductName() << " added to cart." << endl;
+            cout << quantity << ((productID[1] == '1') ? "kg of " : " ") << perishableProduct->GetProductName() << " added to cart." << endl;
         }
     }
     return cart;
