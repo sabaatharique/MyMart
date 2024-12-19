@@ -46,7 +46,7 @@ bool Database::initialiseDatabase()
                  "NAME CHAR(25) NOT NULL,"
                  "SELLING_PRICE REAL NOT NULL,"
                  "BUYING_COST REAL NOT NULL,"
-                 "IN_STOCK INT NOT NULL,"
+                 "IN_STOCK REAL NOT NULL,"
                  "EXPIRY_DATE DATE);";
     if(!executeQuery(sql))
         return false;

@@ -10,7 +10,7 @@ class Product
 {
     public:
         Product();
-        Product(int n, string x, double p, double c, int s);
+        Product(int n, string x, double p, double c, double s);
         virtual ~Product();
 
         int GetProductID() const;
@@ -23,14 +23,14 @@ class Product
         void SetSellingPrice(double p);
 
         double GetBuyingCost() const;
-        void SetBuyingCost(int c);
+        void SetBuyingCost(double c);
 
         double GetQuantityInStock() const;
         void SetQuantityInStock(double s);
 
-        bool GetProductByID(Database &db, int ID);
-        void DisplayDetails();
-        bool AddProduct(Database &db);
+        virtual bool GetProductByID(Database &db, int ID);
+        virtual void DisplayDetails();
+        virtual bool AddProduct(Database &db);
         bool DeleteProduct(Database& db);
 
     protected:

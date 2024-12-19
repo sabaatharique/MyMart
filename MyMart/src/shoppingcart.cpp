@@ -4,14 +4,15 @@ ShoppingCart::ShoppingCart() : TotalBill(0.0) {}
 
 ShoppingCart::~ShoppingCart() {}
 
-map<Product*, double> ShoppingCart::GetCart()
+const vector<pair<Product*, double>>& ShoppingCart::GetCart()
 {
     return Cart;
 }
 
 void ShoppingCart::AddToCart(Database& db, Product* p, double quantity)
 {
-    Cart[p] += quantity;
+    pair<Product*, double> product(p, quantity);
+    Cart.push_back(product);
 
     p->SetQuantityInStock(p->GetQuantityInStock() - quantity);
 

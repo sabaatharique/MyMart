@@ -11,8 +11,7 @@ class PerishableProducts : public Product
 {
     public:
         PerishableProducts();
-        PerishableProducts(int n, string x, double p, double c, int s, Date e);
-        PerishableProducts(int n, string x, double p, double c, int s, const char* e);
+        PerishableProducts(int n, string x, double p, double c, double s, const char* e);
         ~PerishableProducts();
 
         Date GetExpiryDate();
@@ -20,9 +19,9 @@ class PerishableProducts : public Product
 
         bool operator>(Date today);
 
-        bool GetProductByID(Database &db, int ID);
-        void DisplayDetails();
-        bool AddProduct(Database &db);
+        bool GetProductByID(Database &db, int ID) override;
+        void DisplayDetails()override;
+        bool AddProduct(Database &db) override;
 
     protected:
 

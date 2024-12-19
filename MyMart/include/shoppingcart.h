@@ -2,7 +2,7 @@
 #define SHOPPINGCART_H
 
 #include <iostream>
-#include <map>
+#include <vector>
 #include <string>
 #include <perishableproducts.h>
 
@@ -12,15 +12,15 @@ class ShoppingCart
         ShoppingCart();
         ~ShoppingCart();
 
-        map<Product*, double> GetCart();
-        void AddToCart(Database& db, Product *p, double quantity);
+        const vector<pair<Product*, double>>& GetCart();
+        void AddToCart(Database& db, Product* p, double quantity);
 
         double GetTotalBill();
 
     protected:
 
     private:
-        map<Product*, double> Cart;
+        vector<pair<Product*, double>> Cart;
         double TotalBill;
 };
 

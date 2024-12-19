@@ -2,7 +2,7 @@
 
 Product::Product() : ProductID(0) {}
 
-Product::Product(int n, string x, double p, double c, int s) : ProductID(n), ProductName(x), SellingPrice(p), BuyingCost(c), QuantityInStock(s) {}
+Product::Product(int n, string x, double p, double c, double s) : ProductID(n), ProductName(x), SellingPrice(p), BuyingCost(c), QuantityInStock(s) {}
 
 Product::~Product() {}
 
@@ -46,7 +46,7 @@ void Product::SetSellingPrice(double p)
     SellingPrice = p;
 }
 
-void Product::SetBuyingCost(int c)
+void Product::SetBuyingCost(double c)
 {
     BuyingCost = c;
 }
@@ -73,8 +73,8 @@ bool Product::GetProductByID(Database& db, int ID)
         int id = sqlite3_column_int(stmt, 0);
         const char* name = reinterpret_cast<const char*>(sqlite3_column_text(stmt, 1));
         double sPrice = sqlite3_column_double(stmt, 2);
-        double bCost = sqlite3_column_int(stmt, 3);
-        int quantity = sqlite3_column_int(stmt, 4);
+        double bCost = sqlite3_column_double(stmt, 3);
+        int quantity = sqlite3_column_double(stmt, 4);
 
         this->ProductID = id;
         this->ProductName = name;
@@ -86,6 +86,7 @@ bool Product::GetProductByID(Database& db, int ID)
     else {
         sqlite3_finalize(stmt);
         cout << "No product found with ID: " + to_string(ID) << endl;
+        sqlite3_finalize(stmt);
         return false;
     }
     sqlite3_finalize(stmt);

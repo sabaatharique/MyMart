@@ -18,7 +18,7 @@ class Cashier : public Employee
 
         void GetEmployeeType();
 
-        ShoppingCart& ProcessCart(Database& db);
+        ShoppingCart ProcessCart(Database& db);
 
         double MakeReceipt(ShoppingCart &cart);
 

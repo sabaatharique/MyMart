@@ -9,7 +9,7 @@ void Cashier::GetEmployeeType()
     cout << "Employee: Cashier" << endl;
 }
 
-ShoppingCart& Cashier::ProcessCart(Database& db)
+ShoppingCart Cashier::ProcessCart(Database& db)
 {
     ShoppingCart cart;
 
@@ -25,13 +25,20 @@ ShoppingCart& Cashier::ProcessCart(Database& db)
 
         // odd ID numbers indicate regular product, even indicates perishable
         if (productID % 2) {
-            Product product;
-            if(!product.GetProductByID(db, productID)){
+            Product *product = new Product();
+            if(!product->GetProductByID(db, productID)){
                 cout << "Could not add product to cart." << endl;
+                delete product;
                 continue;
             }
 
-            product.DisplayDetails();
+            product->DisplayDetails();
+
+            if (product->GetQuantityInStock() == 0){
+                cout << "Product out of stock, please refer to stock clerk." << endl;
+                delete product;
+                continue;
+            }
 
             cout << "Enter number of item purchased: " << endl;
             while(1)
@@ -40,30 +47,36 @@ ShoppingCart& Cashier::ProcessCart(Database& db)
 
                 if(floor(quantity) != quantity || quantity <= 0)
                     cout << "Input invalid, try again." << endl;
-                else if (quantity > product.GetQuantityInStock())
+                else if (quantity > product->GetQuantityInStock())
                     cout << "Not enough product in stock." << endl;
                 else
                     break;
             }
 
-            cout << quantity << " " << product.GetProductName() << " added to cart." << endl;
-            cart.AddToCart(db, &product, quantity);
+            cout << quantity << " " << product->GetProductName() << " added to cart." << endl;
+            cart.AddToCart(db, product, quantity);
         }
-        // even number indicated perishable product
+        // even number indicates perishable product
         else {
-            PerishableProducts perishableProduct;
-            if(!perishableProduct.GetProductByID(db, productID)){
+            PerishableProducts *perishableProduct = new PerishableProducts();
+            if(!perishableProduct->GetProductByID(db, productID)){
                 cout << "Could not add product to cart." << endl;
+                delete perishableProduct;
                 continue;
             }
 
-            perishableProduct.DisplayDetails();
+            perishableProduct->DisplayDetails();
 
             // check if expired
             Date today;
             today.GetTodaysDate();
-            if (perishableProduct > today){
+            if (*perishableProduct > today){
                 cout << "Product expired, please refer to stock clerk." << endl;
+                continue;
+            }
+            if (perishableProduct->GetQuantityInStock() == 0){
+                cout << "Product out of stock, please refer to stock clerk." << endl;
+                delete perishableProduct;
                 continue;
             }
 
@@ -75,14 +88,14 @@ ShoppingCart& Cashier::ProcessCart(Database& db)
 
                 if(quantity <= 0)
                     cout << "Input invalid, try again." << endl;
-                else if (quantity > perishableProduct.GetQuantityInStock())
+                else if (quantity > perishableProduct->GetQuantityInStock())
                     cout << "Not enough product in stock." << endl;
                 else
                     break;
             }
 
-            cart.AddToCart(db, &perishableProduct, quantity);
-            cout << quantity << "kg of " << perishableProduct.GetProductName() << " added to cart." << endl;
+            cart.AddToCart(db, perishableProduct, quantity);
+            cout << quantity << "kg of " << perishableProduct->GetProductName() << " added to cart." << endl;
         }
     }
     return cart;
@@ -90,12 +103,39 @@ ShoppingCart& Cashier::ProcessCart(Database& db)
 
 double Cashier::MakeReceipt(ShoppingCart& shoppingCart)
 {
-    map<Product*, double> cart = shoppingCart.GetCart();
-    int i = 1;
-    for(auto &product : cart){
-        cout << product.first->GetProductName() << endl;
+    vector<pair<Product*, double>> cart = shoppingCart.GetCart();
+    double totalBill = shoppingCart.GetTotalBill();
+
+    cout << "------------ RECEIPT ------------" << endl;
+    cout << "No.  Product Name     Qty     Price     Subtotal" << endl;
+    cout << "----------------------------------" << endl;
+
+    for (int i = 0; i < cart.size(); i++) {
+        Product* product = cart[i].first; // Get the product pointer
+        double quantity = cart[i].second; // Get the quantity
+
+        if (product == nullptr) {
+            cout << i + 1 << ". Invalid product in cart!" << endl;
+            continue;
+        }
+
+        // Print base class details
+        cout << i + 1 << ".   "
+             << product->GetProductName() << "   "
+             << quantity << "   "
+             << product->GetSellingPrice() << "   "
+             << quantity * product->GetSellingPrice() << endl;
     }
+
+    cout << "----------------------------------" << endl;
+    cout << "Total Bill: " << totalBill << endl;
+    cout << "----------------------------------" << endl;
+
+    return totalBill;
 }
+
+
+
 
 
 

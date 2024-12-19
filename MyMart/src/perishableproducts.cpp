@@ -2,9 +2,7 @@
 
 PerishableProducts::PerishableProducts(): Product() {}
 
-PerishableProducts::PerishableProducts(int n, string x, double p, double c, int s, Date e) : Product(n, x, p, c, s), ExpiryDate(e) {}
-
-PerishableProducts::PerishableProducts(int n, string x, double p, double c, int s, const char* e): Product(n, x, p, c, s)
+PerishableProducts::PerishableProducts(int n, string x, double p, double c, double s, const char* e): Product(n, x, p, c, s)
 {
     Date d;
     d.ToDate(e);
@@ -41,6 +39,10 @@ bool PerishableProducts::operator>(Date today)
 
 bool PerishableProducts::GetProductByID(Database& db, int ID)
 {
+    if (!Product::GetProductByID(db, ID)) {
+        return false;
+    }
+
     string query = "SELECT * FROM PRODUCTS WHERE ID = " + to_string(ID) + ";";
     sqlite3_stmt* stmt;
 
@@ -56,24 +58,20 @@ bool PerishableProducts::GetProductByID(Database& db, int ID)
         int id = sqlite3_column_int(stmt, 0);
         const char* name = reinterpret_cast<const char*>(sqlite3_column_text(stmt, 1));
         double sPrice = sqlite3_column_double(stmt, 2);
-        double bCost = sqlite3_column_int(stmt, 3);
-        int quantity = sqlite3_column_int(stmt, 4);
+        double bCost = sqlite3_column_double(stmt, 3);
+        double quantity = sqlite3_column_double(stmt, 4);
         const char* expDate = reinterpret_cast<const char*>(sqlite3_column_text(stmt, 5));
 
         // converting string to date struct
         Date date;
         date.ToDate(expDate);
 
-        this->SetProductID(id);
-        this->SetProductName(name);
-        this->SetSellingPrice(sPrice);
-        this->SetBuyingCost(bCost);
-        this->SetQuantityInStock(quantity);
         this->ExpiryDate = date;
     }
     else {
         sqlite3_finalize(stmt);
-        cout << "No product found with ID: " + to_string(ID) << endl;
+        cout << "No expiry date found for ID: " + to_string(ID) << endl;
+        sqlite3_finalize(stmt);
         return false;
     }
 
