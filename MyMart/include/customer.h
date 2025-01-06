@@ -17,20 +17,18 @@ class Customer
 
         int GetCustomerID();
 
-        vector<Product*> GetShoppingCart();
-        void AddToShoppingCart(Product *p);
-
-        double CheckOut();
-
         double GetTotalAmountSpent();
         void SetTotalAmountSpent(double val);
+
+        bool AddCustomer(Database &db);
+
+        virtual bool GetCustomerByID(Database &db, int ID);
 
     protected:
 
     private:
         int CustomerID;
         string CustomerName;
-        vector<Product*> ShoppingCart;
         double TotalAmountSpent;
 };
 

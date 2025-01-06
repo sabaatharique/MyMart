@@ -39,20 +39,7 @@ bool PerishableProducts::operator<(Date today)
 
 bool PerishableProducts::GetProductByID(Database& db, int ID)
 {
-    if (!Product::GetProductByID(db, ID)) {
-        return false;
-    }
-
-    string query = "SELECT * FROM PRODUCTS WHERE ID = " + to_string(ID) + ";";
-    sqlite3_stmt* stmt;
-
-
-    int exitCode = sqlite3_prepare_v2(db.getDatabase(), query.c_str(),-1, &stmt, NULL);
-
-    if (exitCode != SQLITE_OK) {
-        cerr << "Could not prepare statement: " << sqlite3_errmsg(db.getDatabase()) << endl;
-        return false;
-    }
+    sqlite3_stmt* stmt = db.searchFromTable(db,ID,"PRODUCTS");
 
     if (sqlite3_step(stmt) == SQLITE_ROW) {
         int id = sqlite3_column_int(stmt, 0);

@@ -14,9 +14,14 @@ bool StockClerk::CheckExpiry(PerishableProducts* p, Date today)
     return *p < today;
 }
 
-void StockClerk::UpdateStockByID(Database& db, int ID)
+void StockClerk::UpdateStockByID(Database& db, int ID, float amount)
 {
+    string query = "UPDATE PRODUCTS SET IN_STOCK = " + to_string(amount) + " WHERE ID = " + to_string(ID) + ";";
 
+    if(db.executeQuery(query))
+        cout << "Product stock updated." << endl;
+    else
+        cout << "Could not update product with ID " << ID << endl;
 }
 
 void StockClerk::ShowExpiredProducts(Database& db)
@@ -31,16 +36,7 @@ void StockClerk::ShowOutOfStockProducts(Database& db)
 
 bool StockClerk::IsProductInTable(Database& db, int ID)
 {
-    string query = "SELECT * FROM (SELECT * FROM PRODUCTS WHERE IN_STOCK = 0 OR EXPIRY_DATE < DATE('now')) WHERE ID = " + to_string(ID) + ";";
-    sqlite3_stmt* stmt;
-
-
-    int exitCode = sqlite3_prepare_v2(db.getDatabase(), query.c_str(),-1, &stmt, NULL);
-
-    if (exitCode != SQLITE_OK) {
-        cerr << "Could not prepare statement: " << sqlite3_errmsg(db.getDatabase()) << endl;
-        return false;
-    }
+    sqlite3_stmt* stmt = db.searchFromTable(db,ID,"(SELECT * FROM PRODUCTS WHERE IN_STOCK = 0 OR EXPIRY_DATE < DATE('now'))");
 
     int exists = 0;
     if (sqlite3_step(stmt) == SQLITE_ROW) {
@@ -70,7 +66,23 @@ void StockClerk::ShowAllProducts(Database& db)
             break;
 
         if(IsProductInTable(db, productID)) {
-
+            float amount;
+            cout << "Enter new stock amount: " << endl;
+            string pID = to_string(productID);
+            cin >> amount;
+        // first digit 1 indicates regular product, 21 indicates perishable but bought in kg and 22 indicates perishable but bought in unit
+            if(pID[0] == '1' || pID[1] == '2') {
+                while(1){
+                    if(floor(amount) != amount || amount <= 0)
+                    {
+                        cout << "Input invalid, try again." << endl;
+                        cin >> amount;
+                    }
+                    else
+                        break;
+                }
+            }
+            UpdateStockByID(db,productID,amount);
         }
         else
             cout << "Product does not need restocking." << endl;

@@ -4,6 +4,7 @@
 #include <employee.h>
 #include <product.h>
 #include <perishableproducts.h>
+#include <cmath>
 #include <iostream>
 
 using namespace std;
@@ -19,7 +20,7 @@ class StockClerk : public Employee
         bool CheckExpiry(PerishableProducts *p, Date today);
 
         void UpdateExpiryDate();
-        void UpdateStockByID(Database &db, int ID);
+        void UpdateStockByID(Database &db, int ID, float amount);
         void ShowExpiredProducts(Database &db);
         void ShowOutOfStockProducts(Database &db);
         void ShowAllProducts(Database &db);

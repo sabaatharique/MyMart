@@ -39,6 +39,7 @@
 		<Unit filename="include/customer.h" />
 		<Unit filename="include/database.h" />
 		<Unit filename="include/employee.h" />
+		<Unit filename="include/loyalcustomer.h" />
 		<Unit filename="include/perishableproducts.h" />
 		<Unit filename="include/product.h" />
 		<Unit filename="include/shoppingcart.h" />
@@ -50,6 +51,7 @@
 		<Unit filename="src/customer.cpp" />
 		<Unit filename="src/database.cpp" />
 		<Unit filename="src/employee.cpp" />
+		<Unit filename="src/loyalcustomer.cpp" />
 		<Unit filename="src/perishableproducts.cpp" />
 		<Unit filename="src/product.cpp" />
 		<Unit filename="src/shoppingcart.cpp" />

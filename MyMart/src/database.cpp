@@ -129,6 +129,27 @@ bool Database::displayTable(string query)
     return true;
 }
 
+sqlite3_stmt* Database::searchFromTable(Database& db, int ID, const string table)
+{
+    string query = "SELECT * FROM " + table + " WHERE ID = ?;";
+    sqlite3_stmt* stmt = nullptr;
+
+    int exitCode = sqlite3_prepare_v2(db.getDatabase(), query.c_str(), -1, &stmt, NULL);
+    if (exitCode != SQLITE_OK) {
+        cerr << "Could not prepare statement: " << sqlite3_errmsg(db.getDatabase()) << endl;
+        return nullptr;
+    }
+
+    exitCode = sqlite3_bind_int(stmt, 1, ID);
+    if (exitCode != SQLITE_OK) {
+        cerr << "Could not bind parameter: " << sqlite3_errmsg(db.getDatabase()) << endl;
+        sqlite3_finalize(stmt);
+        return nullptr;
+    }
+
+    return stmt;
+}
+
 
 bool Database::closeDatabase()
 {

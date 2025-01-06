@@ -23,9 +23,9 @@ int main()
     StockClerk Mishkat(220041134, "Mishkat");
     Mishkat.ShowAllProducts(db);
 
-    //Cashier saba(220041130, "Saba Atharique");
-    //ShoppingCart cart = saba.ProcessCart(db);
-    //saba.MakeReceipt(cart);
+//    Cashier saba(220041130, "Saba Atharique");
+//    ShoppingCart cart = saba.ProcessCart(db);
+//    saba.MakeReceipt(cart);
 
     db.displayTable("SELECT * FROM PRODUCTS;");
     cout << endl;

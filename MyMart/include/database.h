@@ -26,6 +26,8 @@ class Database
 
         bool closeDatabase();
 
+        sqlite3_stmt* searchFromTable(Database& db, int ID, const string table);
+
     protected:
 
     private:
