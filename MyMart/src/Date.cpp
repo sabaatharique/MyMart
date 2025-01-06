@@ -33,14 +33,14 @@ string Date::ToString()
 {
     string res = "";
 
-    res += to_string(year);
+    res += to_string(year) + '-';
 
     int numericMonth = static_cast<int>(month) + 1;
     if(numericMonth < 10) res += '0';
     res += to_string(numericMonth) + '-';
 
     if(day < 10) res += '0';
-    res += to_string(day) + '-';
+    res += to_string(day);
 
     return res;
 }

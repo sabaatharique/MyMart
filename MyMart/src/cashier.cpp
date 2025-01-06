@@ -108,31 +108,36 @@ double Cashier::MakeReceipt(ShoppingCart& shoppingCart)
     unordered_map<int, pair<Product*, double>> cart = shoppingCart.GetCart();
     double totalBill = shoppingCart.GetTotalBill();
 
-    cout << string(25, '-') << " RECEIPT " << string(25, '-') << endl;
-    cout << "No.  Product Name     Qty     Price     Subtotal" << endl;
-    cout << string(59, '-') << endl;
+    cout << string(30, '-') << " RECEIPT " << string(30, '-') << endl;
+    cout << setw(7) << "No.";
+    cout << setw(27) << "Product Name";
+    cout << setw(7) << "ID";
+    cout << setw(8) << "Qty";
+    cout << setw(10) << "Price";
+    cout << setw(10) << "Subtotal" << endl;
+    cout << string(69, '-') << endl;
 
     int i = 1;
     for (auto &prod : cart) {
-        Product* product = prod.second.first; // Get the product pointer
-        double quantity = prod.second.second; // Get the quantity
+        Product* product = prod.second.first;
+        double quantity = prod.second.second;
 
-        if (product == nullptr) {
-            cout << i + 1 << ". Invalid product in cart!" << endl;
+        if (product == NULL) {
+            cout << i++ << ". Invalid product in cart." << endl;
             continue;
         }
 
-        // Print base class details
-        cout << i + 1 << ".   "
-             << product->GetProductName() << "   "
-             << quantity << "   "
-             << product->GetSellingPrice() << "   "
-             << quantity * product->GetSellingPrice() << endl;
+            cout << setw(7) << i++;
+            cout << setw(27) << product->GetProductName();
+            cout << setw(7) << product->GetProductID();
+            cout << setw(8) << quantity;
+            cout << setw(10) << product->GetSellingPrice();
+            cout << setw(10) << quantity * product->GetSellingPrice() << endl;
     }
 
-    cout << string(59, '-') << endl;
-    cout << "Total Bill: " << totalBill << endl;
-    cout << string(59, '-') << endl;
+    cout << string(69, '-') << endl;
+    cout << setw(59) << "Total: " << totalBill << endl;
+    cout << string(69, '-') << endl;
 
     return totalBill;
 }

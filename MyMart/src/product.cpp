@@ -86,7 +86,6 @@ bool Product::GetProductByID(Database& db, int ID)
     else {
         sqlite3_finalize(stmt);
         cout << "No product found with ID: " + to_string(ID) << endl;
-        sqlite3_finalize(stmt);
         return false;
     }
     sqlite3_finalize(stmt);

@@ -66,8 +66,14 @@ void StockClerk::ShowAllProducts(Database& db)
     while(true) {
         cin >> productID;
 
-        if(IsProductInTable(db, productID)) cout << "YAYY" << endl;
-        else cout << "NAY" << endl;
+        if (productID == -1)
+            break;
+
+        if(IsProductInTable(db, productID)) {
+
+        }
+        else
+            cout << "Product does not need restocking." << endl;
     }
 }
 

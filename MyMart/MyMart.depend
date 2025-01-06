@@ -1,7 +1,8 @@
 # depslib dependency file v1.0
-1734612656 source:c:\users\user\desktop\mymart\mymart\main.cpp
+1736157341 source:c:\users\user\desktop\mymart\mymart\main.cpp
 	<iostream>
 	<cashier.h>
+	<stockclerk.h>
 	<database.h>
 
 1733306675 source:c:\users\user\desktop\mymart\mymart\src\employee.cpp
@@ -10,7 +11,7 @@
 1731841239 c:\users\user\desktop\mymart\mymart\include\employee.h
 	<iostream>
 
-1734614949 source:c:\users\user\desktop\mymart\mymart\src\cashier.cpp
+1734692117 source:c:\users\user\desktop\mymart\mymart\src\cashier.cpp
 	"cashier.h"
 
 1734544973 c:\users\user\desktop\mymart\mymart\include\cashier.h
@@ -19,23 +20,23 @@
 	<cmath>
 	<iostream>
 
-1734612170 source:c:\users\user\desktop\mymart\mymart\src\product.cpp
+1734691753 source:c:\users\user\desktop\mymart\mymart\src\product.cpp
 	"product.h"
 
 1734590639 c:\users\user\desktop\mymart\mymart\include\product.h
 	<iostream>
 	<database.h>
 
-1734616706 source:c:\users\user\desktop\mymart\mymart\src\stockclerk.cpp
+1734631371 source:c:\users\user\desktop\mymart\mymart\src\stockclerk.cpp
 	"stockclerk.h"
 
-1734616152 c:\users\user\desktop\mymart\mymart\include\stockclerk.h
+1734631159 c:\users\user\desktop\mymart\mymart\include\stockclerk.h
 	<employee.h>
 	<product.h>
 	<perishableproducts.h>
 	<iostream>
 
-1734613901 source:c:\users\user\desktop\mymart\mymart\src\perishableproducts.cpp
+1734691780 source:c:\users\user\desktop\mymart\mymart\src\perishableproducts.cpp
 	"perishableproducts.h"
 
 1734613745 c:\users\user\desktop\mymart\mymart\include\perishableproducts.h
@@ -116,7 +117,7 @@
 	<unicode/utf16.h>
 	<math.h>
 
-1734613830 source:c:\users\user\desktop\mymart\mymart\src\database.cpp
+1734631159 source:c:\users\user\desktop\mymart\mymart\src\database.cpp
 	"database.h"
 
 1734345667 c:\users\user\desktop\mymart\mymart\include\database.h
@@ -259,7 +260,7 @@
 1734620652 source:d:\git\mymart\mymart\src\date.cpp
 	"Date.h"
 
-1734613613 source:c:\users\user\desktop\mymart\mymart\src\date.cpp
+1734691926 source:c:\users\user\desktop\mymart\mymart\src\date.cpp
 	"Date.h"
 
 1734368743 c:\users\user\desktop\mymart\mymart\include\date.h
