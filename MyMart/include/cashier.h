@@ -8,12 +8,11 @@
 
 using namespace std;
 
-
-
 class Cashier : public Employee
 {
     public:
         Cashier(int n, string x, double s = 0);
+        Cashier();
         ~Cashier();
 
         void GetEmployeeType();

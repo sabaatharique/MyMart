@@ -7,12 +7,15 @@
 class LoyalCustomer : public Customer
 {
     public:
+        LoyalCustomer(string x, int n);
         LoyalCustomer();
         virtual ~LoyalCustomer();
 
     protected:
 
     private:
+        double DiscountPercentage;
+
 };
 
 #endif // LOYALCUSTOMER_H

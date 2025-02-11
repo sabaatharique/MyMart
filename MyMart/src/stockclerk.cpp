@@ -1,7 +1,7 @@
 #include "stockclerk.h"
 
 StockClerk::StockClerk(int n, string x, double s) : Employee(n, x, s) {}
-
+StockClerk::StockClerk() {}
 StockClerk::~StockClerk() {}
 
 void StockClerk::GetEmployeeType()

@@ -11,6 +11,7 @@ class Customer
 {
     public:
         Customer(string x, int n);
+        Customer();
         virtual ~Customer();
 
         string GetCustomerName();
@@ -23,6 +24,12 @@ class Customer
         bool AddCustomer(Database &db);
 
         virtual bool GetCustomerByID(Database &db, int ID);
+
+        bool UpdateTotalAmountSpent(Database &db);
+
+        bool UpdateCustomerStatus(Database &db);
+
+        void DisplayDetails();
 
     protected:
 

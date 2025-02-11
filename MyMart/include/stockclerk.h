@@ -13,6 +13,7 @@ class StockClerk : public Employee
 {
     public:
         StockClerk(int n, string x, double s = 0);
+        StockClerk();
         ~StockClerk();
 
         void GetEmployeeType();

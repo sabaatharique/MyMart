@@ -3,6 +3,7 @@
 #include <stockclerk.h>
 #include <database.h>
 
+#include<customer.h>
 using namespace std;
 
 int main()
@@ -20,12 +21,16 @@ int main()
     db.displayTable("SELECT * FROM EMPLOYEES;");
     cout << endl;
 
-//    StockClerk Mishkat(220041134, "Mishkat");
-//    Mishkat.ShowAllProducts(db);
+    StockClerk Mishkat;
+    Mishkat.ShowAllProducts(db);
 
-    Cashier saba(220041130, "Saba Atharique");
-    ShoppingCart cart = saba.ProcessCart(db);
-    saba.MakeReceipt(cart);
+//    Cashier saba;
+//    ShoppingCart cart = saba.ProcessCart(db);
+//    saba.MakeReceipt(cart);
+//
+//    Customer Ridita;
+//    Ridita.GetCustomerByID(db,220041101);
+//    Ridita.DisplayDetails();
 
     db.displayTable("SELECT * FROM PRODUCTS;");
     cout << endl;

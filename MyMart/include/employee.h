@@ -9,6 +9,7 @@ class Employee
 {
     public:
         Employee(int n, string x, double s);
+        Employee();
         virtual ~Employee();
 
         virtual void GetEmployeeType() = 0;

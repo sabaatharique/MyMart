@@ -51,13 +51,13 @@ bool Database::initialiseDatabase()
     if(!executeQuery(sql))
         return false;
 
-    sql = "INSERT INTO PRODUCTS VALUES(21000, 'APPLES RED', 150, 100, 50, '2024-12-19');"
+    sql = "INSERT INTO PRODUCTS VALUES(21000, 'APPLES RED', 150, 100, 50, '2025-06-19');"
           "INSERT INTO PRODUCTS VALUES(10001, 'SCISSORS', 500, 400, 0, NULL);"
-          "INSERT INTO PRODUCTS VALUES(21002, 'BANANAS', 125, 95, 80, '2024-12-26');"
+          "INSERT INTO PRODUCTS VALUES(21002, 'BANANAS', 125, 95, 80, '2025-06-26');"
           "INSERT INTO PRODUCTS VALUES(10003, 'COLOUR PENCILS', 275, 240, 15, NULL);"
           "INSERT INTO PRODUCTS VALUES(22004, 'MILK', 100, 80, 60, '2024-12-25');"
           "INSERT INTO PRODUCTS VALUES(10005, 'BLACK PEN 12 PACK', 120, 100, 18, NULL);"
-          "INSERT INTO PRODUCTS VALUES(10006, 'GRAPES GREEN', 100, 85, 60, '2024-12-22');"
+          "INSERT INTO PRODUCTS VALUES(10006, 'GRAPES GREEN', 100, 85, 60, '2025-06-22');"
           "INSERT INTO PRODUCTS VALUES(10007, 'WHITE PAPER 500', 480, 400, 12, NULL);"
           "INSERT INTO PRODUCTS VALUES(10008, 'TOMATOES', 80, 70, 60, '2024-12-10');";
     if(!executeQuery(sql))
@@ -149,7 +149,6 @@ sqlite3_stmt* Database::searchFromTable(Database& db, int ID, const string table
 
     return stmt;
 }
-
 
 bool Database::closeDatabase()
 {

@@ -1,7 +1,7 @@
 #include "cashier.h"
 
 Cashier::Cashier(int n, string x, double s) : Employee(n, x, s) {}
-
+Cashier::Cashier() {}
 Cashier::~Cashier() {}
 
 void Cashier::GetEmployeeType()
@@ -141,12 +141,3 @@ double Cashier::MakeReceipt(ShoppingCart& shoppingCart)
 
     return totalBill;
 }
-
-
-
-
-
-
-
-
-
