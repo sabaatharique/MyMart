@@ -9,6 +9,11 @@
 
 using namespace std;
 
+enum Table {
+    Expired,
+    OutOfStock
+};
+
 class StockClerk : public Employee
 {
     public:
@@ -22,14 +27,16 @@ class StockClerk : public Employee
 
         void UpdateExpiryDate();
         void UpdateStockByID(Database &db, int ID, float amount);
+        void UpdateExpiryDateByID(Database& db, int ID,string date);
         void ShowExpiredProducts(Database &db);
         void ShowOutOfStockProducts(Database &db);
         void ShowAllProducts(Database &db);
-        bool IsProductInTable(Database &db, int ID);
+        bool IsProductInTable(Database &db, int ID, Table tbl);
 
     protected:
 
     private:
+
 };
 
 #endif // STOCKCLERK_H

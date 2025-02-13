@@ -24,19 +24,27 @@ void StockClerk::UpdateStockByID(Database& db, int ID, float amount)
         cout << "Could not update product with ID " << ID << endl;
 }
 
-void StockClerk::ShowExpiredProducts(Database& db)
+void StockClerk::UpdateExpiryDateByID(Database& db, int ID,string date)
 {
+    string smtng = "'" + date + "'";
+    string query = "UPDATE PRODUCTS SET EXPIRY_DATE = " + smtng + " WHERE ID = " + to_string(ID) + ";";
 
+    if(db.executeQuery(query))
+        cout << "Product expiry date updated." << endl;
+    else
+        cout << "Could not update product with ID " << ID << endl;
 }
 
-void StockClerk::ShowOutOfStockProducts(Database& db)
+bool StockClerk::IsProductInTable(Database& db, int ID, Table tbl)
 {
+    string table;
+    if(tbl == Expired)
+        table = "EXPIRY_DATE < DATE('now')";
+    else
+        table = "IN_STOCK = 0";
 
-}
-
-bool StockClerk::IsProductInTable(Database& db, int ID)
-{
-    sqlite3_stmt* stmt = db.searchFromTable(db,ID,"(SELECT * FROM PRODUCTS WHERE IN_STOCK = 0 OR EXPIRY_DATE < DATE('now'))");
+    string query = "(SELECT * FROM PRODUCTS WHERE " + table + ")";
+    sqlite3_stmt* stmt = db.searchFromTable(db,ID,query);
 
     int exists = 0;
     if (sqlite3_step(stmt) == SQLITE_ROW) {
@@ -51,10 +59,9 @@ bool StockClerk::IsProductInTable(Database& db, int ID)
     return false;
 }
 
-
-void StockClerk::ShowAllProducts(Database& db)
+void StockClerk::ShowExpiredProducts(Database& db)
 {
-    db.displayTable("SELECT * FROM PRODUCTS WHERE IN_STOCK = 0 OR EXPIRY_DATE < DATE('now');");
+    db.displayTable("SELECT * FROM PRODUCTS WHERE EXPIRY_DATE < DATE('now');");
     cout << endl;
 
     int productID;
@@ -65,7 +72,49 @@ void StockClerk::ShowAllProducts(Database& db)
         if (productID == -1)
             break;
 
-        if(IsProductInTable(db, productID)) {
+        if(IsProductInTable(db, productID, Expired)) {
+            float amount;
+            cout << "Enter new stock amount: " << endl;
+            string pID = to_string(productID);
+            cin >> amount;
+        // first digit 1 indicates regular product, 21 indicates perishable but bought in kg and 22 indicates perishable but bought in unit
+            if(pID[1] == '2') {
+                while(1){
+                    if(floor(amount) != amount || amount <= 0)
+                    {
+                        cout << "Input invalid, try again." << endl;
+                        cin >> amount;
+                    }
+                    else
+                        break;
+                }
+            }
+            UpdateStockByID(db,productID,amount);
+            string date;
+            cout << "Enter new expiry date : " << endl;
+            cin >> date;
+            UpdateExpiryDateByID(db,productID,date);
+
+        }
+        else
+            cout << "Product could not be found." << endl;
+    }
+}
+
+void StockClerk::ShowOutOfStockProducts(Database& db)
+{
+    db.displayTable("SELECT * FROM PRODUCTS WHERE IN_STOCK = 0;");
+    cout << endl;
+
+    int productID;
+    cout << "Enter product ID to update: " << endl;
+    while(true) {
+        cin >> productID;
+
+        if (productID == -1)
+            break;
+
+        if(IsProductInTable(db, productID,OutOfStock)) {
             float amount;
             cout << "Enter new stock amount: " << endl;
             string pID = to_string(productID);
@@ -87,6 +136,12 @@ void StockClerk::ShowAllProducts(Database& db)
         else
             cout << "Product does not need restocking." << endl;
     }
+}
+
+void StockClerk::ShowAllProducts(Database& db)
+{
+    db.displayTable("SELECT * FROM PRODUCTS;");
+    cout << endl;
 }
 
 

@@ -12,7 +12,7 @@ bool Database::openDatabase(string fileName)
         cerr << "Error opening " << fileName << " : " << sqlite3_errmsg(DB) << endl;
         return false;
     }
-    cout << "Successfully opened " << fileName << endl;
+   // cout << "Successfully opened " << fileName << endl;
     return true;
 }
 
@@ -41,7 +41,7 @@ bool Database::initialiseDatabase()
     if(!openDatabase("supermarket.db"))
         return false;
 
-    string sql = "CREATE TABLE PRODUCTS("
+    string sql = "CREATE TABLE IF NOT EXISTS PRODUCTS("
                  "ID INT PRIMARY KEY NOT NULL,"
                  "NAME CHAR(25) NOT NULL,"
                  "SELLING_PRICE REAL NOT NULL,"
@@ -51,19 +51,19 @@ bool Database::initialiseDatabase()
     if(!executeQuery(sql))
         return false;
 
-    sql = "INSERT INTO PRODUCTS VALUES(21000, 'APPLES RED', 150, 100, 50, '2025-06-19');"
-          "INSERT INTO PRODUCTS VALUES(10001, 'SCISSORS', 500, 400, 0, NULL);"
-          "INSERT INTO PRODUCTS VALUES(21002, 'BANANAS', 125, 95, 80, '2025-06-26');"
-          "INSERT INTO PRODUCTS VALUES(10003, 'COLOUR PENCILS', 275, 240, 15, NULL);"
-          "INSERT INTO PRODUCTS VALUES(22004, 'MILK', 100, 80, 60, '2024-12-25');"
-          "INSERT INTO PRODUCTS VALUES(10005, 'BLACK PEN 12 PACK', 120, 100, 18, NULL);"
-          "INSERT INTO PRODUCTS VALUES(10006, 'GRAPES GREEN', 100, 85, 60, '2025-06-22');"
-          "INSERT INTO PRODUCTS VALUES(10007, 'WHITE PAPER 500', 480, 400, 12, NULL);"
-          "INSERT INTO PRODUCTS VALUES(10008, 'TOMATOES', 80, 70, 60, '2024-12-10');";
+    sql = "INSERT OR IGNORE INTO PRODUCTS VALUES(21000, 'APPLES RED', 150, 100, 50, '2025-06-19');"
+          "INSERT OR IGNORE INTO PRODUCTS VALUES(10001, 'SCISSORS', 500, 400, 0, NULL);"
+          "INSERT OR IGNORE INTO PRODUCTS VALUES(21002, 'BANANAS', 125, 95, 80, '2025-06-26');"
+          "INSERT OR IGNORE INTO PRODUCTS VALUES(10003, 'COLOUR PENCILS', 275, 240, 15, NULL);"
+          "INSERT OR IGNORE INTO PRODUCTS VALUES(22004, 'MILK', 100, 80, 60, '2024-12-25');"
+          "INSERT OR IGNORE INTO PRODUCTS VALUES(10005, 'BLACK PEN 12 PACK', 120, 100, 18, NULL);"
+          "INSERT OR IGNORE INTO PRODUCTS VALUES(21006, 'GRAPES GREEN', 100, 85, 60, '2025-06-22');"
+          "INSERT OR IGNORE INTO PRODUCTS VALUES(10007, 'WHITE PAPER 500', 480, 400, 12, NULL);"
+          "INSERT OR IGNORE INTO PRODUCTS VALUES(21008, 'TOMATOES', 80, 70, 60, '2024-12-10');";
     if(!executeQuery(sql))
         return false;
 
-    sql = "CREATE TABLE EMPLOYEES("
+    sql = "CREATE TABLE IF NOT EXISTS EMPLOYEES("
           "ID INT PRIMARY KEY NOT NULL,"
           "NAME CHAR(25) NOT NULL,"
           "TYPE CHAR(15) CHECK (TYPE IN ('MANAGER', 'CASHIER', 'STOCK CLERK')),"
@@ -71,13 +71,13 @@ bool Database::initialiseDatabase()
     if(!executeQuery(sql))
         return false;
 
-    sql = "INSERT INTO EMPLOYEES VALUES(1130, 'SABA ATHARIQUE', 'MANAGER', 40500);"
-          "INSERT INTO EMPLOYEES VALUES(1110, 'RIDITA ALAM', 'CASHIER', 35750);"
-          "INSERT INTO EMPLOYEES VALUES(1134, 'MISHKAT AHMED KHAN', 'STOCK CLERK', 27500);";
+    sql = "INSERT OR IGNORE INTO EMPLOYEES VALUES(1130, 'SABA ATHARIQUE', 'MANAGER', 40500);"
+          "INSERT OR IGNORE INTO EMPLOYEES VALUES(1110, 'RIDITA ALAM', 'CASHIER', 35750);"
+          "INSERT OR IGNORE INTO EMPLOYEES VALUES(1134, 'MISHKAT AHMED KHAN', 'STOCK CLERK', 27500);";
     if(!executeQuery(sql))
         return false;
 
-    sql = "CREATE TABLE CUSTOMERS("
+    sql = "CREATE TABLE IF NOT EXISTS CUSTOMERS("
           "ID INT PRIMARY KEY NOT NULL,"
           "NAME CHAR(25) NOT NULL,"
           "TYPE CHAR(10) CHECK (TYPE IN ('LOYAL', 'REGULAR')),"
@@ -85,16 +85,15 @@ bool Database::initialiseDatabase()
     if(!executeQuery(sql))
         return false;
 
-    sql = "INSERT INTO CUSTOMERS VALUES(220041117, 'DIDHITI NAHID', 'REGULAR', 675);"
-          "INSERT INTO CUSTOMERS VALUES(220041101, 'ANJIM HOSSAIN', 'REGULAR', 20);"
-          "INSERT INTO CUSTOMERS VALUES(220041122, 'RAHATUT TAHRIM', 'LOYAL', 1250);"
-          "INSERT INTO CUSTOMERS VALUES(120041137, 'FAISAL HUSSAIN', 'LOYAL', 5675);";
+    sql = "INSERT OR IGNORE INTO CUSTOMERS VALUES(220041117, 'DIDHITI NAHID', 'REGULAR', 675);"
+          "INSERT OR IGNORE INTO CUSTOMERS VALUES(220041101, 'ANJIM HOSSAIN', 'REGULAR', 20);"
+          "INSERT OR IGNORE INTO CUSTOMERS VALUES(220041122, 'RAHATUT TAHRIM', 'LOYAL', 1250);"
+          "INSERT OR IGNORE INTO CUSTOMERS VALUES(120041137, 'FAISAL HUSSAIN', 'LOYAL', 5675);";
     if(!executeQuery(sql))
         return false;
 
     return true;
 }
-
 
 // used to display all results of a table after query
 bool Database::displayTable(string query)
@@ -112,16 +111,16 @@ bool Database::displayTable(string query)
     cout << left;
     for (int i = 0; i < columns; i++){
         string colName = sqlite3_column_name(stmt, i);
-        cout << setw(25) << colName;
+        cout << setw(21) << colName;
     }
 
     cout << endl;
-    cout << string(25 * columns, '-') << endl;
+    cout << string(120, '-');
 
     while(sqlite3_step(stmt) == SQLITE_ROW){
         for (int i = 0; i < columns; i++){
             const char *text = reinterpret_cast<const char*>(sqlite3_column_text(stmt, i));
-            cout << setw(25) << (text ? text : "NULL");
+            cout << setw(21) << (text ? text : "NULL");
         }
         cout << endl;
     }
@@ -167,5 +166,3 @@ bool Database::closeDatabase()
     sqlite3_close(DB);
     return true;
 }
-
-
