@@ -58,6 +58,11 @@ int main()
             cin >> op;
         }
     }
+    else if(n == 3) {
+        Cashier saba;
+        ShoppingCart cart = saba.ProcessCart(db);
+        saba.MakeReceipt(cart);
+    }
     system("cls");
 
     db.displayTable("SELECT * FROM PRODUCTS;");

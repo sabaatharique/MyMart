@@ -27,7 +27,7 @@ class StockClerk : public Employee
 
         void UpdateExpiryDate();
         void UpdateStockByID(Database &db, int ID, float amount);
-        void UpdateExpiryDateByID(Database& db, int ID,string date);
+        void UpdateExpiryDateByID(Database& db, PerishableProducts &Exp, int ID);
         void ShowExpiredProducts(Database &db);
         void ShowOutOfStockProducts(Database &db);
         void ShowAllProducts(Database &db);

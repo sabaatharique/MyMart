@@ -42,11 +42,7 @@ bool PerishableProducts::GetProductByID(Database& db, int ID)
     sqlite3_stmt* stmt = db.searchFromTable(db,ID,"PRODUCTS");
 
     if (sqlite3_step(stmt) == SQLITE_ROW) {
-        int id = sqlite3_column_int(stmt, 0);
-        const char* name = reinterpret_cast<const char*>(sqlite3_column_text(stmt, 1));
-        double sPrice = sqlite3_column_double(stmt, 2);
-        double bCost = sqlite3_column_double(stmt, 3);
-        double quantity = sqlite3_column_double(stmt, 4);
+        Product::GetProductByID(db, ID);
         const char* expDate = reinterpret_cast<const char*>(sqlite3_column_text(stmt, 5));
 
         // converting string to date struct

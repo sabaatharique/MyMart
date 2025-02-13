@@ -128,7 +128,7 @@ bool Database::displayTable(string query)
     return true;
 }
 
-sqlite3_stmt* Database::searchFromTable(Database& db, int ID, const string table)
+sqlite3_stmt* Database::searchFromTable(Database& db, int ID, const string& table)
 {
     string query = "SELECT * FROM " + table + " WHERE ID = ?;";
     sqlite3_stmt* stmt = nullptr;

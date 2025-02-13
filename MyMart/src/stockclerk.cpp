@@ -1,4 +1,6 @@
 #include "stockclerk.h"
+#include "perishableproducts.h"
+#include "Date.h"
 
 StockClerk::StockClerk(int n, string x, double s) : Employee(n, x, s) {}
 StockClerk::StockClerk() {}
@@ -24,10 +26,10 @@ void StockClerk::UpdateStockByID(Database& db, int ID, float amount)
         cout << "Could not update product with ID " << ID << endl;
 }
 
-void StockClerk::UpdateExpiryDateByID(Database& db, int ID,string date)
+void StockClerk::UpdateExpiryDateByID(Database& db, PerishableProducts &Exp, int ID)
 {
-    string smtng = "'" + date + "'";
-    string query = "UPDATE PRODUCTS SET EXPIRY_DATE = " + smtng + " WHERE ID = " + to_string(ID) + ";";
+    string expDate = "'" + Exp.GetExpiryDate().ToString() + "'";
+    string query = "UPDATE PRODUCTS SET EXPIRY_DATE = " + expDate + " WHERE ID = " + to_string(ID) + ";";
 
     if(db.executeQuery(query))
         cout << "Product expiry date updated." << endl;
@@ -89,11 +91,24 @@ void StockClerk::ShowExpiredProducts(Database& db)
                         break;
                 }
             }
-            UpdateStockByID(db,productID,amount);
-            string date;
-            cout << "Enter new expiry date : " << endl;
-            cin >> date;
-            UpdateExpiryDateByID(db,productID,date);
+            UpdateStockByID(db, productID, amount);
+
+            bool notfirst = false;
+            Date dt, today;
+            today.GetTodaysDate();
+            PerishableProducts Exp;
+            do{
+                string date;
+                if(notfirst) cout << "Invalid Expiry Date! ";
+                cout << "Enter new expiry date : " << endl;
+                cin >> date;
+                const char *expDate = date.c_str();
+                dt.ToDate(expDate);
+
+                Exp.SetExpiryDate(dt);
+            } while(notfirst = CheckExpiry(&Exp, today));
+
+            UpdateExpiryDateByID(db, Exp, productID);
 
         }
         else
