@@ -103,14 +103,14 @@ ShoppingCart Cashier::ProcessCart(Database& db)
     return cart;
 }
 
-double Cashier::MakeReceipt(ShoppingCart& shoppingCart)
+void Cashier::MakeReceipt(ShoppingCart& shoppingCart, Customer *customer)
 {
     unordered_map<int, pair<Product*, double>> cart = shoppingCart.GetCart();
     double totalBill = shoppingCart.GetTotalBill();
 
     cout << string(30, '-') << " RECEIPT " << string(30, '-') << endl;
     cout << setw(7) << "No.";
-    cout << setw(27) << "Product Name";
+    cout << setw(27) << "Product name";
     cout << setw(7) << "ID";
     cout << setw(8) << "Qty";
     cout << setw(10) << "Price";
@@ -136,8 +136,104 @@ double Cashier::MakeReceipt(ShoppingCart& shoppingCart)
     }
 
     cout << string(69, '-') << endl;
-    cout << setw(59) << "Total: " << totalBill << endl;
-    cout << string(69, '-') << endl;
+    cout << setw(50) << "Amount: " << setw(7) << totalBill << endl;
 
-    return totalBill;
+    // how the hell would this even work
+    if(dynamic_cast<LoyalCustomer*>(customer)) {
+        cout << setw(50) << "Discount: " << setw(7) << "5%" << endl;
+        cout << setw(50) << "Net amount: " << setw(7) << (totalBill*0.95) << endl;
+    }
+
+    cout << string(69, '-') << endl;
+}
+
+Customer* Cashier::OpenCustomerAccount(Database& db)
+{
+    cout << "Open customer account: " << endl;
+
+    bool first = true;
+    int choice;
+    // loop while input is incorrect
+    do {
+        if (!first)
+            cout << "Invalid input, try again." << endl;
+
+        cout << "1. Enter existing ID" << endl << "2. Create new customer ID" << endl;
+        cin >> choice;
+        first = false;
+    } while (choice < 1 || choice > 2);
+
+    // if customer already exists, search database
+    if (choice == 1) {
+        string customerID;
+        while(1){
+            cout << "Enter customer ID: " << endl;
+            cin >> customerID;
+
+            if(customerID[0] == '1'){
+                Customer *customer = new Customer();
+
+                // if no customer with id found, loop
+                if(customer->GetCustomerByID(db, stoi(customerID))){
+                    customer->DisplayDetails();
+                    return customer;
+                }
+            }
+            else if(customerID[0] == '2') {
+                LoyalCustomer *loyalCustomer = new LoyalCustomer();
+
+                // if no loyal customer with id found, loop
+                if(loyalCustomer->GetCustomerByID(db, stoi(customerID))){
+                    loyalCustomer->DisplayDetails();
+                    return loyalCustomer;
+                }
+            }
+
+            cout << ">No customer with ID: " << customerID << endl;
+        }
+
+    }
+    // if new customer, create account
+    else if (choice == 2) {
+        // what do if not work???
+        Customer *customer = new Customer();
+
+        if (!customer->GenerateNewID(db))
+            cout << "Could not create new customer ID. Try again." << endl;
+
+        string name;
+        cout << "Enter customer name: " << endl;
+        cin.ignore();
+        getline(cin, name);
+        customer->SetCustomerName(name);
+
+        // see aforementioned ???
+        if (!customer->AddCustomer(db))
+            cout << "Could not add customer to database." << endl;
+
+        customer->DisplayDetails();
+
+        return customer;
+    }
+
+    return NULL;
+}
+
+
+void Cashier::CheckoutCustomer(Database& db)
+{
+    // find customer's account
+    Customer *customer = OpenCustomerAccount(db);
+
+
+    // scan customer's cart
+    ShoppingCart cart = ProcessCart(db);
+
+    // update customer's total spending, add current bill
+    customer->SetTotalAmountSpent(customer->GetTotalAmountSpent() + cart.GetTotalBill());
+    customer->UpdateTotalAmountSpent(db);
+
+    MakeReceipt(cart, customer);
+
+    delete customer;
 }

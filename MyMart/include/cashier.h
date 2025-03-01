@@ -3,7 +3,9 @@
 
 #include <employee.h>
 #include <shoppingcart.h>
+#include <loyalcustomer.h>
 #include <cmath>
+#include <string>
 #include <iostream>
 
 using namespace std;
@@ -19,7 +21,11 @@ class Cashier : public Employee
 
         ShoppingCart ProcessCart(Database& db);
 
-        double MakeReceipt(ShoppingCart &cart);
+        void MakeReceipt(ShoppingCart& cart, Customer *customer);
+
+        void CheckoutCustomer(Database& db);
+
+        Customer* OpenCustomerAccount(Database& db);
 
     protected:
 

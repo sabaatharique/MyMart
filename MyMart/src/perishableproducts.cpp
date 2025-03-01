@@ -53,7 +53,7 @@ bool PerishableProducts::GetProductByID(Database& db, int ID)
     }
     else {
         sqlite3_finalize(stmt);
-        cout << "No expiry date found for ID: " + to_string(ID) << endl;
+        //cout << "No expiry date found for ID: " + to_string(ID) << endl;
         return false;
     }
 

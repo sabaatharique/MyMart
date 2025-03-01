@@ -15,13 +15,17 @@ class Customer
         virtual ~Customer();
 
         string GetCustomerName();
+        void SetCustomerName(string name);
 
         int GetCustomerID();
+        void SetCustomerID(int ID);
 
         double GetTotalAmountSpent();
         void SetTotalAmountSpent(double val);
 
         bool AddCustomer(Database &db);
+
+        bool GenerateNewID(Database &db);
 
         virtual bool GetCustomerByID(Database &db, int ID);
 

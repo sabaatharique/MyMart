@@ -12,5 +12,7 @@ LoyalCustomer::LoyalCustomer()
 
 LoyalCustomer::~LoyalCustomer()
 {
-    //dtor
+
 }
+
+

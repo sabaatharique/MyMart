@@ -9,7 +9,7 @@ int main()
 {
     system("color 5F");
 
-    cout << "\n\n";
+    /*cout << "\n\n";
     cout << " " << string(118, '~') << " " << endl;
     cout << string(55, ' ') << "MY MART" << endl;
     cout << " " << string(118, '~') << " " << endl;
@@ -26,7 +26,7 @@ int main()
     cout << string(50, ' ') << string(20, '_') << "\n" << string(49, ' ') << "  Enter Password :\n" << string(50, ' ') << string(20, '-') << endl;
     string password;
     cout << string(50,' ');
-    cin >> password;
+    cin >> password;*/
 
 
     Database db;
@@ -60,10 +60,9 @@ int main()
     }
     else if(n == 3) {
         Cashier saba;
-        ShoppingCart cart = saba.ProcessCart(db);
-        saba.MakeReceipt(cart);
+        saba.CheckoutCustomer(db);
     }
-    system("cls");
+    //system("cls");
 
     db.displayTable("SELECT * FROM PRODUCTS;");
     cout << endl;

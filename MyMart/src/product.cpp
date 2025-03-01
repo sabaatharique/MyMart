@@ -58,7 +58,7 @@ void Product::SetQuantityInStock(double s)
 
 bool Product::GetProductByID(Database& db, int ID)
 {
-    sqlite3_stmt* stmt = db.searchFromTable(db,ID,"PRODUCTS");
+    sqlite3_stmt* stmt = db.searchFromTable(db, ID, "PRODUCTS");
 
     if (sqlite3_step(stmt) == SQLITE_ROW) {
         int id = sqlite3_column_int(stmt, 0);
@@ -76,7 +76,7 @@ bool Product::GetProductByID(Database& db, int ID)
     }
     else {
         sqlite3_finalize(stmt);
-        cout << "No product found with ID: " + to_string(ID) << endl;
+        cout << "No product found with ID: " << ID << endl;
         return false;
     }
     sqlite3_finalize(stmt);
