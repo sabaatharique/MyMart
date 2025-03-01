@@ -6,6 +6,12 @@
 
 using namespace std;
 
+enum Table {
+    Expired,
+    OutOfStock,
+    All
+};
+
 class Product
 {
     public:
@@ -31,7 +37,7 @@ class Product
         virtual bool GetProductByID(Database &db, int ID);
         virtual void DisplayDetails();
         virtual bool AddProduct(Database &db);
-        bool DeleteProduct(Database& db);
+        static bool IsProductInTable(Database& db, int ID, Table tbl);
 
     protected:
 

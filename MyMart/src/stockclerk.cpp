@@ -37,30 +37,6 @@ void StockClerk::UpdateExpiryDateByID(Database& db, PerishableProducts &Exp, int
         cout << "Could not update product with ID " << ID << endl;
 }
 
-bool StockClerk::IsProductInTable(Database& db, int ID, Table tbl)
-{
-    string table;
-    if(tbl == Expired)
-        table = "EXPIRY_DATE < DATE('now')";
-    else
-        table = "IN_STOCK = 0";
-
-    string query = "(SELECT * FROM PRODUCTS WHERE " + table + ")";
-    sqlite3_stmt* stmt = db.searchFromTable(db,ID,query);
-
-    int exists = 0;
-    if (sqlite3_step(stmt) == SQLITE_ROW) {
-        exists = sqlite3_column_int(stmt, 0);
-    }
-
-    if (exists) {
-        sqlite3_finalize(stmt);
-        return true;
-    }
-    sqlite3_finalize(stmt);
-    return false;
-}
-
 void StockClerk::ShowExpiredProducts(Database& db)
 {
     db.displayTable("SELECT * FROM PRODUCTS WHERE EXPIRY_DATE < DATE('now');");
@@ -74,7 +50,7 @@ void StockClerk::ShowExpiredProducts(Database& db)
         if (productID == -1)
             break;
 
-        if(IsProductInTable(db, productID, Expired)) {
+        if(Product::IsProductInTable(db, productID, Expired)) {
             float amount;
             cout << "Enter new stock amount: " << endl;
             string pID = to_string(productID);
@@ -129,7 +105,7 @@ void StockClerk::ShowOutOfStockProducts(Database& db)
         if (productID == -1)
             break;
 
-        if(IsProductInTable(db, productID,OutOfStock)) {
+        if(Product::IsProductInTable(db, productID,OutOfStock)) {
             float amount;
             cout << "Enter new stock amount: " << endl;
             string pID = to_string(productID);

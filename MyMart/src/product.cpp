@@ -94,13 +94,34 @@ void Product::DisplayDetails()
 
 bool Product::AddProduct(Database& db)
 {
-    string query = "INSERT INTO PRODUCTS VALUES(" + to_string(ProductID) + ", '" + ProductName + "', " + to_string(SellingPrice) + ", " + to_string(BuyingCost) + ", " + to_string(QuantityInStock) + ", NULL);";
+    string query = "INSERT OR IGNORE INTO PRODUCTS VALUES(" + to_string(ProductID) + ", '" + ProductName + "', " + to_string(SellingPrice) + ", " + to_string(BuyingCost) + ", " + to_string(QuantityInStock) + ", NULL);";
     return db.executeQuery(query);
 }
 
-bool Product::DeleteProduct(Database& db)
+
+bool Product::IsProductInTable(Database& db, int ID, Table tbl)
 {
-    string query = "DELETE FROM PRODUCTS WHERE ID = " + to_string(ProductID) + ";";
-    return db.executeQuery(query);
+    string table;
+    if(tbl == Expired)
+        table = " WHERE EXPIRY_DATE < DATE('now')";
+    else if(tbl == OutOfStock)
+        table = " WHERE IN_STOCK = 0";
+    else
+        table = "";
+
+    string query = "(SELECT * FROM PRODUCTS" + table + ")";
+    sqlite3_stmt* stmt = db.searchFromTable(db,ID,query);
+
+    int exists = 0;
+    if (sqlite3_step(stmt) == SQLITE_ROW) {
+        exists = sqlite3_column_int(stmt, 0);
+    }
+
+    if (exists) {
+        sqlite3_finalize(stmt);
+        return true;
+    }
+    sqlite3_finalize(stmt);
+    return false;
 }
 

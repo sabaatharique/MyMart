@@ -70,7 +70,7 @@ void PerishableProducts::DisplayDetails()
 
 bool PerishableProducts::AddProduct(Database& db)
 {
-    string query = "INSERT INTO PRODUCTS VALUES(" + to_string(GetProductID()) + ", '" + GetProductName() + "', " + to_string(GetSellingPrice()) + ", " + to_string(GetBuyingCost()) + ", " + to_string(GetQuantityInStock()) + ", '" + ExpiryDate.ToString() + "');";
+    string query = "INSERT OR IGNORE INTO PRODUCTS VALUES(" + to_string(GetProductID()) + ", '" + GetProductName() + "', " + to_string(GetSellingPrice()) + ", " + to_string(GetBuyingCost()) + ", " + to_string(GetQuantityInStock()) + ", '" + ExpiryDate.ToString() + "');";
     return db.executeQuery(query);
 }
 

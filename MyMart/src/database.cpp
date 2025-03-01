@@ -35,6 +35,18 @@ bool Database::executeQuery(string query)
     return true;
 }
 
+sqlite3_stmt* Database::fetchQuery(string query)
+{
+    sqlite3_stmt* stmt = nullptr;
+    int exitCode = sqlite3_prepare_v2(DB, query.c_str(), -1, &stmt, nullptr);
+
+    if (exitCode != SQLITE_OK) {
+        cerr << "SQL error: " << sqlite3_errmsg(DB) << endl;
+        return nullptr;
+    }
+    return stmt;
+}
+
 bool Database::initialiseDatabase()
 {
     if(!openDatabase("supermarket.db"))
@@ -167,3 +179,4 @@ bool Database::closeDatabase()
     sqlite3_close(DB);
     return true;
 }
+

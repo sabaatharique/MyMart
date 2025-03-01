@@ -80,8 +80,8 @@ bool Customer::GenerateNewID(Database& db)
         return false;
     }
 
-    exitCode = sqlite3_step(stmt)
-;    if (exitCode == SQLITE_ROW) {
+    exitCode = sqlite3_step(stmt);
+    if (exitCode == SQLITE_ROW) {
         int totalCustomers = sqlite3_column_int(stmt, 0);
 
         // maximum capacity

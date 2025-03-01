@@ -28,6 +28,8 @@ class Database
 
         sqlite3_stmt* searchFromTable(Database& db, int ID, const string& table);
 
+        sqlite3_stmt* fetchQuery(string query);
+
     protected:
 
     private:

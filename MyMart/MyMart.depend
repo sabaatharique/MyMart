@@ -458,3 +458,168 @@
 1740835440 c:\users\user\desktop\mymart\mymart\include\loyalcustomer.h
 	<customer.h>
 
+1740848706 source:c:\users\user\desktop\mymart-2\mymart\main.cpp
+	<iostream>
+	<cashier.h>
+	<stockclerk.h>
+	<database.h>
+	<customer.h>
+	<manager.h>
+
+1740841000 c:\users\user\desktop\mymart-2\mymart\include\cashier.h
+	<employee.h>
+	<shoppingcart.h>
+	<loyalcustomer.h>
+	<cmath>
+	<string>
+	<iostream>
+
+1740841000 c:\users\user\desktop\mymart-2\mymart\include\employee.h
+	<iostream>
+
+1740841000 c:\users\user\desktop\mymart-2\mymart\include\shoppingcart.h
+	<iostream>
+	<unordered_map>
+	<string>
+	<perishableproducts.h>
+
+1740841000 c:\users\user\desktop\mymart-2\mymart\include\perishableproducts.h
+	<product.h>
+	<Date.h>
+	<iostream>
+
+1740849590 c:\users\user\desktop\mymart-2\mymart\include\product.h
+	<iostream>
+	<database.h>
+
+1740844407 c:\users\user\desktop\mymart-2\mymart\include\database.h
+	<iostream>
+	<string>
+	<iomanip>
+	<sqlite3.h>
+
+1740841000 c:\users\user\desktop\mymart-2\mymart\include\sqlite3.h
+	<stdarg.h>
+
+1740841000 c:\users\user\desktop\mymart-2\mymart\include\date.h
+	<iostream>
+	<ctime>
+
+1740841000 c:\users\user\desktop\mymart-2\mymart\include\loyalcustomer.h
+	<customer.h>
+
+1740841000 c:\users\user\desktop\mymart-2\mymart\include\customer.h
+	<product.h>
+	<iostream>
+	<vector>
+
+1740849312 c:\users\user\desktop\mymart-2\mymart\include\stockclerk.h
+	<employee.h>
+	<product.h>
+	<perishableproducts.h>
+	<cmath>
+	<iostream>
+
+1740841000 source:c:\users\user\desktop\mymart-2\mymart\src\cashier.cpp
+	"cashier.h"
+
+1740842925 source:c:\users\user\desktop\mymart-2\mymart\src\customer.cpp
+	"customer.h"
+
+1740844410 source:c:\users\user\desktop\mymart-2\mymart\src\database.cpp
+	"database.h"
+
+1740841000 source:c:\users\user\desktop\mymart-2\mymart\src\date.cpp
+	"Date.h"
+
+1740841000 source:c:\users\user\desktop\mymart-2\mymart\src\employee.cpp
+	"employee.h"
+
+1740841000 source:c:\users\user\desktop\mymart-2\mymart\src\loyalcustomer.cpp
+	"loyalcustomer.h"
+
+1740847365 source:c:\users\user\desktop\mymart-2\mymart\src\perishableproducts.cpp
+	"perishableproducts.h"
+
+1740849952 source:c:\users\user\desktop\mymart-2\mymart\src\product.cpp
+	"product.h"
+
+1740841000 source:c:\users\user\desktop\mymart-2\mymart\src\shoppingcart.cpp
+	"shoppingcart.h"
+
+1740841000 source:c:\users\user\desktop\mymart-2\mymart\src\sqlite3.c
+	<vxWorks.h>
+	<pthread.h>
+	"mingw.h"
+	"_mingw.h"
+	<stdarg.h>
+	"sqlite_cfg.h"
+	<stdint.h>
+	<inttypes.h>
+	<intrin.h>
+	<cmnintrin.h>
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<assert.h>
+	<stddef.h>
+	<ctype.h>
+	<TargetConditionals.h>
+	<time.h>
+	<sys/sysctl.h>
+	<malloc/malloc.h>
+	<libkern/OSAtomic.h>
+	<malloc.h>
+	<pthread.h>
+	"windows.h"
+	<sys/cygwin.h>
+	<errno.h>
+	<process.h>
+	<math.h>
+	<sys/types.h>
+	<sys/stat.h>
+	<unistd.h>
+	<sys/time.h>
+	<sys/types.h>
+	<sys/stat.h>
+	<fcntl.h>
+	<sys/ioctl.h>
+	<unistd.h>
+	<sys/time.h>
+	<errno.h>
+	<sys/mman.h>
+	<sys/file.h>
+	<sys/param.h>
+	<semaphore.h>
+	<limits.h>
+	<sys/mount.h>
+	<utime.h>
+	<sys/dcmd_blk.h>
+	<sys/statvfs.h>
+	<dlfcn.h>
+	<Windows.h>
+	"tclsqlite.h"
+	"sqlite3rtree.h"
+	<ctype.h>
+	<unicode/utypes.h>
+	<unicode/uregex.h>
+	<unicode/ustring.h>
+	<unicode/ucol.h>
+	<unicode/ubrk.h>
+	<unicode/utf16.h>
+	<math.h>
+
+1740849284 source:c:\users\user\desktop\mymart-2\mymart\src\stockclerk.cpp
+	"stockclerk.h"
+	"perishableproducts.h"
+	"Date.h"
+
+1740849895 source:c:\users\user\desktop\mymart-2\mymart\src\manager.cpp
+	"Manager.h"
+
+1740848465 c:\users\user\desktop\mymart-2\mymart\include\manager.h
+	<employee.h>
+	<shoppingcart.h>
+	<cmath>
+	<iostream>
+
