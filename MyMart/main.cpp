@@ -32,13 +32,15 @@ int main()
 
     Database db;
     db.initialiseDatabase();
-    cout << endl;
 
-    Manager mmmm;
-    mmmm.AddNewProducts(db);
-    db.displayTable("SELECT * FROM PRODUCTS;");
-    cout << endl;
-    mmmm.DeleteProduct(db);
+//    Manager mmmm;
+//    mmmm.AddNewProducts(db);
+//    db.displayTable("SELECT * FROM PRODUCTS;");
+//    cout << endl;
+//    mmmm.DeleteProduct(db);
+
+    Cashier ridita;
+    ridita.CheckoutCustomer(db);
 
 //
 //    int n;
@@ -75,8 +77,8 @@ int main()
 //    db.displayTable("SELECT * FROM PRODUCTS;");
 //    cout << endl;
 //
-//    db.displayTable("SELECT * FROM CUSTOMERS;");
-//    cout << endl;
+    db.displayTable("SELECT * FROM CUSTOMERS;");
+    cout << endl;
 //
 //    db.displayTable("SELECT * FROM EMPLOYEES;");
 //    cout << endl;

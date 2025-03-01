@@ -110,7 +110,7 @@ bool Product::IsProductInTable(Database& db, int ID, Table tbl)
         table = "";
 
     string query = "(SELECT * FROM PRODUCTS" + table + ")";
-    sqlite3_stmt* stmt = db.searchFromTable(db,ID,query);
+    sqlite3_stmt* stmt = db.searchFromTable(db, ID, query);
 
     int exists = 0;
     if (sqlite3_step(stmt) == SQLITE_ROW) {

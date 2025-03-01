@@ -136,12 +136,16 @@ void Cashier::MakeReceipt(ShoppingCart& shoppingCart, Customer *customer)
     }
 
     cout << string(69, '-') << endl;
-    cout << setw(50) << "Amount: " << setw(7) << totalBill << endl;
+    cout << setw(50) << "Amount: " << setw(19) << totalBill << endl;
 
-    // how the hell would this even work
-    if(dynamic_cast<LoyalCustomer*>(customer)) {
-        cout << setw(50) << "Discount: " << setw(7) << "5%" << endl;
-        cout << setw(50) << "Net amount: " << setw(7) << (totalBill*0.95) << endl;
+    // add discount for loyal customers only
+    LoyalCustomer* loyalCustomer = dynamic_cast<LoyalCustomer*>(customer);
+    if (loyalCustomer) {
+        double discountAmount = totalBill * loyalCustomer->CalculateDiscount();
+        double netAmount = totalBill - discountAmount;
+
+        cout << setw(50) << "Discount: " << setw(18) << loyalCustomer->CalculateDiscount() * 100 << "%" << endl;
+        cout << setw(50) << "Net amount: " << setw(19) << netAmount << endl;
     }
 
     cout << string(69, '-') << endl;
@@ -173,33 +177,32 @@ Customer* Cashier::OpenCustomerAccount(Database& db)
             if(customerID[0] == '1'){
                 Customer *customer = new Customer();
 
-                // if no customer with id found, loop
                 if(customer->GetCustomerByID(db, stoi(customerID))){
                     customer->DisplayDetails();
                     return customer;
                 }
+                // if no customer with id found, loop
             }
             else if(customerID[0] == '2') {
                 LoyalCustomer *loyalCustomer = new LoyalCustomer();
 
-                // if no loyal customer with id found, loop
                 if(loyalCustomer->GetCustomerByID(db, stoi(customerID))){
                     loyalCustomer->DisplayDetails();
                     return loyalCustomer;
                 }
+                // if no loyal customer with id found, loop
             }
-
-            cout << ">No customer with ID: " << customerID << endl;
         }
 
     }
     // if new customer, create account
     else if (choice == 2) {
-        // what do if not work???
         Customer *customer = new Customer();
 
-        if (!customer->GenerateNewID(db))
+        if (!customer->GenerateNewID(db)) {
             cout << "Could not create new customer ID. Try again." << endl;
+            return NULL;
+        }
 
         string name;
         cout << "Enter customer name: " << endl;
@@ -223,17 +226,36 @@ Customer* Cashier::OpenCustomerAccount(Database& db)
 void Cashier::CheckoutCustomer(Database& db)
 {
     // find customer's account
+    int choice;
     Customer *customer = OpenCustomerAccount(db);
 
+    while (customer == NULL)
+    {
+        cout << "Customer login failed:" << endl <<
+        "1. Retry" << endl <<
+        "2. Continue to checkout" << endl;
+        cin >> choice;
+
+        if(choice == 1)
+            customer = OpenCustomerAccount(db);
+        else if (choice == 2)
+            break;
+        else
+            cout << "Invalid input, try again." << endl;
+    }
 
     // scan customer's cart
     ShoppingCart cart = ProcessCart(db);
+
+    // create receipt for customer
+    MakeReceipt(cart, customer);
 
     // update customer's total spending, add current bill
     customer->SetTotalAmountSpent(customer->GetTotalAmountSpent() + cart.GetTotalBill());
     customer->UpdateTotalAmountSpent(db);
 
-    MakeReceipt(cart, customer);
+    // check if customer is eligible to become a loyalty member
+    customer->UpdateCustomerStatus(db);
 
     delete customer;
 }

@@ -106,17 +106,29 @@ bool Customer::UpdateTotalAmountSpent(Database& db)
     string query = "UPDATE CUSTOMERS SET TOTAL_SPENT = " + to_string(TotalAmountSpent) + " WHERE ID = " + to_string(CustomerID) + ";";
     if(!db.executeQuery(query))
         cout << "Could not update customer's spending." << endl;
-    else
-        cout << "Updated customer's total spending." << endl;
 }
 
 bool Customer::UpdateCustomerStatus(Database& db)
 {
-    string query = "UPDATE CUSTOMERS SET TYPE = 'LOYAL' WHERE ID = " + to_string(CustomerID) + ";";
-    if(!db.executeQuery(query))
-        cout << "Could not update customer status." << endl;
-    else
-        cout << "Updated customer status." << endl;
+    // regular to loyal conversion
+    if(TotalAmountSpent >= 10000) {
+        string query = "UPDATE CUSTOMERS SET TYPE = 'LOYAL' WHERE ID = " + to_string(CustomerID) + ";";
+        if(!db.executeQuery(query)) {
+            cout << "Could not update customer status." << endl;
+            return false;
+        }
+
+        // change ID to start with 2
+        string newID = to_string(CustomerID);
+        newID[0] = '2';
+
+        query = "UPDATE CUSTOMERS SET ID = " + newID + " WHERE ID = " + to_string(CustomerID) + ";";
+        if(!db.executeQuery(query)) {
+            cout << "Could not update customer status." << endl;
+            return false;
+        }
+    }
+    return true;
 }
 
 void Customer::DisplayDetails()

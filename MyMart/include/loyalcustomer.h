@@ -11,10 +11,11 @@ class LoyalCustomer : public Customer
         LoyalCustomer();
         ~LoyalCustomer();
 
+        double CalculateDiscount();
+
     protected:
 
     private:
-        double DiscountPercentage;
 
 };
 
