@@ -5,6 +5,7 @@
 #include <unordered_map>
 #include <string>
 #include <perishableproducts.h>
+#include <manager.h>
 
 class ShoppingCart
 {

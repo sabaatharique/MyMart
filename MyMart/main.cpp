@@ -6,41 +6,24 @@
 #include <manager.h>
 using namespace std;
 
+
 int main()
 {
     system("color 5F");
 
-    /*cout << "\n\n";
-    cout << " " << string(118, '~') << " " << endl;
-    cout << string(55, ' ') << "MY MART" << endl;
-    cout << " " << string(118, '~') << " " << endl;
-
-    cout << string(55, ' ') << "Login as :\n" << endl;
-    cout << string(54, ' ') << "1.Manager" << endl;
-    cout << string(54, ' ') << "2.Stockclerk" << endl;
-    cout << string(54, ' ') << "3.Cashier" << endl;
-
-    cout << string(50, ' ') << string(20, '_') << "\n" << string(49, ' ') << "  Enter Username :\n" << string(50, ' ') << string(20, '-') << endl;
-    cout << string(50,' ');
-    string name;
-    cin >> name;
-    cout << string(50, ' ') << string(20, '_') << "\n" << string(49, ' ') << "  Enter Password :\n" << string(50, ' ') << string(20, '-') << endl;
-    string password;
-    cout << string(50,' ');
-    cin >> password;*/
-
-
     Database db;
     db.initialiseDatabase();
 
-//    Manager mmmm;
-//    mmmm.AddNewProducts(db);
-//    db.displayTable("SELECT * FROM PRODUCTS;");
-//    cout << endl;
-//    mmmm.DeleteProduct(db);
 
-    Cashier ridita;
-    ridita.CheckoutCustomer(db);
+
+//    Manager mmmm;
+//    mmmm.AddNewEmployee(db);
+//    db.displayTable("SELECT * FROM EMPLOYEES;");
+//    cout << endl;
+//    mmmm.RemoveEmployee(db);
+//    db.displayTable("SELECT * FROM EMPLOYEES;");
+//    Cashier ridita;
+//    ridita.CheckoutCustomer(db);
 
 //
 //    int n;
@@ -77,26 +60,32 @@ int main()
 //    db.displayTable("SELECT * FROM PRODUCTS;");
 //    cout << endl;
 //
-    db.displayTable("SELECT * FROM CUSTOMERS;");
-    cout << endl;
+//    db.displayTable("SELECT * FROM CUSTOMERS;");
+//    cout << endl;
 //
 //    db.displayTable("SELECT * FROM EMPLOYEES;");
 //    cout << endl;
 //
-//    StockClerk Mishkat;
-//    Mishkat.ShowExpiredProducts(db);
-   // Mishkat.ShowAllProducts(db);
+//    cout << Manager::GetProfit() << endl;
+    StockClerk Mishkat;
+    Mishkat.ShowExpiredProducts(db);
+    Mishkat.ShowAllProducts(db);
 //
-//    Cashier saba;
-//    ShoppingCart cart = saba.ProcessCart(db);
-//    saba.MakeReceipt(cart);
+//    cout << "Profit: " << Manager::GetProfit() << endl;
 //
 //    Customer Ridita;
-//    Ridita.GetCustomerByID(db,220041101);
-//    Ridita.DisplayDetails();
+////    Ridita.GetCustomerByID(db,10000001);
+////    Ridita.DisplayDetails();
 //
-    db.displayTable("SELECT * FROM PRODUCTS;");
-    cout << endl;
+//    Cashier saba;
+//    saba.OpenCustomerAccount(db);
+//    ShoppingCart cart = saba.ProcessCart(db);
+//    saba.MakeReceipt(cart,&Ridita);
+//    cout << "Profit: " <<  Manager::GetProfit() << endl;
+//    saba.GiveFeedback();
+
+//    db.displayTable("SELECT * FROM PRODUCTS;");
+//    cout << endl;
 
     db.closeDatabase();
 

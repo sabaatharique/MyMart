@@ -79,14 +79,14 @@ bool Database::initialiseDatabase()
           "NAME CHAR(25) NOT NULL,"
           "TYPE CHAR(15) CHECK (TYPE IN ('MANAGER', 'CASHIER', 'STOCK CLERK')),"
           "SALARY REAL NOT NULL,"
-          "USERNAME CHAR(15) NOT NULL,"
-          "PASSWORD TEXT(15) NOT NULL);";
+          "USERNAME CHAR(15) ,"
+          "PASSWORD TEXT(15) );";
     if(!executeQuery(sql))
         return false;
 
-    sql = "INSERT OR IGNORE INTO EMPLOYEES VALUES(1130, 'SABA ATHARIQUE', 'MANAGER', 40500, 'saba03', 'Saba2003!');"
-          "INSERT OR IGNORE INTO EMPLOYEES VALUES(1110, 'RIDITA ALAM', 'CASHIER', 35750, 'ridita19', 'Alam#309');"
-          "INSERT OR IGNORE INTO EMPLOYEES VALUES(1134, 'MISHKAT AHMED KHAN', 'STOCK CLERK', 27500, 'mishkat2025', 'Pass123');";
+    sql = "INSERT OR IGNORE INTO EMPLOYEES VALUES(1001, 'SABA ATHARIQUE', 'MANAGER', 40500, 'saba03', 'Saba2003!');"
+          "INSERT OR IGNORE INTO EMPLOYEES VALUES(2001, 'RIDITA ALAM', 'CASHIER', 35750, 'ridita19', 'Alam#309');"
+          "INSERT OR IGNORE INTO EMPLOYEES VALUES(3001, 'MISHKAT AHMED KHAN', 'STOCK CLERK', 27500, 'mishkat2025', 'Pass123');";
     if(!executeQuery(sql))
         return false;
 

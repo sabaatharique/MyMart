@@ -45,9 +45,23 @@ string Date::ToString()
     return res;
 }
 
-void Date::ToDate(const char* date)
+bool Date::ToDate(const char* date)
 {
+    for(int i=0; i<10; i++)
+    {
+        if(i == 4 || i == 7)
+        {
+            if(date[i] != '-' && date[i] != '/')
+                return false;
+        }
+        else
+        {
+            if(!isdigit(date[i]))
+                return false;
+        }
+    }
     year = (date[0] - '0')*1000 + (date[1] - '0')*100 + (date[2] - '0')*10 + (date[3] - '0');
     month = static_cast<Months>((date[5] - '0')*10 + (date[6] - '0') - 1);
     day = (date[8] - '0')*10 + (date[9] - '0');
+    return true;
 }

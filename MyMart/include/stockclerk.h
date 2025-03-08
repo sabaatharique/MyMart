@@ -4,6 +4,7 @@
 #include <employee.h>
 #include <product.h>
 #include <perishableproducts.h>
+#include <manager.h>
 #include <cmath>
 #include <iostream>
 
@@ -26,6 +27,8 @@ class StockClerk : public Employee
         void ShowExpiredProducts(Database &db);
         void ShowOutOfStockProducts(Database &db);
         void ShowAllProducts(Database &db);
+
+        double GetExpiredStockAmount(Database &db, int ID);
 
     protected:
 

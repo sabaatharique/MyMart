@@ -26,6 +26,19 @@ void StockClerk::UpdateStockByID(Database& db, int ID, float amount)
         cout << "Could not update product with ID " << ID << endl;
 }
 
+double StockClerk::GetExpiredStockAmount(Database& db, int ID)
+{
+    double loss;
+    string query = "SELECT IN_STOCK*BUYING_COST FROM PRODUCTS WHERE ID = " + to_string(ID) + ";";
+    sqlite3_stmt* stmt = db.fetchQuery(query);
+    if (sqlite3_step(stmt) == SQLITE_ROW) {
+        loss = sqlite3_column_int(stmt, 0);
+    }
+    sqlite3_finalize(stmt);
+    return loss;
+}
+
+
 void StockClerk::UpdateExpiryDateByID(Database& db, PerishableProducts &Exp, int ID)
 {
     string expDate = "'" + Exp.GetExpiryDate().ToString() + "'";
@@ -67,6 +80,9 @@ void StockClerk::ShowExpiredProducts(Database& db)
                         break;
                 }
             }
+            double cur_profit = Manager::GetProfit();
+            double loss = GetExpiredStockAmount(db,productID);
+            Manager::SetProfit(cur_profit-loss);
             UpdateStockByID(db, productID, amount);
 
             bool notfirst = false;
@@ -78,14 +94,11 @@ void StockClerk::ShowExpiredProducts(Database& db)
                 if(notfirst) cout << "Invalid Expiry Date! ";
                 cout << "Enter new expiry date : " << endl;
                 cin >> date;
-                const char *expDate = date.c_str();
-                dt.ToDate(expDate);
-
+                dt.ToDate(date.c_str());
                 Exp.SetExpiryDate(dt);
             } while(notfirst = CheckExpiry(&Exp, today));
 
             UpdateExpiryDateByID(db, Exp, productID);
-
         }
         else
             cout << "Product could not be found." << endl;

@@ -2,6 +2,7 @@
 #define EMPLOYEE_H
 
 #include <iostream>
+#include <database.h>
 
 using namespace std;
 
@@ -20,6 +21,8 @@ class Employee
 
         double GetSalary();
         void SetSalary(double val);
+        virtual bool AddEmployee(Database &db,int choice);
+        static bool IsEmployeeInTable(Database& db, int ID);
 
     protected:
 

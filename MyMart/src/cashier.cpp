@@ -1,5 +1,5 @@
 #include "cashier.h"
-
+#include "shoppingcart.h"
 Cashier::Cashier(int n, string x, double s) : Employee(n, x, s) {}
 Cashier::Cashier() {}
 Cashier::~Cashier() {}
@@ -146,6 +146,10 @@ void Cashier::MakeReceipt(ShoppingCart& shoppingCart, Customer *customer)
 
         cout << setw(50) << "Discount: " << setw(18) << loyalCustomer->CalculateDiscount() * 100 << "%" << endl;
         cout << setw(50) << "Net amount: " << setw(19) << netAmount << endl;
+
+        double cur_profit = Manager::GetProfit();
+        double loss = discountAmount;
+        Manager::SetProfit(cur_profit-loss);
     }
 
     cout << string(69, '-') << endl;
@@ -258,4 +262,13 @@ void Cashier::CheckoutCustomer(Database& db)
     customer->UpdateCustomerStatus(db);
 
     delete customer;
+}
+
+void Cashier::GiveFeedback()
+{
+    string feedback;
+    cout << "Enter Feedback: " << endl;
+    cin.ignore();
+    getline(cin, feedback);
+    cout << "Customer feedback: " << feedback << endl;
 }

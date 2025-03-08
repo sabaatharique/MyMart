@@ -4,11 +4,14 @@
 #include <employee.h>
 #include <shoppingcart.h>
 #include <loyalcustomer.h>
+//#include <manager.h>
 #include <cmath>
 #include <string>
 #include <iostream>
 
 using namespace std;
+
+class ShoppingCart;
 
 class Cashier : public Employee
 {
@@ -26,6 +29,8 @@ class Cashier : public Employee
         void CheckoutCustomer(Database& db);
 
         Customer* OpenCustomerAccount(Database& db);
+
+        void GiveFeedback();
 
     protected:
 

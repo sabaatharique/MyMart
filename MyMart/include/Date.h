@@ -35,7 +35,7 @@ class Date
 
         string ToString();
 
-        void ToDate(const char* date);
+        bool ToDate(const char* date);
 
     protected:
 

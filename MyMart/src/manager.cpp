@@ -2,6 +2,9 @@
 
 using namespace std;
 
+double Manager::profit = 0;
+double Manager::totalBalance = 1000000;
+
 Manager::Manager(int n, string x, double s) : Employee(n, x, s) {}
 
 Manager::Manager(){}
@@ -12,6 +15,33 @@ void Manager::GetEmployeeType()
 {
     cout << "Employee: Manager" << endl;
 }
+
+double Manager::GetProfit()
+{
+    return profit;
+}
+
+double Manager::GetTotalBalance()
+{
+    return totalBalance;
+}
+
+void Manager::SetProfit(const double p)
+{
+    profit = p;
+}
+
+void Manager::SetTotalBalance(const double b)
+{
+    totalBalance = b;
+}
+
+
+void Manager::SetSalary(Database& db)
+{
+
+}
+
 
 bool Manager::AddNewProducts(Database& db)
 {
@@ -108,6 +138,74 @@ bool Manager::DeleteProduct(Database& db)
     }while(!Product::IsProductInTable(db,productID,All));
 
     string query = "DELETE FROM PRODUCTS WHERE ID = " + to_string(productID) + ";";
+    return db.executeQuery(query);
+}
+
+bool Manager::AddNewEmployee(Database& db)
+{
+    Employee* emp;
+    int e_type,e_id;
+    string e_name, e_username, e_password;
+    double e_salary;
+
+    cout << "Enter Employee Type: \n1.Cashier\n2.Stock Clerk" << endl;
+    cin >> e_type;
+    cout << "Enter Employee Name: " << endl;
+    cin >> e_name;
+    cout << "Enter Salary: " << endl;
+    cin >> e_salary;
+    if(e_type == 1)
+    {
+        string query = "SELECT ID FROM EMPLOYEES WHERE ID LIKE '2%' ORDER BY ID DESC LIMIT 1";
+        sqlite3_stmt* stmt = db.fetchQuery(query);
+        if (sqlite3_step(stmt) == SQLITE_ROW) {
+            e_id = sqlite3_column_int(stmt, 0) + 1 ;
+        if(e_id == 3000)
+            return false;
+        }
+        else {
+            sqlite3_finalize(stmt);
+            e_id = 2000 + 1;
+        }
+        sqlite3_finalize(stmt);
+
+        emp = new Cashier(e_id,e_name,e_salary);
+        emp->AddEmployee(db,e_type);
+    }
+    else if(e_type == 2)
+    {
+        string query = "SELECT ID FROM EMPLOYEES WHERE ID LIKE '3%' ORDER BY ID DESC LIMIT 1";
+        sqlite3_stmt* stmt = db.fetchQuery(query);
+        if (sqlite3_step(stmt) == SQLITE_ROW) {
+            e_id = sqlite3_column_int(stmt, 0) + 1 ;
+            if(e_id == 4000)
+                return false;
+        }
+        else {
+            sqlite3_finalize(stmt);
+            e_id = 3000 + 1;
+        }
+        sqlite3_finalize(stmt);
+
+        emp = new StockClerk(e_id,e_name,e_salary);
+        emp->AddEmployee(db,e_type);
+    }
+    return true;
+}
+
+bool Manager::RemoveEmployee(Database& db)
+{
+    int employeeID;
+    bool first = true;
+    cout << "Enter employee ID to remove: " << endl;
+    do{
+        if(!first)
+            cout << "employee ID not found, enter again: " << endl;
+        cin >> employeeID;
+        first = false;
+    }while(!Employee::IsEmployeeInTable(db,employeeID));
+
+    string query = "DELETE FROM EMPLOYEES WHERE ID = " + to_string(employeeID) + ";";
     return db.executeQuery(query);
 }
 

@@ -22,6 +22,10 @@ void ShoppingCart::AddToCart(Database& db, Product* p, double quantity)
     Cart[p->GetProductID()].second += quantity;
 
     TotalBill += quantity * p->GetSellingPrice();
+
+    double cur_profit = Manager::GetProfit();
+    double TotalGain = quantity * (p->GetSellingPrice() - p->GetBuyingCost());
+    Manager::SetProfit(cur_profit+TotalGain);
 }
 
 double ShoppingCart::GetTotalBill()
