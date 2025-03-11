@@ -4,14 +4,14 @@
 #include <employee.h>
 #include <shoppingcart.h>
 #include <loyalcustomer.h>
-//#include <manager.h>
 #include <cmath>
 #include <string>
+#include <fstream>
 #include <iostream>
 
 using namespace std;
 
-class ShoppingCart;
+class ShoppingCart; //Forward declaration
 
 class Cashier : public Employee
 {
@@ -20,7 +20,7 @@ class Cashier : public Employee
         Cashier();
         ~Cashier();
 
-        void GetEmployeeType();
+        string GetEmployeeType() override;
 
         ShoppingCart ProcessCart(Database& db);
 
@@ -30,7 +30,7 @@ class Cashier : public Employee
 
         Customer* OpenCustomerAccount(Database& db);
 
-        void GiveFeedback();
+        void GiveFeedback(Customer* customer);
 
     protected:
 

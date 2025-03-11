@@ -5,15 +5,15 @@ using namespace std;
 double Manager::profit = 0;
 double Manager::totalBalance = 1000000;
 
-Manager::Manager(int n, string x, double s) : Employee(n, x, s) {}
+Manager::Manager(int n, string x, double s) : Employee(n, x, "MANAGER", s) {}
 
 Manager::Manager(){}
 
 Manager::~Manager(){}
 
-void Manager::GetEmployeeType()
+string Manager::GetEmployeeType()
 {
-    cout << "Employee: Manager" << endl;
+    return EmployeeType;
 }
 
 double Manager::GetProfit()
@@ -36,12 +36,40 @@ void Manager::SetTotalBalance(const double b)
     totalBalance = b;
 }
 
-
-void Manager::SetSalary(Database& db)
+bool Manager::SetSalary(Database& db)
 {
+    int emp_salary, choice;
+    string emp_type;
+    bool first = true;
 
+    cout << "Enter employee type:\n1.Cashier\n2.Stock Clerk\n " << endl;
+    do{
+        if(!first)
+            cout << "Invalid input , try again." << endl;
+        cin >> choice;
+        first = false;
+
+    } while(choice != 1 || choice != 2);
+
+    if(choice == 1)
+        emp_type = "CASHIER";
+    else if(choice == 2)
+        emp_type = "STOCK CLERK";
+
+    cout << "Enter new salary : " << endl;
+    first = true;
+    do{
+        if(!first)
+            cout << "Invalid input , try again." << endl;
+        cin >> emp_salary;
+        first = false;
+
+    } while(emp_salary <= 0);
+
+    string query = "UPDATE EMPLOYEES SET SALARY = " + to_string(emp_salary) + " WHERE TYPE = " + emp_type + ";";
+
+    return db.executeQuery(query);
 }
-
 
 bool Manager::AddNewProducts(Database& db)
 {
@@ -209,3 +237,9 @@ bool Manager::RemoveEmployee(Database& db)
     return db.executeQuery(query);
 }
 
+void Manager::showFeedback()
+{
+    ifstream infile("Feedback.txt");
+    cout << infile.rdbuf() << endl;
+
+}

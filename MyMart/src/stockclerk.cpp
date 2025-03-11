@@ -2,13 +2,13 @@
 #include "perishableproducts.h"
 #include "Date.h"
 
-StockClerk::StockClerk(int n, string x, double s) : Employee(n, x, s) {}
+StockClerk::StockClerk(int n, string x, double s) : Employee(n, x, "STOCK CLERK", s) {}
 StockClerk::StockClerk() {}
 StockClerk::~StockClerk() {}
 
-void StockClerk::GetEmployeeType()
+string StockClerk::GetEmployeeType()
 {
-    cout << "Employee: StockClerk" << endl;
+    return EmployeeType;
 }
 
 bool StockClerk::CheckExpiry(PerishableProducts* p, Date today)

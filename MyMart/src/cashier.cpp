@@ -1,12 +1,12 @@
 #include "cashier.h"
 #include "shoppingcart.h"
-Cashier::Cashier(int n, string x, double s) : Employee(n, x, s) {}
+Cashier::Cashier(int n, string x, double s) : Employee(n, x, "CASHIER", s) {}
 Cashier::Cashier() {}
 Cashier::~Cashier() {}
 
-void Cashier::GetEmployeeType()
+string Cashier::GetEmployeeType()
 {
-    cout << "Employee: Cashier" << endl;
+    return EmployeeType;
 }
 
 ShoppingCart Cashier::ProcessCart(Database& db)
@@ -230,27 +230,19 @@ Customer* Cashier::OpenCustomerAccount(Database& db)
 void Cashier::CheckoutCustomer(Database& db)
 {
     // find customer's account
-    int choice;
     Customer *customer = OpenCustomerAccount(db);
 
     while (customer == NULL)
     {
-        cout << "Customer login failed:" << endl <<
-        "1. Retry" << endl <<
-        "2. Continue to checkout" << endl;
-        cin >> choice;
+        cout << "Customer login failed, retry." << endl;
 
-        if(choice == 1)
-            customer = OpenCustomerAccount(db);
-        else if (choice == 2)
-            break;
-        else
-            cout << "Invalid input, try again." << endl;
+        customer = OpenCustomerAccount(db);
     }
 
     // scan customer's cart
     ShoppingCart cart = ProcessCart(db);
 
+    GiveFeedback(customer);
     // create receipt for customer
     MakeReceipt(cart, customer);
 
@@ -264,11 +256,22 @@ void Cashier::CheckoutCustomer(Database& db)
     delete customer;
 }
 
-void Cashier::GiveFeedback()
+void Cashier::GiveFeedback(Customer* customer)
 {
     string feedback;
+    int id = customer->GetCustomerID();
     cout << "Enter Feedback: " << endl;
     cin.ignore();
     getline(cin, feedback);
-    cout << "Customer feedback: " << feedback << endl;
+
+    ofstream outfile("Feedback.txt", ios:: app);
+    outfile  << id << ": " << feedback << '\n';
+
+    outfile.close();
+
+    cout << "Customer feedback: " << endl;
+
+    ifstream infile("Feedback.txt");
+    infile.close();
+    cout << endl;
 }

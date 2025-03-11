@@ -17,7 +17,7 @@ class StockClerk : public Employee
         StockClerk();
         ~StockClerk();
 
-        void GetEmployeeType();
+        string GetEmployeeType() override;
 
         bool CheckExpiry(PerishableProducts *p, Date today);
 

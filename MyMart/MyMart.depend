@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1741459866 source:c:\users\user\desktop\mymart\mymart\main.cpp
+1741535385 source:c:\users\user\desktop\mymart\mymart\main.cpp
 	<iostream>
 	<cashier.h>
 	<stockclerk.h>
@@ -7,23 +7,24 @@
 	<customer.h>
 	<manager.h>
 
-1741423084 source:c:\users\user\desktop\mymart\mymart\src\employee.cpp
+1741672984 source:c:\users\user\desktop\mymart\mymart\src\employee.cpp
 	"employee.h"
 
-1741422930 c:\users\user\desktop\mymart\mymart\include\employee.h
+1741672991 c:\users\user\desktop\mymart\mymart\include\employee.h
 	<iostream>
 	<database.h>
 
-1741459144 source:c:\users\user\desktop\mymart\mymart\src\cashier.cpp
+1741674058 source:c:\users\user\desktop\mymart\mymart\src\cashier.cpp
 	"cashier.h"
 	"shoppingcart.h"
 
-1741434363 c:\users\user\desktop\mymart\mymart\include\cashier.h
+1741536833 c:\users\user\desktop\mymart\mymart\include\cashier.h
 	<employee.h>
 	<shoppingcart.h>
 	<loyalcustomer.h>
 	<cmath>
 	<string>
+	<fstream>
 	<iostream>
 
 1741371311 source:c:\users\user\desktop\mymart\mymart\src\product.cpp
@@ -33,12 +34,12 @@
 	<iostream>
 	<database.h>
 
-1741460495 source:c:\users\user\desktop\mymart\mymart\src\stockclerk.cpp
+1741673207 source:c:\users\user\desktop\mymart\mymart\src\stockclerk.cpp
 	"stockclerk.h"
 	"perishableproducts.h"
 	"Date.h"
 
-1741429967 c:\users\user\desktop\mymart\mymart\include\stockclerk.h
+1741536814 c:\users\user\desktop\mymart\mymart\include\stockclerk.h
 	<employee.h>
 	<product.h>
 	<perishableproducts.h>
@@ -628,15 +629,16 @@
 	<cmath>
 	<iostream>
 
-1741458948 source:c:\users\user\desktop\mymart\mymart\src\manager.cpp
+1741673193 source:c:\users\user\desktop\mymart\mymart\src\manager.cpp
 	"Manager.h"
 
-1741431105 c:\users\user\desktop\mymart\mymart\include\manager.h
+1741675938 c:\users\user\desktop\mymart\mymart\include\manager.h
 	<employee.h>
 	<product.h>
 	<perishableproducts.h>
 	<cashier.h>
 	<stockclerk.h>
 	<cmath>
+	<fstream>
 	<iostream>
 

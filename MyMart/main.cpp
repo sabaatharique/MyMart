@@ -16,14 +16,18 @@ int main()
 
 
 
-//    Manager mmmm;
+//      Manager mmmm;
+//      mmmm.showFeedback();
 //    mmmm.AddNewEmployee(db);
 //    db.displayTable("SELECT * FROM EMPLOYEES;");
 //    cout << endl;
 //    mmmm.RemoveEmployee(db);
 //    db.displayTable("SELECT * FROM EMPLOYEES;");
-//    Cashier ridita;
-//    ridita.CheckoutCustomer(db);
+    Cashier ridita;
+    ridita.CheckoutCustomer(db);
+    Manager mmmm;
+    mmmm.showFeedback();
+
 
 //
 //    int n;
@@ -67,9 +71,9 @@ int main()
 //    cout << endl;
 //
 //    cout << Manager::GetProfit() << endl;
-    StockClerk Mishkat;
-    Mishkat.ShowExpiredProducts(db);
-    Mishkat.ShowAllProducts(db);
+//    StockClerk Mishkat;
+//    Mishkat.ShowExpiredProducts(db);
+//    Mishkat.ShowAllProducts(db);
 //
 //    cout << "Profit: " << Manager::GetProfit() << endl;
 //
@@ -81,7 +85,6 @@ int main()
 //    saba.OpenCustomerAccount(db);
 //    ShoppingCart cart = saba.ProcessCart(db);
 //    saba.MakeReceipt(cart,&Ridita);
-//    cout << "Profit: " <<  Manager::GetProfit() << endl;
 //    saba.GiveFeedback();
 
 //    db.displayTable("SELECT * FROM PRODUCTS;");

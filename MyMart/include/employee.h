@@ -9,11 +9,11 @@ using namespace std;
 class Employee
 {
     public:
-        Employee(int n, string x, double s);
+        Employee(int n, string x, string t, double s);
         Employee();
         virtual ~Employee();
 
-        virtual void GetEmployeeType() = 0;
+        virtual string GetEmployeeType() = 0;
 
         int GetEmployeeID();
 
@@ -25,7 +25,7 @@ class Employee
         static bool IsEmployeeInTable(Database& db, int ID);
 
     protected:
-
+        string EmployeeType;
     private:
         int EmployeeID;
         string EmployeeName;

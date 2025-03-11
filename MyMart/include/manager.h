@@ -2,12 +2,12 @@
 #define MANAGER_H
 
 #include <employee.h>
-//#include <shoppingcart.h>
-#include<product.h>
-#include<perishableproducts.h>
-#include<cashier.h>
-#include<stockclerk.h>
+#include <product.h>
+#include <perishableproducts.h>
+#include <cashier.h>
+#include <stockclerk.h>
 #include <cmath>
+#include <fstream>
 #include <iostream>
 
 
@@ -17,7 +17,7 @@ class Manager : public Employee
         Manager();
         Manager(int n, string x, double s = 0);
         ~Manager();
-        void GetEmployeeType();
+        string GetEmployeeType() override;
 
         static double GetProfit();
         static void SetProfit(const double p);
@@ -31,7 +31,9 @@ class Manager : public Employee
 
         bool RemoveEmployee(Database& db);
 
-        void SetSalary(Database& db);
+        bool SetSalary(Database& db);
+
+        void showFeedback();
     protected:
 
     private:
