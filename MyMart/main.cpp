@@ -4,17 +4,20 @@
 #include <database.h>
 #include <customer.h>
 #include <manager.h>
+#include <ui.h>
 using namespace std;
 
 
 int main()
 {
-    system("color 5F");
+//    system("color 5F");
+//
+//    Database db;
+//    db.initialiseDatabase();
 
-    Database db;
-    db.initialiseDatabase();
+    Ui* ui = new Ui();
 
-
+    ui->Engine();
 
 //      Manager mmmm;
 //      mmmm.showFeedback();
@@ -23,10 +26,10 @@ int main()
 //    cout << endl;
 //    mmmm.RemoveEmployee(db);
 //    db.displayTable("SELECT * FROM EMPLOYEES;");
-    Cashier ridita;
-    ridita.CheckoutCustomer(db);
-    Manager mmmm;
-    mmmm.showFeedback();
+//    Cashier ridita;
+//    ridita.CheckoutCustomer(db);
+//    Manager mmmm;
+//    mmmm.showFeedback();
 
 
 //
@@ -89,8 +92,9 @@ int main()
 
 //    db.displayTable("SELECT * FROM PRODUCTS;");
 //    cout << endl;
+//
+//    db.closeDatabase();
 
-    db.closeDatabase();
-
+    delete ui;
 	return 0;
 }

@@ -46,6 +46,7 @@
 		<Unit filename="include/shoppingcart.h" />
 		<Unit filename="include/sqlite3.h" />
 		<Unit filename="include/stockclerk.h" />
+		<Unit filename="include/ui.h" />
 		<Unit filename="main.cpp" />
 		<Unit filename="src/Date.cpp" />
 		<Unit filename="src/cashier.cpp" />
@@ -61,6 +62,7 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="src/stockclerk.cpp" />
+		<Unit filename="src/ui.cpp" />
 		<Extensions />
 	</Project>
 </CodeBlocks_project_file>

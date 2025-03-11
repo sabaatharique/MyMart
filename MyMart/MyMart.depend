@@ -144,54 +144,59 @@
 	<database.h>
 	<customer.h>
 
-1739459546 source:d:\git\mymart\mymart\src\cashier.cpp
+1741691065 source:d:\git\mymart\mymart\src\cashier.cpp
 	"cashier.h"
+	"shoppingcart.h"
 
-1739453931 d:\git\mymart\mymart\include\cashier.h
+1741691065 d:\git\mymart\mymart\include\cashier.h
 	<employee.h>
 	<shoppingcart.h>
+	<loyalcustomer.h>
 	<cmath>
+	<string>
+	<fstream>
 	<iostream>
 
-1739453931 d:\git\mymart\mymart\include\employee.h
-	<iostream>
-
-1739453931 d:\git\mymart\mymart\include\product.h
+1741691065 d:\git\mymart\mymart\include\employee.h
 	<iostream>
 	<database.h>
 
-1739459037 d:\git\mymart\mymart\include\database.h
+1741691065 d:\git\mymart\mymart\include\product.h
+	<iostream>
+	<database.h>
+
+1741691065 d:\git\mymart\mymart\include\database.h
 	<iostream>
 	<string>
 	<iomanip>
 	<sqlite3.h>
 
-1739453931 d:\git\mymart\mymart\include\sqlite3.h
+1741691065 d:\git\mymart\mymart\include\sqlite3.h
 	<stdarg.h>
 
-1739453931 source:d:\git\mymart\mymart\src\customer.cpp
+1741691065 source:d:\git\mymart\mymart\src\customer.cpp
 	"customer.h"
 
-1739453931 d:\git\mymart\mymart\include\customer.h
+1741691065 d:\git\mymart\mymart\include\customer.h
 	<product.h>
 	<iostream>
 	<vector>
 
-1739459843 source:d:\git\mymart\mymart\src\database.cpp
+1741691065 source:d:\git\mymart\mymart\src\database.cpp
 	"database.h"
 
-1739453931 source:d:\git\mymart\mymart\src\employee.cpp
+1741691065 source:d:\git\mymart\mymart\src\employee.cpp
 	"employee.h"
 
-1739460992 source:d:\git\mymart\mymart\src\perishableproducts.cpp
+1741691065 source:d:\git\mymart\mymart\src\perishableproducts.cpp
 	"perishableproducts.h"
 
-1739453931 d:\git\mymart\mymart\include\perishableproducts.h
+1741691065 d:\git\mymart\mymart\include\perishableproducts.h
 	<product.h>
 	<Date.h>
 	<iostream>
 
-1739453931 source:d:\git\mymart\mymart\src\sqlite3.c
+1741691065 source:d:\git\mymart\mymart\src\sqlite3.c
 	<vxWorks.h>
 	<pthread.h>
 	"mingw.h"
@@ -253,26 +258,27 @@
 	<unicode/utf16.h>
 	<math.h>
 
-1739457929 source:d:\git\mymart\mymart\src\stockclerk.cpp
+1741691065 source:d:\git\mymart\mymart\src\stockclerk.cpp
 	"stockclerk.h"
 	"perishableproducts.h"
 	"Date.h"
 
-1739456143 d:\git\mymart\mymart\include\stockclerk.h
+1741691065 d:\git\mymart\mymart\include\stockclerk.h
 	<employee.h>
 	<product.h>
 	<perishableproducts.h>
+	<manager.h>
 	<cmath>
 	<iostream>
 
-1739459738 source:d:\git\mymart\mymart\src\product.cpp
+1741691065 source:d:\git\mymart\mymart\src\product.cpp
 	"product.h"
 
-1739453931 d:\git\mymart\mymart\include\date.h
+1741691065 d:\git\mymart\mymart\include\date.h
 	<iostream>
 	<ctime>
 
-1739456920 source:d:\git\mymart\mymart\src\date.cpp
+1741691065 source:d:\git\mymart\mymart\src\date.cpp
 	"Date.h"
 
 1741460377 source:c:\users\user\desktop\mymart\mymart\src\date.cpp
@@ -292,13 +298,14 @@
 	<perishableproducts.h>
 	<manager.h>
 
-1739453931 d:\git\mymart\mymart\include\shoppingcart.h
+1741691065 d:\git\mymart\mymart\include\shoppingcart.h
 	<iostream>
 	<unordered_map>
 	<string>
 	<perishableproducts.h>
+	<manager.h>
 
-1739453931 source:d:\git\mymart\mymart\src\shoppingcart.cpp
+1741691065 source:d:\git\mymart\mymart\src\shoppingcart.cpp
 	"shoppingcart.h"
 
 1739452524 source:c:\users\user\desktop\mymart-1\mymart\main.cpp
@@ -452,10 +459,10 @@
 1739280163 c:\users\user\desktop\mymart-1\mymart\include\loyalcustomer.h
 	<customer.h>
 
-1739453931 source:d:\git\mymart\mymart\src\loyalcustomer.cpp
+1741691065 source:d:\git\mymart\mymart\src\loyalcustomer.cpp
 	"loyalcustomer.h"
 
-1739453931 d:\git\mymart\mymart\include\loyalcustomer.h
+1741691065 d:\git\mymart\mymart\include\loyalcustomer.h
 	<customer.h>
 
 1741371311 source:c:\users\user\desktop\mymart\mymart\src\loyalcustomer.cpp
@@ -640,5 +647,27 @@
 	<stockclerk.h>
 	<cmath>
 	<fstream>
+	<iostream>
+
+1741691065 d:\git\mymart\mymart\include\manager.h
+	<employee.h>
+	<product.h>
+	<perishableproducts.h>
+	<cashier.h>
+	<stockclerk.h>
+	<cmath>
+	<fstream>
+	<iostream>
+
+1741691065 source:d:\git\mymart\mymart\src\manager.cpp
+	"Manager.h"
+
+1741691245 source:d:\git\mymart\mymart\src\ui.cpp
+	"ui.h"
+
+1741691215 d:\git\mymart\mymart\include\ui.h
+	<curses.h>
+	<vector>
+	<string>
 	<iostream>
 
