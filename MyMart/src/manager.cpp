@@ -71,21 +71,69 @@ bool Manager::SetSalary(Database& db)
     return db.executeQuery(query);
 }
 
+bool Manager::IsEmployeeIdValid(Database& db, string& id, int login_type)
+{
+    string query = "SELECT ID FROM EMPLOYEES WHERE ID = " + id + ";";
+    sqlite3_stmt* stmt = db.fetchQuery(query);
+    if (!(sqlite3_step(stmt) == SQLITE_ROW)) {
+        sqlite3_finalize(stmt);
+        return false;
+    }
+    int first_digit = to_string(sqlite3_column_int(stmt, 0))[0] - '0';
+    if(first_digit != login_type) {
+        return false;
+    }
+    sqlite3_finalize(stmt);
+    return true;
+}
+
+bool Manager::IsEmployeePassValid(Database& db, string& id, string& password, int login_type)
+{
+    string query = "SELECT PASSWORD FROM EMPLOYEES WHERE ID = " + id + ";";
+    sqlite3_stmt* stmt = db.fetchQuery(query);
+    if (!(sqlite3_step(stmt) == SQLITE_ROW)) {
+        sqlite3_finalize(stmt);
+        return false;
+    }
+    string pass = string(reinterpret_cast<const char*>(sqlite3_column_text(stmt, 0)));
+    if(pass != password) {
+        return false;
+    }
+    sqlite3_finalize(stmt);
+    return true;
+}
+
+
 bool Manager::AddNewProducts(Database& db)
 {
+    clear();
+
     Product* prdct;
     int type,p_id;
     string p_name;
     const char* date;
     double sell_price, buying_cost,stock;
 
-    cout << "Enter Product Type: \n1.Non-Perishable\n2.Perishable\n" << endl;
-    cin >> type;
-    if(type == 2)
+    mvwprintw(stdscr, 1, 2, "Enter Product Type: ");
+    mvwprintw(stdscr, 2, 2, "1. Non-Perishable");
+    mvwprintw(stdscr, 3, 2, "2. Perishable");
+    //wmove(stdscr, 1, 21);
+    //curs_set(1);
+
+    //echo();
+    type = getch();
+
+    //cout << "Enter Product Type: \n1.Non-Perishable\n2.Perishable\n" << endl;
+//    cin >> type;
+    if(type == '2')
     {
+        mvwprintw(stdscr, 5, 2, "Enter PerishableProduct Type: ");
+        mvwprintw(stdscr, 6, 2, "1. Sold in units");
+        mvwprintw(stdscr, 7, 2, "2. Sold in kilograms");
         int choice;
-        cin >> choice;
-        if(choice == 1)
+        choice = getch();
+        //cin >> choice;
+        if(choice == '1')
         {
             string query = "SELECT ID FROM PRODUCTS WHERE ID LIKE '21%' ORDER BY ID DESC LIMIT 1";
             sqlite3_stmt* stmt = db.fetchQuery(query);
@@ -100,7 +148,7 @@ bool Manager::AddNewProducts(Database& db)
             }
             sqlite3_finalize(stmt);
         }
-        else if(choice == 2)
+        else if(choice == '2')
         {
             string query = "SELECT ID FROM PRODUCTS WHERE ID LIKE '22%' ORDER BY ID DESC LIMIT 1";
             sqlite3_stmt* stmt = db.fetchQuery(query);
@@ -115,12 +163,28 @@ bool Manager::AddNewProducts(Database& db)
             }
             sqlite3_finalize(stmt);
         }
-        cout << "Enter Product Name: " << endl;
-        cin >> p_name;
-        cout << "Enter Sell Price: " << endl;
-        cin >> sell_price;
-        cout << "Enter Buying Cost: " << endl;
-        cin >> buying_cost;
+        mvwprintw(stdscr, 9, 2, "Enter Product Name: ");
+        curs_set(1);
+        //cout << "Enter Product Name: " << endl;
+        echo();
+        char temp[200];
+        getnstr(temp, sizeof(temp) - 1);
+        p_name = string(temp);
+        //cin >> p_name;
+        mvwprintw(stdscr, 10, 2, "Enter Sell Price: ");
+        //wmove(stdscr, 4, 21);
+        //curs_set(1);
+        //cout << "Enter Sell Price: " << endl;
+        getnstr(temp, sizeof(temp) - 1);
+        sell_price = stod(string(temp));
+        //cin >> sell_price;
+        mvwprintw(stdscr, 11, 2, "Enter Buying Cost: ");
+        //wmove(stdscr, 4, 21);
+        //curs_set(1);
+        //cout << "Enter Buying Cost: " << endl;
+        getnstr(temp, sizeof(temp) - 1);
+        buying_cost = stod(string(temp));
+        //cin >> buying_cost;
         stock = 0;
         date = "0000-00-00";
         prdct = new PerishableProducts(p_id,p_name,sell_price,buying_cost,stock,date);
@@ -128,7 +192,7 @@ bool Manager::AddNewProducts(Database& db)
     }
     else if(type == 1)
     {
-            string query = "SELECT ID FROM PRODUCTS WHERE ID LIKE '1%' ORDER BY ID DESC LIMIT 1";
+        string query = "SELECT ID FROM PRODUCTS WHERE ID LIKE '1%' ORDER BY ID DESC LIMIT 1";
         sqlite3_stmt* stmt = db.fetchQuery(query);
         if (sqlite3_step(stmt) == SQLITE_ROW) {
             p_id = sqlite3_column_int(stmt, 0) + 1 ;
@@ -140,16 +204,33 @@ bool Manager::AddNewProducts(Database& db)
             p_id = 10000 + 1;
         }
         sqlite3_finalize(stmt);
-        cout << "Enter Product Name: " << endl;
-        cin >> p_name;
-        cout << "Enter Sell Price: " << endl;
-        cin >> sell_price;
-        cout << "Enter Buying Cost: " << endl;
-        cin >> buying_cost;
+        mvwprintw(stdscr, 5, 2, "Enter Product Name: ");
+        curs_set(1);
+        //cout << "Enter Product Name: " << endl;
+        echo();
+        char temp[200];
+        getnstr(temp, sizeof(temp) - 1);
+        p_name = string(temp);
+        //cin >> p_name;
+        mvwprintw(stdscr, 6, 2, "Enter Sell Price: ");
+        //wmove(stdscr, 4, 21);
+        //curs_set(1);
+        //cout << "Enter Sell Price: " << endl;
+        getnstr(temp, sizeof(temp) - 1);
+        sell_price = stod(string(temp));
+        //cin >> sell_price;
+        mvwprintw(stdscr, 7, 2, "Enter Buying Cost: ");
+        //wmove(stdscr, 4, 21);
+        //curs_set(1);
+        //cout << "Enter Buying Cost: " << endl;
+        getnstr(temp, sizeof(temp) - 1);
+        buying_cost = stod(string(temp));
+        //cin >> buying_cost;
         stock = 0;
         prdct = new Product(p_id, p_name, sell_price, buying_cost, stock);
         prdct->AddProduct(db);
     }
+    refresh();
     return true;
 }
 

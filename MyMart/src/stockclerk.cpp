@@ -32,7 +32,7 @@ double StockClerk::GetExpiredStockAmount(Database& db, int ID)
     string query = "SELECT IN_STOCK*BUYING_COST FROM PRODUCTS WHERE ID = " + to_string(ID) + ";";
     sqlite3_stmt* stmt = db.fetchQuery(query);
     if (sqlite3_step(stmt) == SQLITE_ROW) {
-        loss = sqlite3_column_int(stmt, 0);
+        loss = sqlite3_column_double(stmt, 0);
     }
     sqlite3_finalize(stmt);
     return loss;

@@ -65,68 +65,31 @@ void Ui::DrawWindow(WINDOW* win, int highlight, const vector<string>& choices, i
     wrefresh(win);
 }
 
-void Ui::GetUsername(WINDOW* win, string &username, int startX, int startY) {
-    char ch;
-    username = "";
-    wmove(win, startY, startX);
-    while ((ch = wgetch(win)) != KEY_ENTER) { // Enter key to stop
-        if (ch == KEY_BACKSPACE) { // Handle Backspace
-            if (!username.empty()) {
-                username.pop_back();
-                int x, y;
-                getyx(win, y, x);
-                mvwaddch(win, y, x - 1, ' ');
-                wmove(win, y, x - 1);
-            }
-        } else {
-            username += ch;
-        }
-        mvwprintw(win, startY, startX, username.c_str());
-    }
-}
-
-void Ui::GetPassword(WINDOW* win, string &password, int startX, int startY) {
-    char ch;
-    password = "";
-    string encrypted = "";
-    wmove(win, startY, startX);
-    while ((ch = wgetch(win)) != KEY_ENTER) { // Enter key to stop
-        if (ch == KEY_BACKSPACE) { // Handle Backspace
-            if (!password.empty()) {
-                password.pop_back();
-                encrypted.pop_back();
-                int x, y;
-                getyx(win, y, x);
-                mvwaddch(win, y, x - 1, ' ');
-                wmove(win, y, x - 1);
-            }
-        } else {
-            password += ch;
-            encrypted += '*';
-            //wechochar(win, '*');
-        }
-        mvwprintw(win, startY, startX, encrypted.c_str());
-    }
-}
-
-void Ui::DrawSignUp(WINDOW* win, bool highlight, int width, int height, string &username, string &password) {
+void Ui::DrawLogin(WINDOW* win, int wrong, int width, int height) {
     werase(win);
     BackgroundClr(win);
     box(win, 0, 0);
 
-    mvwprintw(win, 0, (width - 6) / 2, "MyMart");
-    mvwprintw(win, 1, (width - 17) / 2, "Create an account");
-    mvwprintw(win, 3, 2, "Enter Username: ");
+    mvwprintw(win, 0, (width - 6) / 2, "Login");
+    mvwprintw(win, 3, 2, "Enter ID      : ");
     mvwprintw(win, 5, 2, "Enter Password: ");
-    mvwprintw(win, 7, 2, "Already have an account?");
-    wattron(win, A_BOLD);
-    DrawBox(win, 7, 27, "Login", (highlight == true));
-    wattroff(win, A_BOLD);
+    if(wrong == 1) {
+        mvwprintw(win, 4, 19, "Wrong id!");
+    }
+    if(wrong == 4) {
+        mvwprintw(win, 6, 19, "Wrong id!");
+    }
+    if(wrong == 2) {
+        mvwprintw(win, 4, 19, "Invalid input!");
+    }
+    if(wrong == 3) {
+        mvwprintw(win, 6, 19, "Invalid input!");
+    }
 
     wrefresh(win);
 }
 
-void Ui::Engine()
+void Ui::Engine(Database& db, Manager &M, Cashier &C, StockClerk &SC)
 {
     // Select
     int active_select = -1;
@@ -138,27 +101,71 @@ void Ui::Engine()
     WINDOW* win_select = newwin(select_W_height, select_W_width, (LINES-select_W_height)/2, (COLS-select_W_width)/2);
     keypad(win_select, TRUE);
 
-    // login_signup
-    int active_login_signup = -1;
-    vector<string> choices_login_signup = {
-        "Log in",
-        "Sign up",
+    // Login
+
+    string id = "", password = "", encrypted = "";
+    int active = 0;
+    int login_type = -1;
+    int wrong = 0;
+    WINDOW* win_login = newwin(login_W_height, login_W_width, (LINES - login_W_height) / 2, (COLS - login_W_width) / 2);
+    keypad(win_login, TRUE);
+
+    //  Manager
+
+    int active_manager = -1;
+    int manager_manual_W = 0;
+    WINDOW* win_manager_manual = newwin(manual_W_height, manual_W_width, (LINES - manual_W_height) / 2, (COLS - manual_W_width) / 2);
+    keypad(win_manager_manual, TRUE);
+    vector<string> manual_manager = {};
+    vector<string> manager_functions = {
+        "1. AddNewProducts",
+        "2. DeleteProduct",
+        "3. AddNewEmployee",
+        "4. RemoveEmployee",
+        "5. SetSalary",
+        "6. showFeedback",
     };
-    WINDOW* win_login_signup = newwin(login_signup_W_height, login_signup_W_width, (LINES-login_signup_W_height)/2, (COLS-login_signup_W_width)/2);
-    keypad(win_login_signup, TRUE);
 
-    // Sign_Up
+    //  Cashier
 
-    bool active_signup = false;
-    WINDOW* win_signup = newwin(10, 40, (LINES - 10) / 2, (COLS - 40) / 2);
-    keypad(win_signup, TRUE);
+    int active_cashier = -1;
+    bool cashier_manual_W = true;
+    WINDOW* win_cashier_manual = newwin(manual_W_height, manual_W_width, (LINES - manual_W_height) / 2, (COLS - manual_W_width) / 2);
+    keypad(win_cashier_manual, TRUE);
+    vector<string> manual_cashier = {};
+    vector<string> cashier_functions = {
+        "1. AddNewProducts",
+        "2. DeleteProduct",
+        "3. AddNewEmployee",
+        "4. RemoveEmployee",
+        "5. SetSalary",
+        "6. showFeedback",
+    };
+
+    //  Stock_Clerk
+
+    int active_Stock_Clerk = -1;
+    bool Stock_Clerk_manual_W = true;
+    WINDOW* win_Stock_Clerk_manual = newwin(manual_W_height, manual_W_width, (LINES - manual_W_height) / 2, (COLS - manual_W_width) / 2);
+    keypad(win_Stock_Clerk_manual, TRUE);
+    vector<string> manual_Stock_Clerk = {};
+    vector<string> Stock_Clerk_functions = {
+        "1. AddNewProducts",
+        "2. DeleteProduct",
+        "3. AddNewEmployee",
+        "4. RemoveEmployee",
+        "5. SetSalary",
+        "6. showFeedback",
+    };
 
     while(true) {
         BackgroundClr(stdscr);
         if(GetScreen(Main)) Show_Main();
-        if(GetScreen(Select)) Show_Select(win_select, &active_select, choices_select);
-        if(GetScreen(Login_SignUp)) Show_Login_SignUp(win_login_signup, &active_login_signup, choices_login_signup);
-        if(GetScreen(SignUp)) Show_SignUp(win_signup, &active_signup);
+        if(GetScreen(Select)) Show_Select(win_select, &active_select, &login_type, choices_select);
+        if(GetScreen(Login)) Show_Login(db, M, win_login, &active, &wrong, &login_type, id, password, encrypted);
+        if(GetScreen(Manager_S)) Show_Manager(db, M, win_manager_manual, &active_manager, &manager_manual_W, manual_manager, manager_functions);
+        if(GetScreen(Cashier_S)) Show_Cashier(db, C, win_cashier_manual, &active_cashier, &cashier_manual_W, manual_cashier, cashier_functions);
+        if(GetScreen(Stock_Clerk_S)) Show_Stock_Clerk(db, SC, win_Stock_Clerk_manual, &active_Stock_Clerk, &Stock_Clerk_manual_W, manual_Stock_Clerk, Stock_Clerk_functions);
     }
 }
 
@@ -194,7 +201,7 @@ void Ui::Show_Main()
     }
 }
 
-void Ui::Show_Select(WINDOW* win, int *active, const vector<string>& choices)
+void Ui::Show_Select(WINDOW* win, int *active, int *login_type, const vector<string>& choices)
 {
     int N = choices.size();
     clear();
@@ -210,15 +217,18 @@ void Ui::Show_Select(WINDOW* win, int *active, const vector<string>& choices)
     switch(ch) {
         case '1':
             screens[Select] = false;
-            screens[Login_SignUp] = true;
+            screens[Login] = true;
+            *login_type = 0;
             break;
         case '2':
             screens[Select] = false;
-            screens[Login_SignUp] = true;
+            screens[Login] = true;
+            *login_type = 1;
             break;
         case '3':
             screens[Select] = false;
-            screens[Login_SignUp] = true;
+            screens[Login] = true;
+            *login_type = 2;
             break;
         case KEY_TAB:
             *active = (*active + 1)%N;
@@ -237,95 +247,366 @@ void Ui::Show_Select(WINDOW* win, int *active, const vector<string>& choices)
             }
             break;
         case KEY_ENTER:
-            if(*active == 0 || *active == 1 || *active == 2) {
+            if(*active == 0) {
                 screens[Select] = false;
-                screens[Login_SignUp] = true;
+                screens[Login] = true;
+                *login_type = 1;
             }
-            else if(*active == N-1) {
+            else if(*active == 1) {
                 screens[Select] = false;
-                screens[Main] = true;
+                screens[Login] = true;
+                *login_type = 2;
+            }
+            else if(*active == 2) {
+                screens[Select] = false;
+                screens[Login] = true;
+                *login_type = 3;
             }
             break;
     }
 }
 
-void Ui::Show_Login_SignUp(WINDOW* win, int *active, const vector<string>& choices)
+// Function to hash a password using bcrypt (SHA-256)
+string Ui::hashPassword(const string &password) {
+    BCRYPT_ALG_HANDLE hAlgorithm;
+    BCRYPT_HASH_HANDLE hHash;
+    NTSTATUS status;
+    unsigned char hash[HASH_SIZE];  // Using unsigned char instead of BYTE
+    string hashHex;
+
+    // Open bcrypt algorithm provider
+    status = BCryptOpenAlgorithmProvider(&hAlgorithm, HASH_ALGORITHM, NULL, 0);
+    if (status != 0) {
+        cerr << "Error: Unable to open algorithm provider (0x" << hex << status << ")\n";
+        return "";
+    }
+
+    // Create hash object
+    status = BCryptCreateHash(hAlgorithm, &hHash, NULL, 0, NULL, 0, 0);
+    if (status != 0) {
+        cerr << "Error: Unable to create hash (0x" << hex << status << ")\n";
+        BCryptCloseAlgorithmProvider(hAlgorithm, 0);
+        return "";
+    }
+
+    // Hash the password
+    status = BCryptHashData(hHash, (unsigned char*)password.c_str(), (ULONG)password.length(), 0);
+    if (status != 0) {
+        cerr << "Error: Unable to hash data (0x" << hex << status << ")\n";
+        BCryptDestroyHash(hHash);
+        BCryptCloseAlgorithmProvider(hAlgorithm, 0);
+        return "";
+    }
+
+    // Get the final hash value
+    status = BCryptFinishHash(hHash, hash, HASH_SIZE, 0);
+    if (status != 0) {
+        cerr << "Error: Unable to finish hash (0x" << hex << status << ")\n";
+        BCryptDestroyHash(hHash);
+        BCryptCloseAlgorithmProvider(hAlgorithm, 0);
+        return "";
+    }
+
+    // Convert hash bytes to hex string
+    for (int i = 0; i < HASH_SIZE; i++) {
+        char buffer[3];
+        snprintf(buffer, sizeof(buffer), "%02x", hash[i]);
+        hashHex += buffer;
+    }
+
+    // Cleanup
+    BCryptDestroyHash(hHash);
+    BCryptCloseAlgorithmProvider(hAlgorithm, 0);
+
+    return hashHex;
+}
+
+void Ui::Show_Login(Database& db, Manager &M, WINDOW* win, int *active, int *wrong, int *login_type, string &id, string &password, string &encrypted)
 {
     clear();
     vector<string> chcs = {};
-    DrawWindow(stdscr, false, chcs, COLS, LINES, "");
-    DrawWindow(win, *active, choices, login_signup_W_width, login_signup_W_height, "Welcome");
+    DrawWindow(stdscr, false, chcs, COLS, LINES, "MyMart");
+    DrawLogin(win, *wrong, 40, 20);
+    if(*active >= 1) mvwprintw(win, 3, 19, id.c_str());
+    if(*active >= 2) mvwprintw(win, 5, 19, encrypted.c_str());
     refresh();
 
     int ch = wgetch(win);
 
     switch(ch) {
-        case KEY_TAB:
-            *active = (*active + 1) % 2;
+        case KEY_ENTER:
+            if(*active == 0) {
+                *active = 1; // id write mode enabled
+                *wrong = 0; // no warning
+                curs_set(1);
+                wmove(win, 3, 19);
+            }
+            else if(*active == 1) {
+                //curs_set(0);
+                if(*login_type == 1 && M.IsEmployeeIdValid(db, id, *login_type)) {
+                    *active = 2;
+                    *wrong = 0;
+                    wmove(win, 5, 19);
+                    curs_set(1);
+                }
+                else if(*login_type == 2 && M.IsEmployeeIdValid(db, id, *login_type)) {
+                    *active = 2;
+                    *wrong = 0;
+                    wmove(win, 5, 19);
+                    curs_set(1);
+                }
+                else if(*login_type == 3 && M.IsEmployeeIdValid(db, id, *login_type)) {
+                    *active = 2;
+                    *wrong = 0;
+                    wmove(win, 5, 19);
+                    curs_set(1);
+                }
+                else {
+                    id = "";
+                    *wrong = 1; // wrong id
+                    *active = 0; // id write mode disabled
+                    curs_set(0);
+                    break;
+                }
+            }
+            else if(*active == 2) {
+                curs_set(0);
+                if(*login_type == 1 && M.IsEmployeePassValid(db, id, password, *login_type)) {
+                    *wrong = 0;
+                    screens[Login] = false;
+                    screens[Manager_S] = true;
+                }
+                else if(*login_type == 2 && M.IsEmployeePassValid(db, id, password, *login_type)) {
+                    *wrong  = 0;
+                    screens[Login] = false;
+                    screens[Cashier_S] = true;
+                }
+                else if(*login_type == 3 && M.IsEmployeePassValid(db, id, password, *login_type)) {
+                    *wrong = 0;
+                    screens[Login] = false;
+                    screens[Stock_Clerk_S] = true;
+                }
+                else {
+                    password = "";
+                    encrypted = "";
+                    *wrong = 4; // wrong id
+                    *active = 1; // id write mode disabled
+                    break;
+                }
+            }
+            //password = hashPassword(password);
             break;
-        case KEY_BTAB:
-            *active = (*active - 1 + 3) % 2;
+        case KEY_ESC:
+            if(*active == 0) {
+                screens[Login] = false;
+                screens[Select] = true;
+            }
             break;
-        case KEY_DOWN:
-            if(*active < 1) {
-                *active = (*active + 1);
+        case KEY_BACKSPACE:
+            if(*active == 1) {
+                if (!id.empty()) {
+                    id.pop_back();
+                    int x, y;
+                    getyx(win, y, x);
+                    if(x > 0) {
+                        mvwaddch(win, y, x - 1, ' ');
+                        wmove(win, y, x - 1);
+                    }
+                }
+            }
+            else if(*active == 2) {
+                if (!password.empty()) {
+                    password.pop_back();
+                    encrypted.pop_back();
+                    int x, y;
+                    getyx(win, y, x);
+                    if(x > 0) {
+                        mvwaddch(win, y, x - 1, ' ');
+                        wmove(win, y, x - 1);
+                    }
+                }
+            }
+            break;
+        default:
+            if(*active == 1) {
+                if(ch >= '0' && ch <= '9') {
+                    *wrong = 0;
+                    id += ch;
+                }
+                else {
+                    *wrong = 2;
+                }
+            }
+            else if(*active == 2) {
+                if(ch != ' ') {
+                    *wrong = 0;
+                    password += ch;
+                    encrypted += '*';
+                }
+                else {
+                    *wrong = 3;
+                }
+            }
+            break;
+    }
+}
+
+void Ui::Show_Manager(Database& db, Manager& M, WINDOW* win, int *active, int *manual_W, const vector<string>& manual, const vector<string>& functions)
+{
+    int N = functions.size();
+    clear();
+    vector<string> chcs = {};
+    DrawWindow(stdscr, false, chcs, COLS, LINES, "");
+
+    if(*manual_W == 0) DrawWindow(win, -1, manual, manual_W_width, manual_W_height, "Manual");
+
+    if(*manual_W == 1) {
+        wresize(win, manager_W_height, manager_W_width);
+        mvwin(win, (LINES - manager_W_height) / 2, (COLS - manager_W_width) / 2);
+        DrawWindow(win, *active, functions, manager_W_width, manager_W_height, "Manager");
+    }
+
+    if(*manual_W == 0 || *manual_W == 1) {
+        int ch = wgetch(win);
+
+        switch(ch) {
+            case '1':
+                if(*manual_W == 1) {
+                    *manual_W = 2;
+                }
+                break;
+            case KEY_ENTER:
+                if(*manual_W == 0) {
+                    *manual_W = 1;
+                }
+                break;
+            case KEY_UP:
+                if(*manual_W == 1) {
+                    if(*active > 0) {
+                        *active = (*active - 1);
+                    }
+                }
+                break;
+            case KEY_DOWN:
+                if(*manual_W == 1) {
+                    if(*active < N-1) {
+                        *active = (*active + 1);
+                    }
+                }
+                break;
+            case KEY_TAB:
+                if(*manual_W == 1) {
+                    *active = (*active + 1) % N;
+                }
+                break;
+            case KEY_BTAB:
+                if(*manual_W == 1) {
+                    *active = (*active - 1 + N) % N;
+                }
+                break;
+        }
+    }
+
+    if(*manual_W == 8) {
+        mvwprintw(stdscr, LINES/2, (COLS - 22) / 2, "press enter to return!");
+        int ch = getch();
+        if(ch == KEY_ENTER) {
+            *manual_W = 1;
+        }
+    }
+
+    if(*manual_W == 2) {
+        if(M.AddNewProducts(db)) {
+            *manual_W = 8;
+        }
+        else {
+
+        }
+    }
+
+    refresh();
+}
+
+void Ui::Show_Cashier(Database& db, Cashier& C, WINDOW* win, int *active, bool *manual_W, const vector<string>& manual, const vector<string>& functions)
+{
+    int N = functions.size();
+    clear();
+    vector<string> chcs = {};
+    DrawWindow(stdscr, false, chcs, COLS, LINES, "");
+
+    if(*manual_W) DrawWindow(win, -1, manual, manual_W_width, manual_W_height, "Manual");
+
+    if(!*manual_W) {
+        wresize(win, manager_W_height, manager_W_width);
+        mvwin(win, (LINES - manager_W_height) / 2, (COLS - manager_W_width) / 2);
+        DrawWindow(win, *active, functions, manager_W_width, manager_W_height, "Manager");
+    }
+
+    refresh();
+
+    int ch = wgetch(win);
+
+    switch(ch) {
+        case KEY_ENTER:
+            if(*manual_W) {
+                *manual_W = false;
             }
             break;
         case KEY_UP:
-            if(*active > 0) {
-                *active = (*active - 1);
+            if(!*manual_W) {
+                if(*active > 0) {
+                    *active = (*active - 1);
+                }
             }
             break;
-        case KEY_ENTER:
-            if(*active == 0) {
-                screens[Login_SignUp] = false;
-                screens[Login] = true;
+        case KEY_DOWN:
+            if(!*manual_W) {
+                if(*active < N-1) {
+                    *active = (*active + 1);
+                }
             }
-            else if(*active == 1) {
-                screens[Login_SignUp] = false;
-                screens[SignUp] = true;
-            }
-            break;
-        case KEY_ESC:
-            *active = -1;
-            screens[Login_SignUp] = false;
-            screens[Select] = true;
             break;
     }
 }
 
-void Ui::Show_SignUp(WINDOW* win, bool *active)
+void Ui::Show_Stock_Clerk(Database& db, StockClerk& SC, WINDOW* win, int *active, bool *manual_W, const vector<string>& manual, const vector<string>& functions)
 {
-    string username, password;
+    int N = functions.size();
     clear();
     vector<string> chcs = {};
     DrawWindow(stdscr, false, chcs, COLS, LINES, "");
-    DrawSignUp(win, *active, 40, 10, username, password);
+
+    if(*manual_W) DrawWindow(win, -1, manual, manual_W_width, manual_W_height, "Manual");
+
+    if(!*manual_W) {
+        wresize(win, manager_W_height, manager_W_width);
+        mvwin(win, (LINES - manager_W_height) / 2, (COLS - manager_W_width) / 2);
+        DrawWindow(win, *active, functions, manager_W_width, manager_W_height, "Manager");
+    }
+
     refresh();
 
     int ch = wgetch(win);
 
     switch(ch) {
-        case KEY_TAB:
-            *active ^= true;
-            break;
         case KEY_ENTER:
-            if(*active == false) {
-                curs_set(1);
-                GetUsername(win, username, 19, 3);
-                GetPassword(win, password, 19, 5);
-                curs_set(0);
-            }
-            else {
-                screens[SignUp] = false;
-                screens[Login] = true;
+            if(*manual_W) {
+                *manual_W = false;
             }
             break;
-        case KEY_ESC:
-            *active = false;
-            screens[SignUp] = false;
-            screens[Login_SignUp] = true;
+        case KEY_UP:
+            if(!*manual_W) {
+                if(*active > 0) {
+                    *active = (*active - 1);
+                }
+            }
+            break;
+        case KEY_DOWN:
+            if(!*manual_W) {
+                if(*active < N-1) {
+                    *active = (*active + 1);
+                }
+            }
             break;
     }
 }
-

@@ -1,22 +1,38 @@
 #ifndef UI_H
 #define UI_H
 
+
+#include <ntdef.h>
+#include <bcrypt.h>
 #include <curses.h>
 #include <vector>
 #include <string>
+#include <manager.h>
+#include <cashier.h>
+#include <stockclerk.h>
 #include <iostream>
+
+#pragma comment(lib, "bcrypt.lib")  // Link bcrypt library
+
+#define HASH_ALGORITHM BCRYPT_SHA256_ALGORITHM  // Use SHA-256
+#define HASH_SIZE 32  // 32-byte hash output
 
 using namespace std;
 
 // Colors
-#define FG 0
-#define BG 248
-// Button positions
-#define tot_screen 5
+#define FG 7
+#define BG 65
+// sizes
+#define tot_screen 6
 #define select_W_width 30
 #define select_W_height 9
-#define login_signup_W_width 30
-#define login_signup_W_height 6
+#define login_W_width 40
+#define login_W_height 10
+#define manual_W_width 80
+#define manual_W_height 28
+#define manager_W_width 40
+#define manager_W_height 15
+// Button positions
 #define MY_MART_BUTTON_X (COLS - 43)/2
 #define MY_MART_BUTTON_Y (LINES-5)/2
 #define Press_Enter_X (COLS - 24)/2
@@ -30,9 +46,10 @@ using namespace std;
 enum Screen {
     Main,
     Select,
-    Login_SignUp,
     Login,
-    SignUp
+    Manager_S,
+    Cashier_S,
+    Stock_Clerk_S
 };
 
 class Ui
@@ -46,15 +63,16 @@ class Ui
         bool IsInBox(const int val_x, const int val_y, const int x, const int y, const int length);
         void DrawBox(WINDOW* win, const int x, const int y, string line, const bool active);
         void DrawWindow(WINDOW* win, int highlight, const vector<string>& choices, int width, int height, const string title, short fg, short bg, int line_ch);
-        void GetUsername(WINDOW* win, string &username, int startX, int startY);
-        void GetPassword(WINDOW* win, string &password, int startX, int startY);
-        void DrawSignUp(WINDOW* win, bool highlight, int width, int height, string &username, string &password);
+        void DrawLogin(WINDOW* win, int wrong, int width, int height);
 
-        void Engine();
+        void Engine(Database& db, Manager &M, Cashier &C, StockClerk &SC);
         void Show_Main();
-        void Show_Select(WINDOW* win, int *active, const vector<string>& choices);
-        void Show_Login_SignUp(WINDOW* win, int *active, const vector<string>& choices);
-        void Show_SignUp(WINDOW* win, bool *active);
+        void Show_Select(WINDOW* win, int *active, int *login_type, const vector<string>& choices);
+        string hashPassword(const string &password);
+        void Show_Login(Database& db, Manager &M, WINDOW* win, int *active, int *wrong, int *login_type, string &id, string &password, string &encrypted);
+        void Show_Manager(Database& db, Manager &M, WINDOW* win, int *active, int *manual_W, const vector<string>& manual, const vector<string>& functions);
+        void Show_Cashier(Database& db, Cashier& C, WINDOW* win, int *active, bool *manual_W, const vector<string>& manual, const vector<string>& functions);
+        void Show_Stock_Clerk(Database& db, StockClerk& SC, WINDOW* win, int *active, bool *manual_W, const vector<string>& manual, const vector<string>& functions);
 
     protected:
 

@@ -9,6 +9,7 @@
 #include <cmath>
 #include <fstream>
 #include <iostream>
+#include <curses.h>
 
 
 class Manager : public Employee
@@ -23,6 +24,11 @@ class Manager : public Employee
         static void SetProfit(const double p);
         static double GetTotalBalance();
         static void SetTotalBalance(const double b);
+
+        bool IsEmployeeIdValid(Database& db, string& id, int login_type);
+
+        bool IsEmployeePassValid(Database& db, string &id, string &password, int login_type);
+
         bool AddNewProducts(Database& db);
 
         bool DeleteProduct(Database& db);

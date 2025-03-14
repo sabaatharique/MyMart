@@ -12,12 +12,16 @@ int main()
 {
 //    system("color 5F");
 //
-//    Database db;
-//    db.initialiseDatabase();
+    Database db;
+    db.initialiseDatabase();
+
+    Manager M;
+    Cashier C;
+    StockClerk SC;
 
     Ui* ui = new Ui();
 
-    ui->Engine();
+    ui->Engine(db, M, C, SC);
 
 //      Manager mmmm;
 //      mmmm.showFeedback();
@@ -25,7 +29,7 @@ int main()
 //    db.displayTable("SELECT * FROM EMPLOYEES;");
 //    cout << endl;
 //    mmmm.RemoveEmployee(db);
-//    db.displayTable("SELECT * FROM EMPLOYEES;");
+    //db.displayTable("SELECT * FROM EMPLOYEES;");
 //    Cashier ridita;
 //    ridita.CheckoutCustomer(db);
 //    Manager mmmm;
@@ -93,8 +97,8 @@ int main()
 //    db.displayTable("SELECT * FROM PRODUCTS;");
 //    cout << endl;
 //
-//    db.closeDatabase();
+    db.closeDatabase();
 
-    delete ui;
+    //delete ui;
 	return 0;
 }

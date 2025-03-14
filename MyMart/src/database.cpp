@@ -79,12 +79,12 @@ bool Database::initialiseDatabase()
           "NAME CHAR(25) NOT NULL,"
           "TYPE CHAR(15) CHECK (TYPE IN ('MANAGER', 'CASHIER', 'STOCK CLERK')),"
           "SALARY REAL NOT NULL,"
-          "USERNAME CHAR(15) ,"
-          "PASSWORD TEXT(15) );";
+          "USERNAME CHAR(15),"
+          "PASSWORD TEXT(15));";
     if(!executeQuery(sql))
         return false;
 
-    sql = "INSERT OR IGNORE INTO EMPLOYEES VALUES(1001, 'SABA ATHARIQUE', 'MANAGER', 40500, 'saba03', 'Saba2003!');"
+    sql = "INSERT OR IGNORE INTO EMPLOYEES VALUES(1001, 'SABA ATHARIQUE', 'MANAGER', 40500, 'saba03', '30');"
           "INSERT OR IGNORE INTO EMPLOYEES VALUES(2001, 'RIDITA ALAM', 'CASHIER', 35750, 'ridita19', 'Alam#309');"
           "INSERT OR IGNORE INTO EMPLOYEES VALUES(3001, 'MISHKAT AHMED KHAN', 'STOCK CLERK', 27500, 'mishkat2025', 'Pass123');";
     if(!executeQuery(sql))
@@ -121,7 +121,7 @@ bool Database::displayTable(string query)
 
     // get number of columns and print column names first
     int columns = sqlite3_column_count(stmt);
-    cout << left;
+    //cout << left;
     for (int i = 0; i < columns; i++){
         string colName = sqlite3_column_name(stmt, i);
         cout << setw(21) << colName;
