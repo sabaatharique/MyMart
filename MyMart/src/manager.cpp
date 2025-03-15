@@ -36,38 +36,53 @@ void Manager::SetTotalBalance(const double b)
     totalBalance = b;
 }
 
-bool Manager::SetSalary(Database& db)
+bool Manager::SetSalary(Database& db, int start_line)
 {
-    int emp_salary, choice;
+    int choice;
+    int emp_salary;
     string emp_type;
     bool first = true;
 
-    cout << "Enter employee type:\n1.Cashier\n2.Stock Clerk\n " << endl;
+    mvwprintw(stdscr, start_line, 2, "Enter employee type:");
+    mvwprintw(stdscr, start_line+1, 2, "1. Cashier");
+    mvwprintw(stdscr, start_line+2, 2, "2. Stock Clerk");
+
+    //cout << "Enter employee type:\n1.Cashier\n2.Stock Clerk\n " << endl;
     do{
-        if(!first)
-            cout << "Invalid input , try again." << endl;
-        cin >> choice;
-        first = false;
+//        if(!first)
+//            cout << "Invalid input , try again." << endl;
+        choice = getch();
+        //cin >> choice;
+        //first = false;
 
-    } while(choice != 1 || choice != 2);
+    } while(choice != '1' && choice != '2');
 
-    if(choice == 1)
-        emp_type = "CASHIER";
-    else if(choice == 2)
-        emp_type = "STOCK CLERK";
+    if(choice == '1')
+        emp_type = "'CASHIER'";
+    else if(choice == '2')
+        emp_type = "'STOCK CLERK'";
 
-    cout << "Enter new salary : " << endl;
+    mvwprintw(stdscr, start_line+4, 2, "Enter new salary : ");
+    curs_set(1);
+    echo();
+    //cout << "Enter new salary : " << endl;
     first = true;
     do{
         if(!first)
-            cout << "Invalid input , try again." << endl;
-        cin >> emp_salary;
+            mvwprintw(stdscr, start_line+4, 2, "Invalid input , try again: ");
+            //cout << "Invalid input , try again." << endl;
+        char temp[200];
+        getnstr(temp, sizeof(temp) - 1);
+        emp_salary = stoi(string(temp));
+        //cin >> emp_salary;
         first = false;
 
     } while(emp_salary <= 0);
+    curs_set(0);
+    noecho();
 
     string query = "UPDATE EMPLOYEES SET SALARY = " + to_string(emp_salary) + " WHERE TYPE = " + emp_type + ";";
-
+    refresh();
     return db.executeQuery(query);
 }
 
@@ -114,9 +129,9 @@ bool Manager::AddNewProducts(Database& db)
     const char* date;
     double sell_price, buying_cost,stock;
 
-    mvwprintw(stdscr, 1, 2, "Enter Product Type: ");
-    mvwprintw(stdscr, 2, 2, "1. Non-Perishable");
-    mvwprintw(stdscr, 3, 2, "2. Perishable");
+    mvwprintw(stdscr, 2, 2, "Enter Product Type: ");
+    mvwprintw(stdscr, 3, 2, "1. Non-Perishable");
+    mvwprintw(stdscr, 4, 2, "2. Perishable");
     //wmove(stdscr, 1, 21);
     //curs_set(1);
 
@@ -127,11 +142,13 @@ bool Manager::AddNewProducts(Database& db)
 //    cin >> type;
     if(type == '2')
     {
-        mvwprintw(stdscr, 5, 2, "Enter PerishableProduct Type: ");
-        mvwprintw(stdscr, 6, 2, "1. Sold in units");
-        mvwprintw(stdscr, 7, 2, "2. Sold in kilograms");
+        mvwprintw(stdscr, 6, 2, "Enter PerishableProduct Type: ");
+        mvwprintw(stdscr, 7, 2, "1. Sold in units");
+        mvwprintw(stdscr, 8, 2, "2. Sold in kilograms");
         int choice;
-        choice = getch();
+        do {
+            choice = getch();
+        } while(choice != '1' && choice != '2');
         //cin >> choice;
         if(choice == '1')
         {
@@ -163,7 +180,7 @@ bool Manager::AddNewProducts(Database& db)
             }
             sqlite3_finalize(stmt);
         }
-        mvwprintw(stdscr, 9, 2, "Enter Product Name: ");
+        mvwprintw(stdscr, 10, 2, "Enter Product Name: ");
         curs_set(1);
         //cout << "Enter Product Name: " << endl;
         echo();
@@ -171,26 +188,28 @@ bool Manager::AddNewProducts(Database& db)
         getnstr(temp, sizeof(temp) - 1);
         p_name = string(temp);
         //cin >> p_name;
-        mvwprintw(stdscr, 10, 2, "Enter Sell Price: ");
+        mvwprintw(stdscr, 11, 2, "Enter Sell Price: ");
         //wmove(stdscr, 4, 21);
         //curs_set(1);
         //cout << "Enter Sell Price: " << endl;
         getnstr(temp, sizeof(temp) - 1);
         sell_price = stod(string(temp));
         //cin >> sell_price;
-        mvwprintw(stdscr, 11, 2, "Enter Buying Cost: ");
+        mvwprintw(stdscr, 12, 2, "Enter Buying Cost: ");
         //wmove(stdscr, 4, 21);
         //curs_set(1);
         //cout << "Enter Buying Cost: " << endl;
         getnstr(temp, sizeof(temp) - 1);
         buying_cost = stod(string(temp));
+        noecho();
+        curs_set(0);
         //cin >> buying_cost;
         stock = 0;
         date = "0000-00-00";
         prdct = new PerishableProducts(p_id,p_name,sell_price,buying_cost,stock,date);
         prdct->AddProduct(db);
     }
-    else if(type == 1)
+    else if(type == '1')
     {
         string query = "SELECT ID FROM PRODUCTS WHERE ID LIKE '1%' ORDER BY ID DESC LIMIT 1";
         sqlite3_stmt* stmt = db.fetchQuery(query);
@@ -204,7 +223,7 @@ bool Manager::AddNewProducts(Database& db)
             p_id = 10000 + 1;
         }
         sqlite3_finalize(stmt);
-        mvwprintw(stdscr, 5, 2, "Enter Product Name: ");
+        mvwprintw(stdscr, 6, 2, "Enter Product Name: ");
         curs_set(1);
         //cout << "Enter Product Name: " << endl;
         echo();
@@ -212,58 +231,91 @@ bool Manager::AddNewProducts(Database& db)
         getnstr(temp, sizeof(temp) - 1);
         p_name = string(temp);
         //cin >> p_name;
-        mvwprintw(stdscr, 6, 2, "Enter Sell Price: ");
+        mvwprintw(stdscr, 7, 2, "Enter Sell Price: ");
         //wmove(stdscr, 4, 21);
         //curs_set(1);
         //cout << "Enter Sell Price: " << endl;
         getnstr(temp, sizeof(temp) - 1);
         sell_price = stod(string(temp));
         //cin >> sell_price;
-        mvwprintw(stdscr, 7, 2, "Enter Buying Cost: ");
+        mvwprintw(stdscr, 8, 2, "Enter Buying Cost: ");
         //wmove(stdscr, 4, 21);
         //curs_set(1);
         //cout << "Enter Buying Cost: " << endl;
         getnstr(temp, sizeof(temp) - 1);
         buying_cost = stod(string(temp));
+        noecho();
+        curs_set(0);
         //cin >> buying_cost;
         stock = 0;
         prdct = new Product(p_id, p_name, sell_price, buying_cost, stock);
         prdct->AddProduct(db);
     }
+    else {
+        return false;
+    }
     refresh();
     return true;
 }
 
-bool Manager::DeleteProduct(Database& db)
+bool Manager::DeleteProduct(Database& db, int start_line)
 {
     int productID;
     bool first = true;
-    cout << "Enter product ID to delete: " << endl;
+    mvwprintw(stdscr, start_line, 2, "Enter product ID to delete: ");
+    //cout << "Enter product ID to delete: " << endl;
     do{
         if(!first)
-            cout << "Product ID not found, enter again: " << endl;
-        cin >> productID;
+            mvwprintw(stdscr, start_line, 2, "Product ID not found, enter again: ");
+//            cout << "Product ID not found, enter again: " << endl;
+        curs_set(1);
+        echo();
+        char temp[200];
+        getnstr(temp, sizeof(temp) - 1);
+        productID = stoi(string(temp));
         first = false;
     }while(!Product::IsProductInTable(db,productID,All));
+    curs_set(0);
+    noecho();
 
     string query = "DELETE FROM PRODUCTS WHERE ID = " + to_string(productID) + ";";
+    refresh();
     return db.executeQuery(query);
 }
 
 bool Manager::AddNewEmployee(Database& db)
 {
+    clear();
+
     Employee* emp;
     int e_type,e_id;
     string e_name, e_username, e_password;
     double e_salary;
 
-    cout << "Enter Employee Type: \n1.Cashier\n2.Stock Clerk" << endl;
-    cin >> e_type;
-    cout << "Enter Employee Name: " << endl;
-    cin >> e_name;
-    cout << "Enter Salary: " << endl;
-    cin >> e_salary;
-    if(e_type == 1)
+    mvwprintw(stdscr, 2, 2, "Enter Employee Type: ");
+    mvwprintw(stdscr, 3, 2, "1. Cashier");
+    mvwprintw(stdscr, 4, 2, "2. Stock Clerk");
+
+//    cout << "Enter Employee Name: " << endl;
+//    cout << "Enter Salary: " << endl;
+    e_type = getch();
+
+    mvwprintw(stdscr, 6, 2, "Enter Employee Name: ");
+    curs_set(1);
+    echo();
+
+    char temp[200];
+    getnstr(temp, sizeof(temp) - 1);
+    e_name = string(temp);
+
+    mvwprintw(stdscr, 7, 2, "Enter Salary: ");
+    getnstr(temp, sizeof(temp) - 1);
+    e_salary = stod(string(temp));
+
+    curs_set(0);
+    noecho();
+
+    if(e_type == '1')
     {
         string query = "SELECT ID FROM EMPLOYEES WHERE ID LIKE '2%' ORDER BY ID DESC LIMIT 1";
         sqlite3_stmt* stmt = db.fetchQuery(query);
@@ -281,7 +333,7 @@ bool Manager::AddNewEmployee(Database& db)
         emp = new Cashier(e_id,e_name,e_salary);
         emp->AddEmployee(db,e_type);
     }
-    else if(e_type == 2)
+    else if(e_type == '2')
     {
         string query = "SELECT ID FROM EMPLOYEES WHERE ID LIKE '3%' ORDER BY ID DESC LIMIT 1";
         sqlite3_stmt* stmt = db.fetchQuery(query);
@@ -299,28 +351,58 @@ bool Manager::AddNewEmployee(Database& db)
         emp = new StockClerk(e_id,e_name,e_salary);
         emp->AddEmployee(db,e_type);
     }
+    else {
+        return false;
+    }
+    refresh();
     return true;
 }
 
-bool Manager::RemoveEmployee(Database& db)
+bool Manager::RemoveEmployee(Database& db, int start_line)
 {
     int employeeID;
     bool first = true;
-    cout << "Enter employee ID to remove: " << endl;
+
+    mvwprintw(stdscr, start_line, 2, "Enter employee ID to remove: ");
+    //cout << "Enter employee ID to remove: " << endl;
     do{
         if(!first)
-            cout << "employee ID not found, enter again: " << endl;
-        cin >> employeeID;
+            mvwprintw(stdscr, start_line, 2, "employee ID not found, enter again: ");
+            //cout << "employee ID not found, enter again: " << endl;
+
+        curs_set(1);
+        echo();
+        char temp[200];
+        getnstr(temp, sizeof(temp) - 1);
+        employeeID = stoi(string(temp));
+        //cin >> employeeID;
         first = false;
     }while(!Employee::IsEmployeeInTable(db,employeeID));
+    curs_set(0);
+    noecho();
 
     string query = "DELETE FROM EMPLOYEES WHERE ID = " + to_string(employeeID) + ";";
+    refresh();
     return db.executeQuery(query);
 }
 
-void Manager::showFeedback()
+bool Manager::showFeedback()
 {
-    ifstream infile("Feedback.txt");
-    cout << infile.rdbuf() << endl;
+    clear();
 
+    ifstream infile("Feedback.txt");
+    if(!infile) {
+        cerr << "Error opening file." << endl;
+        return false;
+    }
+
+    string line;
+    int y = 1;
+
+    while(getline(infile, line)) {
+        mvprintw(y++, 2, "%s", line.c_str());
+    }
+
+    refresh();
+    return true;
 }

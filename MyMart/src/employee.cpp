@@ -16,12 +16,12 @@ void Employee::SetSalary(double val) { Salary = val; }
 
 bool Employee::AddEmployee(Database& db, int choice)
 {
-    if(choice == 1)
+    if(choice == '1')
     {
         string query = "INSERT OR IGNORE INTO EMPLOYEES VALUES(" + to_string(EmployeeID) + ", '" + EmployeeName + "', 'CASHIER'," + to_string(Salary) + ", NULL, NULL);";
         return db.executeQuery(query);
     }
-    else if(choice == 2)
+    else if(choice == '2')
     {
         string query = "INSERT OR IGNORE INTO EMPLOYEES VALUES(" + to_string(EmployeeID) + ", '" + EmployeeName + "', 'STOCK CLERK'," + to_string(Salary) + ", NULL, NULL);";
         return db.executeQuery(query);

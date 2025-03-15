@@ -167,8 +167,10 @@
 	<iostream>
 	<database.h>
 
-1741691580 d:\git\mymart\mymart\include\database.h
+1742021189 d:\git\mymart\mymart\include\database.h
 	<iostream>
+	<curses.h>
+	<vector>
 	<string>
 	<iomanip>
 	<sqlite3.h>
@@ -184,10 +186,10 @@
 	<iostream>
 	<vector>
 
-1741965704 source:d:\git\mymart\mymart\src\database.cpp
+1742020771 source:d:\git\mymart\mymart\src\database.cpp
 	"database.h"
 
-1741691580 source:d:\git\mymart\mymart\src\employee.cpp
+1742023467 source:d:\git\mymart\mymart\src\employee.cpp
 	"employee.h"
 
 1741691580 source:d:\git\mymart\mymart\src\perishableproducts.cpp
@@ -651,7 +653,7 @@
 	<fstream>
 	<iostream>
 
-1741946928 d:\git\mymart\mymart\include\manager.h
+1742032619 d:\git\mymart\mymart\include\manager.h
 	<employee.h>
 	<product.h>
 	<perishableproducts.h>
@@ -662,13 +664,13 @@
 	<iostream>
 	<curses.h>
 
-1741963494 source:d:\git\mymart\mymart\src\manager.cpp
+1742032610 source:d:\git\mymart\mymart\src\manager.cpp
 	"Manager.h"
 
-1741963666 source:d:\git\mymart\mymart\src\ui.cpp
+1742032790 source:d:\git\mymart\mymart\src\ui.cpp
 	"ui.h"
 
-1741966145 d:\git\mymart\mymart\include\ui.h
+1742029385 d:\git\mymart\mymart\include\ui.h
 	<ntdef.h>
 	<bcrypt.h>
 	<curses.h>

@@ -31,15 +31,15 @@ class Manager : public Employee
 
         bool AddNewProducts(Database& db);
 
-        bool DeleteProduct(Database& db);
+        bool DeleteProduct(Database& db, int start_line);
 
         bool AddNewEmployee(Database& db);
 
-        bool RemoveEmployee(Database& db);
+        bool RemoveEmployee(Database& db, int start_line);
 
-        bool SetSalary(Database& db);
+        bool SetSalary(Database& db, int start_line);
 
-        void showFeedback();
+        bool showFeedback();
     protected:
 
     private:

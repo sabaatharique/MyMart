@@ -21,7 +21,7 @@ using namespace std;
 
 // Colors
 #define FG 7
-#define BG 65
+#define BG 29
 // sizes
 #define tot_screen 6
 #define select_W_width 30
@@ -33,7 +33,7 @@ using namespace std;
 #define manager_W_width 40
 #define manager_W_height 15
 // Button positions
-#define MY_MART_BUTTON_X (COLS - 43)/2
+#define MY_MART_BUTTON_X (COLS - 33)/2
 #define MY_MART_BUTTON_Y (LINES-5)/2
 #define Press_Enter_X (COLS - 24)/2
 #define Press_Enter_Y (LINES-5)/2+7
@@ -70,7 +70,7 @@ class Ui
         void Show_Select(WINDOW* win, int *active, int *login_type, const vector<string>& choices);
         string hashPassword(const string &password);
         void Show_Login(Database& db, Manager &M, WINDOW* win, int *active, int *wrong, int *login_type, string &id, string &password, string &encrypted);
-        void Show_Manager(Database& db, Manager &M, WINDOW* win, int *active, int *manual_W, const vector<string>& manual, const vector<string>& functions);
+        void Show_Manager(Database& db, Manager &M, WINDOW* win, int *active, int *manual_W, string &table, const vector<string>& manual, const vector<string>& functions);
         void Show_Cashier(Database& db, Cashier& C, WINDOW* win, int *active, bool *manual_W, const vector<string>& manual, const vector<string>& functions);
         void Show_Stock_Clerk(Database& db, StockClerk& SC, WINDOW* win, int *active, bool *manual_W, const vector<string>& manual, const vector<string>& functions);
 

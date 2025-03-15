@@ -114,6 +114,7 @@ void Ui::Engine(Database& db, Manager &M, Cashier &C, StockClerk &SC)
 
     int active_manager = -1;
     int manager_manual_W = 0;
+    string table_manager;
     WINDOW* win_manager_manual = newwin(manual_W_height, manual_W_width, (LINES - manual_W_height) / 2, (COLS - manual_W_width) / 2);
     keypad(win_manager_manual, TRUE);
     vector<string> manual_manager = {};
@@ -163,7 +164,7 @@ void Ui::Engine(Database& db, Manager &M, Cashier &C, StockClerk &SC)
         if(GetScreen(Main)) Show_Main();
         if(GetScreen(Select)) Show_Select(win_select, &active_select, &login_type, choices_select);
         if(GetScreen(Login)) Show_Login(db, M, win_login, &active, &wrong, &login_type, id, password, encrypted);
-        if(GetScreen(Manager_S)) Show_Manager(db, M, win_manager_manual, &active_manager, &manager_manual_W, manual_manager, manager_functions);
+        if(GetScreen(Manager_S)) Show_Manager(db, M, win_manager_manual, &active_manager, &manager_manual_W, table_manager, manual_manager, manager_functions);
         if(GetScreen(Cashier_S)) Show_Cashier(db, C, win_cashier_manual, &active_cashier, &cashier_manual_W, manual_cashier, cashier_functions);
         if(GetScreen(Stock_Clerk_S)) Show_Stock_Clerk(db, SC, win_Stock_Clerk_manual, &active_Stock_Clerk, &Stock_Clerk_manual_W, manual_Stock_Clerk, Stock_Clerk_functions);
     }
@@ -179,11 +180,11 @@ void Ui::Show_Main()
     //mvhline(1, 1, ACS_HLINE, COLS-2);
     init_pair(2, 7, BG);
     attron(COLOR_PAIR(2) | A_BOLD);
-    mvwprintw(stdscr, MY_MART_BUTTON_Y, MY_MART_BUTTON_X, "##   ##         ##   ##");
-    mvwprintw(stdscr, MY_MART_BUTTON_Y+1, MY_MART_BUTTON_X, "# # # #  #   #  # # # #    #    ###   #####");
-    mvwprintw(stdscr, MY_MART_BUTTON_Y+2, MY_MART_BUTTON_X, "#  #  #   # #   #  #  #   # #   #  #    #");
-    mvwprintw(stdscr, MY_MART_BUTTON_Y+3, MY_MART_BUTTON_X, "#     #    #    #     #  #####  ###     #");
-    mvwprintw(stdscr, MY_MART_BUTTON_Y+4, MY_MART_BUTTON_X, "#     #    #    #     #  #   #  #  #    #");
+    mvwprintw(stdscr, MY_MART_BUTTON_Y, MY_MART_BUTTON_X, " __  __      __  __          _");
+    mvwprintw(stdscr, MY_MART_BUTTON_Y+1, MY_MART_BUTTON_X, "|  \\/  |_  _|  \\/  |__ _ _ _| |_");
+    mvwprintw(stdscr, MY_MART_BUTTON_Y+2, MY_MART_BUTTON_X, "| |\\/| | || | |\\/| / _` | '_|  _|");
+    mvwprintw(stdscr, MY_MART_BUTTON_Y+3, MY_MART_BUTTON_X, "|_|  |_|\\_, |_|  |_\\__,_|_|  \\__|");
+    mvwprintw(stdscr, MY_MART_BUTTON_Y+4, MY_MART_BUTTON_X, "        |__/");
     mvwprintw(stdscr, Press_Enter_Y, Press_Enter_X, "press enter to continue!");
     attroff(COLOR_PAIR(2) | A_BOLD);
     //DrawBox(stdscr, MY_MART_BUTTON_Y, MY_MART_BUTTON_X, "MY MART", (*active == true));
@@ -206,7 +207,7 @@ void Ui::Show_Select(WINDOW* win, int *active, int *login_type, const vector<str
     int N = choices.size();
     clear();
     vector<string> chcs = {};
-    DrawWindow(stdscr, false, chcs, COLS, LINES, "");
+    DrawWindow(stdscr, false, chcs, COLS, LINES, "MyMart");
     //mvprintw(4, 1, "Enter your employee type");
 
     DrawWindow(win, *active, choices, select_W_width, select_W_height, "SELECT");
@@ -218,17 +219,17 @@ void Ui::Show_Select(WINDOW* win, int *active, int *login_type, const vector<str
         case '1':
             screens[Select] = false;
             screens[Login] = true;
-            *login_type = 0;
+            *login_type = 1;
             break;
         case '2':
             screens[Select] = false;
             screens[Login] = true;
-            *login_type = 1;
+            *login_type = 2;
             break;
         case '3':
             screens[Select] = false;
             screens[Login] = true;
-            *login_type = 2;
+            *login_type = 3;
             break;
         case KEY_TAB:
             *active = (*active + 1)%N;
@@ -451,7 +452,7 @@ void Ui::Show_Login(Database& db, Manager &M, WINDOW* win, int *active, int *wro
     }
 }
 
-void Ui::Show_Manager(Database& db, Manager& M, WINDOW* win, int *active, int *manual_W, const vector<string>& manual, const vector<string>& functions)
+void Ui::Show_Manager(Database& db, Manager& M, WINDOW* win, int *active, int *manual_W, string &table, const vector<string>& manual, const vector<string>& functions)
 {
     int N = functions.size();
     clear();
@@ -475,9 +476,52 @@ void Ui::Show_Manager(Database& db, Manager& M, WINDOW* win, int *active, int *m
                     *manual_W = 2;
                 }
                 break;
+            case '2':
+                if(*manual_W == 1) {
+                    *manual_W = 3;
+                }
+                break;
+            case '3':
+                if(*manual_W == 1) {
+                    *manual_W = 4;
+                }
+                break;
+            case '4':
+                if(*manual_W == 1) {
+                    *manual_W = 5;
+                }
+                break;
+            case '5':
+                if(*manual_W == 1) {
+                    *manual_W = 6;
+                }
+                break;
+            case '6':
+                if(*manual_W == 1) {
+                    *manual_W = 7;
+                }
+                break;
             case KEY_ENTER:
                 if(*manual_W == 0) {
                     *manual_W = 1;
+                }
+                else if(*manual_W == 1 && *active == 0) {
+                    *manual_W = 2;
+                }
+                else if(*manual_W == 1 && *active == 1) {
+                    *manual_W = 3;
+                }
+                else if(*manual_W == 1 && *active == 2) {
+                    *manual_W = 4;
+                }
+                else if(*manual_W == 1 && *active == 3) {
+                    *manual_W = 5;
+                }
+                else if(*manual_W == 1 && *active == 4) {
+                    *manual_W = 6;
+                }
+                else if(*manual_W == 1 && *active == 5) {
+                    *manual_W = 7;
                 }
                 break;
             case KEY_UP:
@@ -515,12 +559,59 @@ void Ui::Show_Manager(Database& db, Manager& M, WINDOW* win, int *active, int *m
         }
     }
 
-    if(*manual_W == 2) {
-        if(M.AddNewProducts(db)) {
+    if(*manual_W == 9) {
+        int trash;
+        db.displayTable("SELECT * FROM " + table + ";", &trash);
+        int ch = getch();
+        if(ch == KEY_ENTER) {
             *manual_W = 8;
         }
-        else {
+    }
 
+    if(*manual_W == 2) {
+        if(M.AddNewProducts(db)) {
+            table = "PRODUCTS";
+            *manual_W = 9;
+        }
+    }
+
+    if(*manual_W == 3) {
+        int line;
+        if(db.displayTable("SELECT * FROM PRODUCTS;", &line) && M.DeleteProduct(db, line)) {
+            table = "PRODUCTS";
+            *manual_W = 9;
+        }
+    }
+
+    if(*manual_W == 4) {
+        if(M.AddNewEmployee(db)) {
+            table = "EMPLOYEES";
+            *manual_W = 9;
+        }
+    }
+
+    if(*manual_W == 5) {
+        int line;
+        if(db.displayTable("SELECT * FROM EMPLOYEES;", &line) && M.RemoveEmployee(db, line)) {
+            table = "EMPLOYEES";
+            *manual_W = 9;
+        }
+    }
+
+    if(*manual_W == 6) {
+        int line;
+        if(db.displayTable("SELECT * FROM EMPLOYEES;", &line) && M.SetSalary(db, line)) {
+            table = "EMPLOYEES";
+            *manual_W = 9;
+        }
+    }
+
+    if(*manual_W == 7) {
+        if(M.showFeedback()) {
+            int ch = getch();
+            if(ch == KEY_ENTER) {
+                *manual_W = 8;
+            }
         }
     }
 
@@ -610,3 +701,5 @@ void Ui::Show_Stock_Clerk(Database& db, StockClerk& SC, WINDOW* win, int *active
             break;
     }
 }
+
+

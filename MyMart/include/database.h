@@ -2,6 +2,8 @@
 #define DATABASE_H
 
 #include <iostream>
+#include <curses.h>
+#include <vector>
 #include <string>
 #include <iomanip>
 #include <sqlite3.h>
@@ -22,7 +24,9 @@ class Database
 
         bool initialiseDatabase();
 
-        bool displayTable(string table);
+        void display(const vector<string> &columnNames, const vector<vector<string>> &tableContents);
+
+        bool displayTable(string table, int *next_line = NULL);
 
         bool closeDatabase();
 
