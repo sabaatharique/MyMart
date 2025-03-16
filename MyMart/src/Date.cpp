@@ -63,5 +63,6 @@ bool Date::ToDate(const char* date)
     year = (date[0] - '0')*1000 + (date[1] - '0')*100 + (date[2] - '0')*10 + (date[3] - '0');
     month = static_cast<Months>((date[5] - '0')*10 + (date[6] - '0') - 1);
     day = (date[8] - '0')*10 + (date[9] - '0');
+    if(month > 12 || day > 30) return false;
     return true;
 }

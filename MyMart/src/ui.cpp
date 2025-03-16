@@ -481,7 +481,6 @@ void Ui::Show_Manager(Database& db, int *active, int *manual_W, string &table, c
     clear();
     mvhline(0, 1, ACS_HLINE, COLS-2);
     mvprintw(0, (COLS - 6) / 2, "MyMart");
-
     refresh();
 
     WINDOW* win = newwin(manual_W_height, manual_W_width, (LINES - manual_W_height) / 2, (COLS - manual_W_width) / 2);
@@ -508,6 +507,7 @@ void Ui::Show_Manager(Database& db, int *active, int *manual_W, string &table, c
     if(*manual_W == 1) {
         mvprintw(3, (COLS - 8) / 2, "Welcome!");
         mvprintw(4, (COLS - M.GetEmployeeName().size()) / 2, M.GetEmployeeName().c_str());
+        refresh();
         wresize(win, manager_W_height, manager_W_width);
         mvwin(win, (LINES - manager_W_height) / 2, (COLS - manager_W_width) / 2);
         DrawWindow(win, *active, functions, manager_W_width, manager_W_height, "Manager");
@@ -700,6 +700,7 @@ void Ui::Show_Cashier(Database& db, int *active, int *manual_W, string &table, c
     if(*manual_W == 1) {
         mvprintw(3, (COLS - 8) / 2, "Welcome!");
         mvprintw(4, (COLS - C.GetEmployeeName().size()) / 2, C.GetEmployeeName().c_str());
+        refresh();
         wresize(win, cashier_W_height, cashier_W_width);
         mvwin(win, (LINES - cashier_W_height) / 2, (COLS - cashier_W_width) / 2);
         DrawWindow(win, *active, functions, cashier_W_width, cashier_W_height, "Cashier");
@@ -809,6 +810,7 @@ void Ui::Show_Stock_Clerk(Database& db, int *active, int *manual_W, string &tabl
     if(*manual_W == 1) {
         mvprintw(3, (COLS - 8) / 2, "Welcome!");
         mvprintw(4, (COLS - SC.GetEmployeeName().size()) / 2, SC.GetEmployeeName().c_str());
+        refresh();
         wresize(win, stock_clerk_W_height, stock_clerk_W_width);
         mvwin(win, (LINES - stock_clerk_W_height) / 2, (COLS - stock_clerk_W_width) / 2);
         DrawWindow(win, *active, functions, stock_clerk_W_width, stock_clerk_W_height, "Stock Clerk");

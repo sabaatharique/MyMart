@@ -116,7 +116,7 @@ bool StockClerk::ShowExpiredProducts(Database& db)
             Manager::SetProfit(cur_profit-loss);
             UpdateStockByID(db, productID, amount);
 
-            bool notfirst = false;
+            bool notfirst = false, isValid;
             Date dt, today;
             today.GetTodaysDate();
             PerishableProducts Exp;
@@ -129,9 +129,10 @@ bool StockClerk::ShowExpiredProducts(Database& db)
                 clrtoeol();
                 getnstr(temp, sizeof(temp) - 1);
                 string date(temp);
-                dt.ToDate(date.c_str());
+                notfirst = true;
+                isValid = dt.ToDate(date.c_str());
                 Exp.SetExpiryDate(dt);
-            } while(notfirst = CheckExpiry(&Exp, today));
+            } while(CheckExpiry(&Exp, today) || !isValid);
 
             UpdateExpiryDateByID(db, Exp, productID);
             move(start_line + 5, 2);
