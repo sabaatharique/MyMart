@@ -351,8 +351,8 @@ void Ui::Show_Login(Database& db, Manager &M, WINDOW* win, int *active, int *wro
             if(*active == 0) {
                 *active = 1; // id write mode enabled
                 *wrong = 0; // no warning
-                curs_set(1);
                 wmove(win, 3, 19);
+                curs_set(1);
             }
             else if(*active == 1) {
                 //curs_set(0);
@@ -377,8 +377,9 @@ void Ui::Show_Login(Database& db, Manager &M, WINDOW* win, int *active, int *wro
                 else {
                     id = "";
                     *wrong = 1; // wrong id
-                    *active = 0; // id write mode disabled
-                    curs_set(0);
+                    *active = 1; // id write mode disabled
+                    wmove(win, 3, 19);
+                    curs_set(1);
                     break;
                 }
             }
@@ -418,7 +419,9 @@ void Ui::Show_Login(Database& db, Manager &M, WINDOW* win, int *active, int *wro
                     password = "";
                     encrypted = "";
                     *wrong = 4; // wrong id
-                    *active = 1; // id write mode disabled
+                    *active = 2; // id write mode disabled
+                    wmove(win, 5, 19);
+                    curs_set(1);
                     break;
                 }
             }
@@ -755,7 +758,7 @@ void Ui::Show_Stock_Clerk(Database& db, StockClerk& SC, WINDOW* win, int *active
 
     if(*manual_W == 2) {
         if(SC.ShowExpiredProducts(db)) {
-            table = "SELECT * FROM PRODUCTS WHERE EXPIRY_DATE < DATE('now');";
+            table = "PRODUCTS WHERE EXPIRY_DATE < DATE('now')";
             *manual_W = 9;
         }
         else {
@@ -776,7 +779,7 @@ void Ui::Show_Stock_Clerk(Database& db, StockClerk& SC, WINDOW* win, int *active
 
     if(*manual_W == 3) {
         if(SC.ShowOutOfStockProducts(db)) {
-            table = "SELECT * FROM PRODUCTS WHERE IN_STOCK = 0;";
+            table = "PRODUCTS WHERE IN_STOCK = 0";
             *manual_W = 9;
         }
         else {

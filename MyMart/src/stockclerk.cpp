@@ -92,8 +92,11 @@ bool StockClerk::ShowExpiredProducts(Database& db)
         getnstr(temp, sizeof(temp) - 1);
         productID = stoi(string(temp));
 
-        if (productID == -1)
+        if (productID == -1) {
+            curs_set(0);
+            noecho();
             return true;
+        }
 
         if(Product::IsProductInTable(db, productID, Expired)) {
             float amount;
@@ -201,8 +204,11 @@ bool StockClerk::ShowOutOfStockProducts(Database& db)
         getnstr(temp, sizeof(temp) - 1);
         productID = stoi(string(temp));
 
-        if (productID == -1)
+        if (productID == -1) {
+            curs_set(0);
+            noecho();
             return true;
+        }
 
         if(Product::IsProductInTable(db, productID, OutOfStock)) {
             float amount;
