@@ -43,4 +43,30 @@ bool Employee::IsEmployeeInTable(Database& db, int ID)
         return true;
     }
     sqlite3_finalize(stmt);
-    return false;}
+    return false;
+}
+
+bool Employee::GetEmployeeByID(Database& db, int ID)
+{
+    sqlite3_stmt* stmt = db.searchFromTable(db, ID, "EMPLOYEES");
+
+    if (sqlite3_step(stmt) == SQLITE_ROW) {
+        int id = sqlite3_column_int(stmt, 0);
+        const char* name = reinterpret_cast<const char*>(sqlite3_column_text(stmt, 1));
+        double salary = sqlite3_column_double(stmt, 3);
+
+        this->EmployeeID = id;
+        this->EmployeeName = name;
+        this->Salary = salary;
+
+    }
+    else {
+        sqlite3_finalize(stmt);
+        cerr << "No Employee found with ID: " << ID << endl;
+        return false;
+    }
+    sqlite3_finalize(stmt);
+    return true;
+
+}
+

@@ -21,8 +21,11 @@ class Employee
 
         double GetSalary();
         void SetSalary(double val);
+
+        bool GetEmployeeByID(Database &db, int ID);
         virtual bool AddEmployee(Database &db,int choice);
         static bool IsEmployeeInTable(Database& db, int ID);
+
 
     protected:
         string EmployeeType;

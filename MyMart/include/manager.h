@@ -9,7 +9,14 @@
 #include <cmath>
 #include <fstream>
 #include <iostream>
+#include <ntdef.h>
+#include <bcrypt.h>
 #include <curses.h>
+
+#pragma comment(lib, "bcrypt.lib")  // Link bcrypt library
+
+#define HASH_ALGORITHM BCRYPT_SHA256_ALGORITHM  // Use SHA-256
+#define HASH_SIZE 32   // 32-byte hash output
 
 
 class Manager : public Employee
@@ -22,8 +29,11 @@ class Manager : public Employee
 
         static double GetProfit();
         static void SetProfit(const double p);
+
         static double GetTotalBalance();
         static void SetTotalBalance(const double b);
+
+        string hashPassword(const string &password);
 
         bool IsEmployeeIdValid(Database& db, string& id, int login_type);
 

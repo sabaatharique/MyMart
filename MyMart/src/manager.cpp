@@ -36,6 +36,62 @@ void Manager::SetTotalBalance(const double b)
     totalBalance = b;
 }
 
+string Manager::hashPassword(const string& password)
+{
+    BCRYPT_ALG_HANDLE hAlgorithm;
+    BCRYPT_HASH_HANDLE hHash;
+    NTSTATUS status;
+    unsigned char hash[HASH_SIZE];  // Using unsigned char instead of BYTE
+    string hashHex;
+
+    // Open bcrypt algorithm provider
+    status = BCryptOpenAlgorithmProvider(&hAlgorithm, HASH_ALGORITHM, NULL, 0);
+    if (status != 0) {
+        cerr << "Error: Unable to open algorithm provider (0x" << hex << status << ")\n";
+        return "";
+    }
+
+    // Create hash object
+    status = BCryptCreateHash(hAlgorithm, &hHash, NULL, 0, NULL, 0, 0);
+    if (status != 0) {
+        cerr << "Error: Unable to create hash (0x" << hex << status << ")\n";
+        BCryptCloseAlgorithmProvider(hAlgorithm, 0);
+        return "";
+    }
+
+    // Hash the password
+    status = BCryptHashData(hHash, (unsigned char*)password.c_str(), (ULONG)password.length(), 0);
+    if (status != 0) {
+        cerr << "Error: Unable to hash data (0x" << hex << status << ")\n";
+        BCryptDestroyHash(hHash);
+        BCryptCloseAlgorithmProvider(hAlgorithm, 0);
+        return "";
+    }
+
+    // Get the final hash value
+    status = BCryptFinishHash(hHash, hash, HASH_SIZE, 0);
+    if (status != 0) {
+        cerr << "Error: Unable to finish hash (0x" << hex << status << ")\n";
+        BCryptDestroyHash(hHash);
+        BCryptCloseAlgorithmProvider(hAlgorithm, 0);
+        return "";
+    }
+
+    // Convert hash bytes to hex string
+    for (int i = 0; i < HASH_SIZE; i++) {
+        char buffer[3];
+        snprintf(buffer, sizeof(buffer), "%02x", hash[i]);
+        hashHex += buffer;
+    }
+
+    // Cleanup
+    BCryptDestroyHash(hHash);
+    BCryptCloseAlgorithmProvider(hAlgorithm, 0);
+
+    return hashHex;
+}
+
+
 bool Manager::SetSalary(Database& db, int start_line)
 {
     string hold = "";
@@ -370,6 +426,11 @@ bool Manager::AddNewEmployee(Database& db)
     getnstr(temp, sizeof(temp) - 1);
     e_salary = stod(string(temp));
 
+    mvwprintw(stdscr, 8, 2, "Enter Password: ");
+    getnstr(temp, sizeof(temp) - 1);
+    e_password = string(temp);
+    e_password = hashPassword(e_password);
+
     curs_set(0);
     noecho();
 
@@ -390,6 +451,8 @@ bool Manager::AddNewEmployee(Database& db)
 
         emp = new Cashier(e_id,e_name,e_salary);
         emp->AddEmployee(db,e_type);
+        db.executeQuery("UPDATE EMPLOYEES SET PASSWORD = '" + e_password + "' WHERE ID = " + to_string(e_id) + ";");
+
     }
     else if(e_type == '2')
     {
@@ -408,6 +471,7 @@ bool Manager::AddNewEmployee(Database& db)
 
         emp = new StockClerk(e_id,e_name,e_salary);
         emp->AddEmployee(db,e_type);
+        db.executeQuery("UPDATE EMPLOYEES SET PASSWORD = '" + e_password + "' WHERE ID = " + to_string(e_id) + ";");
     }
     else {
         return false;

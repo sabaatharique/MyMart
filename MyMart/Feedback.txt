@@ -1,10 +1,5 @@
-20000003: hmmm thik thik
-10000001: product good , mishkat bad.
-10000005: tututu tutu tara
-10000001: hmmmmmmmm thik thik ok byebye
-10000001: yeayyyy hehehe
-10000001: hmmmm
-10000001: asdkljdslfjslfsfsafsafdsafsfda
-10000002: Project finished
-10000001: RIDITA posa
-10000005: aksdjasdkls;afjlasjfdslkafjdslkfjkjldsfhajdsklfhskjdfhkjafdslhfkjadsfhskjldhkjfshadfkashfas
+20000003: Good discounts for loyal customer
+10000001: apples out of stock today
+10000005: Good customer service
+10000001: only had 5 apples left, i needed 8 :(
+10000004: Would recommend to others

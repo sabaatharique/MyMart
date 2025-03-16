@@ -70,19 +70,22 @@ class Ui
         void DrawWindow(WINDOW* win, int highlight, const vector<string>& choices, int width, int height, const string title, bool prft);
         void DrawLogin(WINDOW* win, int wrong, int width, int height);
 
-        void Engine(Database& db, Manager &M, Cashier &C, StockClerk &SC);
+        void Engine(Database& db);
         void Show_Main();
         void Show_Select(WINDOW* win, int *active, int *login_type, const vector<string>& choices);
         string hashPassword(const string &password);
-        void Show_Login(Database& db, Manager &M, int *active, int *wrong, int *login_type, string &id, string &password, string &encrypted);
-        void Show_Manager(Database& db, Manager &M, int *active, int *manual_W, string &table, const vector<string>& manual, const vector<string>& functions);
-        void Show_Cashier(Database& db, Cashier& C, int *active, int *manual_W, string &table, const vector<string>& manual, const vector<string>& functions);
-        void Show_Stock_Clerk(Database& db, StockClerk& SC, int *active, int *manual_W, string &table, const vector<string>& manual, const vector<string>& functions);
+        void Show_Login(Database& db, int *active, int *wrong, int *login_type, string &id, string &password, string &encrypted);
+        void Show_Manager(Database& db, int *active, int *manual_W, string &table, const vector<string>& manual, const vector<string>& functions);
+        void Show_Cashier(Database& db, int *active, int *manual_W, string &table, const vector<string>& manual, const vector<string>& functions);
+        void Show_Stock_Clerk(Database& db, int *active, int *manual_W, string &table, const vector<string>& manual, const vector<string>& functions);
 
     protected:
 
     private:
         bool screens[tot_screen];
+        Manager M;
+        Cashier C;
+        StockClerk SC;
 };
 
 #endif // UI_H

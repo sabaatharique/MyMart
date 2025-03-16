@@ -80,13 +80,13 @@ bool Database::initialiseDatabase()
           "TYPE CHAR(15) CHECK (TYPE IN ('MANAGER', 'CASHIER', 'STOCK CLERK')),"
           "SALARY REAL NOT NULL,"
           "USERNAME CHAR(15),"
-          "PASSWORD TEXT(15));";
+          "PASSWORD TEXT(65));";
     if(!executeQuery(sql))
         return false;
 
-    sql = "INSERT OR IGNORE INTO EMPLOYEES VALUES(1001, 'SABA ATHARIQUE', 'MANAGER', 40500, 'saba03', '30');"
-          "INSERT OR IGNORE INTO EMPLOYEES VALUES(2001, 'RIDITA ALAM', 'CASHIER', 35750, 'ridita19', '10');"
-          "INSERT OR IGNORE INTO EMPLOYEES VALUES(3001, 'MISHKAT AHMED KHAN', 'STOCK CLERK', 27500, 'mishkat2025', '34');";
+    sql = "INSERT OR IGNORE INTO EMPLOYEES VALUES(1001, 'SABA ATHARIQUE', 'MANAGER', 40500, 'saba03', '38d66d9692ac590000a91b03a88da1c88d51fab2b78f63171f553ecc551a0c6f');"
+          "INSERT OR IGNORE INTO EMPLOYEES VALUES(2001, 'RIDITA ALAM', 'CASHIER', 35750, 'ridita19', '9bdb2af6799204a299c603994b8e400e4b1fd625efdb74066cc869fee42c9df3');"
+          "INSERT OR IGNORE INTO EMPLOYEES VALUES(3001, 'MISHKAT AHMED KHAN', 'STOCK CLERK', 27500, 'mishkat2025', '5d389f5e2e34c6b0bad96581c22cee0be36dcf627cd73af4d4cccacd9ef40cc3');";
     if(!executeQuery(sql))
         return false;
 

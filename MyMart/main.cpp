@@ -13,13 +13,9 @@ int main()
     Database db;
     db.initialiseDatabase();
 
-    Manager M;
-    Cashier C;
-    StockClerk SC;
-
     Ui* ui = new Ui();
 
-    ui->Engine(db, M, C, SC);
+    ui->Engine(db);
 
 
     db.closeDatabase();
