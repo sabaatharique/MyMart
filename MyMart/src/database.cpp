@@ -85,8 +85,8 @@ bool Database::initialiseDatabase()
         return false;
 
     sql = "INSERT OR IGNORE INTO EMPLOYEES VALUES(1001, 'SABA ATHARIQUE', 'MANAGER', 40500, 'saba03', '30');"
-          "INSERT OR IGNORE INTO EMPLOYEES VALUES(2001, 'RIDITA ALAM', 'CASHIER', 35750, 'ridita19', 'Alam#309');"
-          "INSERT OR IGNORE INTO EMPLOYEES VALUES(3001, 'MISHKAT AHMED KHAN', 'STOCK CLERK', 27500, 'mishkat2025', 'Pass123');";
+          "INSERT OR IGNORE INTO EMPLOYEES VALUES(2001, 'RIDITA ALAM', 'CASHIER', 35750, 'ridita19', '10');"
+          "INSERT OR IGNORE INTO EMPLOYEES VALUES(3001, 'MISHKAT AHMED KHAN', 'STOCK CLERK', 27500, 'mishkat2025', '34');";
     if(!executeQuery(sql))
         return false;
 
@@ -155,7 +155,9 @@ void Database::display(const vector<string>& columnNames, const vector<vector<st
 // used to display all results of a table after query
 bool Database::displayTable(string query, int *next_line)
 {
-    //clear();
+    clear();
+    mvhline(0, 1, ACS_HLINE, COLS-2);
+    mvprintw(0, (COLS - 6) / 2, "MyMart");
 
     sqlite3_stmt *stmt;
     int exitCode = sqlite3_prepare_v2(DB, query.c_str(),-1, &stmt, NULL);
@@ -198,7 +200,7 @@ bool Database::displayTable(string query, int *next_line)
         return false;
     }
     display(columnNames, contents);
-    //refresh();
+    refresh();
     return true;
 }
 

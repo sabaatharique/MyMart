@@ -61,10 +61,14 @@ bool PerishableProducts::GetProductByID(Database& db, int ID)
     return true;
 }
 
-void PerishableProducts::DisplayDetails()
+int PerishableProducts::DisplayDetails(int start_line)
 {
-    Product::DisplayDetails();
-    cout << "Expiry date: " << ExpiryDate.ToString() << endl;
+    int next_line = Product::DisplayDetails(start_line);
+
+    mvwprintw(stdscr, next_line, 2, "Expiry date: ");
+    mvwprintw(stdscr, next_line, 2 + 13, ExpiryDate.ToString().c_str());
+
+    return next_line + 1;
 }
 
 

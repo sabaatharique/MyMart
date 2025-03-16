@@ -22,8 +22,6 @@ class StockClerk : public Employee
 
         bool CheckExpiry(PerishableProducts *p, Date today);
 
-        void getinput(string &result, int Y, int X);
-
         bool UpdateExpiryDateByID(Database& db, int ID, string Exp);
         bool UpdateExpiryDateByID(Database& db, PerishableProducts &Exp, int ID);
         bool UpdateStockByID(Database &db, int ID, double amount);

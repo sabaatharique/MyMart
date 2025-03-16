@@ -20,7 +20,7 @@ class PerishableProducts : public Product
         bool operator<(Date today);
 
         bool GetProductByID(Database &db, int ID) override;
-        void DisplayDetails()override;
+        int DisplayDetails(int start_line) override;
         bool AddProduct(Database &db) override;
 
     protected:

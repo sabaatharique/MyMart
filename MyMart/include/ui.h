@@ -34,7 +34,7 @@ using namespace std;
 #define manager_W_width 40
 #define manager_W_height 17
 #define cashier_W_width 40
-#define cashier_W_height 15
+#define cashier_W_height 9
 #define stock_clerk_W_width 40
 #define stock_clerk_W_height 11
 // Button positions
@@ -74,10 +74,10 @@ class Ui
         void Show_Main();
         void Show_Select(WINDOW* win, int *active, int *login_type, const vector<string>& choices);
         string hashPassword(const string &password);
-        void Show_Login(Database& db, Manager &M, WINDOW* win, int *active, int *wrong, int *login_type, string &id, string &password, string &encrypted);
-        void Show_Manager(Database& db, Manager &M, WINDOW* win, WINDOW* prft_win, int *active, int *manual_W, string &table, const vector<string>& manual, const vector<string>& functions);
-        void Show_Cashier(Database& db, Cashier& C, WINDOW* win, int *active, bool *manual_W, const vector<string>& manual, const vector<string>& functions);
-        void Show_Stock_Clerk(Database& db, StockClerk& SC, WINDOW* win, int *active, int *manual_W, string &table, const vector<string>& manual, const vector<string>& functions);
+        void Show_Login(Database& db, Manager &M, int *active, int *wrong, int *login_type, string &id, string &password, string &encrypted);
+        void Show_Manager(Database& db, Manager &M, int *active, int *manual_W, string &table, const vector<string>& manual, const vector<string>& functions);
+        void Show_Cashier(Database& db, Cashier& C, int *active, int *manual_W, string &table, const vector<string>& manual, const vector<string>& functions);
+        void Show_Stock_Clerk(Database& db, StockClerk& SC, int *active, int *manual_W, string &table, const vector<string>& manual, const vector<string>& functions);
 
     protected:
 

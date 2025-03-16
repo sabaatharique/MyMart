@@ -110,68 +110,59 @@ void Ui::Engine(Database& db, Manager &M, Cashier &C, StockClerk &SC)
     int active = 0;
     int login_type = -1;
     int wrong = 0;
-    WINDOW* win_login = newwin(login_W_height, login_W_width, (LINES - login_W_height) / 2, (COLS - login_W_width) / 2);
-    keypad(win_login, TRUE);
+
 
     //  Manager
 
     int active_manager = -1;
-    int manager_manual_W = 0;
+    int manager_manual_W = 1;
     string table_manager;
-    WINDOW* win_manager_manual = newwin(manual_W_height, manual_W_width, (LINES - manual_W_height) / 2, (COLS - manual_W_width) / 2);
-    WINDOW* win_prft = newwin(3, 10, LINES - 4, COLS - 11);
-    keypad(win_manager_manual, TRUE);
-    keypad(win_prft, TRUE);
+
     vector<string> manual_manager = {};
     vector<string> manager_functions = {
-        "1. AddNewProducts",
-        "2. DeleteProduct",
-        "3. AddNewEmployee",
-        "4. RemoveEmployee",
-        "5. SetSalary",
-        "6. showFeedback",
-        "7. Logout"
+        "1. Add new product",
+        "2. Delete product",
+        "3. Add New employee",
+        "4. Remove employee",
+        "5. Set salary",
+        "6. Show feedback",
+        "7. Log-out"
     };
 
     //  Cashier
 
     int active_cashier = -1;
-    bool cashier_manual_W = true;
-    WINDOW* win_cashier_manual = newwin(manual_W_height, manual_W_width, (LINES - manual_W_height) / 2, (COLS - manual_W_width) / 2);
-    keypad(win_cashier_manual, TRUE);
+    int cashier_manual_W = 1;
+    string table_cashier;
+
     vector<string> manual_cashier = {};
     vector<string> cashier_functions = {
-        "1. AddNewProducts",
-        "2. DeleteProduct",
-        "3. AddNewEmployee",
-        "4. RemoveEmployee",
-        "5. SetSalary",
-        "6. showFeedback",
+        "1. Checkout customer",
+        "2. Log-out",
     };
 
     //  Stock_Clerk
 
     int active_Stock_Clerk = -1;
-    int Stock_Clerk_manual_W = 0;
+    int Stock_Clerk_manual_W = 1;
     string table_stock_clerk;
-    WINDOW* win_Stock_Clerk_manual = newwin(manual_W_height, manual_W_width, (LINES - manual_W_height) / 2, (COLS - manual_W_width) / 2);
-    keypad(win_Stock_Clerk_manual, TRUE);
+
     vector<string> manual_Stock_Clerk = {};
     vector<string> Stock_Clerk_functions = {
-        "1. Expired Products",
-        "2. Out Of Stock Products",
-        "3. All Products",
-        "4. Logout"
+        "1. Expired products",
+        "2. Out of stock products",
+        "3. All products",
+        "4. Log-out"
     };
 
     while(true) {
         BackgroundClr(stdscr);
         if(GetScreen(Main)) Show_Main();
         if(GetScreen(Select)) Show_Select(win_select, &active_select, &login_type, choices_select);
-        if(GetScreen(Login)) Show_Login(db, M, win_login, &active, &wrong, &login_type, id, password, encrypted);
-        if(GetScreen(Manager_S)) Show_Manager(db, M, win_manager_manual, win_prft, &active_manager, &manager_manual_W, table_manager, manual_manager, manager_functions);
-        if(GetScreen(Cashier_S)) Show_Cashier(db, C, win_cashier_manual, &active_cashier, &cashier_manual_W, manual_cashier, cashier_functions);
-        if(GetScreen(Stock_Clerk_S)) Show_Stock_Clerk(db, SC, win_Stock_Clerk_manual, &active_Stock_Clerk, &Stock_Clerk_manual_W, table_stock_clerk, manual_Stock_Clerk, Stock_Clerk_functions);
+        if(GetScreen(Login)) Show_Login(db, M, &active, &wrong, &login_type, id, password, encrypted);
+        if(GetScreen(Manager_S)) Show_Manager(db, M, &active_manager, &manager_manual_W, table_manager, manual_manager, manager_functions);
+        if(GetScreen(Cashier_S)) Show_Cashier(db, C, &active_cashier, &cashier_manual_W, table_cashier, manual_cashier, cashier_functions);
+        if(GetScreen(Stock_Clerk_S)) Show_Stock_Clerk(db, SC, &active_Stock_Clerk, &Stock_Clerk_manual_W, table_stock_clerk, manual_Stock_Clerk, Stock_Clerk_functions);
     }
 }
 
@@ -212,9 +203,7 @@ void Ui::Show_Select(WINDOW* win, int *active, int *login_type, const vector<str
     int N = choices.size();
     clear();
     mvhline(0, 1, ACS_HLINE, COLS-2);
-    attron(A_REVERSE);
     mvprintw(0, (COLS - 6) / 2, "MyMart");
-    attroff(A_REVERSE);
     refresh();
     //mvprintw(4, 1, "Enter your employee type");
 
@@ -330,15 +319,15 @@ string Ui::hashPassword(const string &password) {
     return hashHex;
 }
 
-void Ui::Show_Login(Database& db, Manager &M, WINDOW* win, int *active, int *wrong, int *login_type, string &id, string &password, string &encrypted)
+void Ui::Show_Login(Database& db, Manager &M, int *active, int *wrong, int *login_type, string &id, string &password, string &encrypted)
 {
     clear();
     mvhline(0, 1, ACS_HLINE, COLS-2);
-    attron(A_REVERSE);
     mvprintw(0, (COLS - 6) / 2, "MyMart");
-    attroff(A_REVERSE);
     refresh();
 
+    WINDOW* win = newwin(login_W_height, login_W_width, (LINES - login_W_height) / 2, (COLS - login_W_width) / 2);
+    keypad(win, TRUE);
     DrawLogin(win, *wrong, 40, 20);
     if(*active >= 1) mvwprintw(win, 3, 19, id.c_str());
     if(*active >= 2) mvwprintw(win, 5, 19, encrypted.c_str());
@@ -482,20 +471,23 @@ void Ui::Show_Login(Database& db, Manager &M, WINDOW* win, int *active, int *wro
     }
 }
 
-void Ui::Show_Manager(Database& db, Manager& M, WINDOW* win, WINDOW* prft_win, int *active, int *manual_W, string &table, const vector<string>& manual, const vector<string>& functions)
+void Ui::Show_Manager(Database& db, Manager& M, int *active, int *manual_W, string &table, const vector<string>& manual, const vector<string>& functions)
 {
     int N = functions.size();
     clear();
     mvhline(0, 1, ACS_HLINE, COLS-2);
-    attron(A_REVERSE);
     mvprintw(0, (COLS - 6) / 2, "MyMart");
-    attroff(A_REVERSE);
     refresh();
+
+    WINDOW* win = newwin(manual_W_height, manual_W_width, (LINES - manual_W_height) / 2, (COLS - manual_W_width) / 2);
+    WINDOW* prft_win = newwin(3, 16, LINES - 3, COLS - 17);
+    keypad(win, TRUE);
+    //keypad(win_prft, TRUE);
 
     vector<string> prft;
     prft.push_back(to_string(M.GetProfit()));
 
-    DrawWindow(prft_win, false, prft, 4, 1, "", true);
+    DrawWindow(prft_win, false, prft, 16, 3, "Profit", true);
 
     if(*manual_W == 0) DrawWindow(win, -1, manual, manual_W_width, manual_W_height, "Manual");
 
@@ -517,6 +509,7 @@ void Ui::Show_Manager(Database& db, Manager& M, WINDOW* win, WINDOW* prft_win, i
     if(*manual_W == 9) {
         int trash;
         db.displayTable("SELECT * FROM " + table + ";", &trash);
+        mvprintw(trash, (COLS - 22) / 2, "press enter to continue!");
         int ch = getch();
         if(ch == KEY_ENTER) {
             *manual_W = 8;
@@ -675,60 +668,141 @@ void Ui::Show_Manager(Database& db, Manager& M, WINDOW* win, WINDOW* prft_win, i
     refresh();
 }
 
-void Ui::Show_Cashier(Database& db, Cashier& C, WINDOW* win, int *active, bool *manual_W, const vector<string>& manual, const vector<string>& functions)
+void Ui::Show_Cashier(Database& db, Cashier& C, int *active, int *manual_W, string &table, const vector<string>& manual, const vector<string>& functions)
 {
     int N = functions.size();
     clear();
     mvhline(0, 1, ACS_HLINE, COLS-2);
-    attron(A_REVERSE);
     mvprintw(0, (COLS - 6) / 2, "MyMart");
-    attroff(A_REVERSE);
     refresh();
 
-    if(*manual_W) DrawWindow(win, -1, manual, manual_W_width, manual_W_height, "Manual");
+    WINDOW* win = newwin(manual_W_height, manual_W_width, (LINES - manual_W_height) / 2, (COLS - manual_W_width) / 2);
+    keypad(win, TRUE);
 
-    if(!*manual_W) {
-        wresize(win, manager_W_height, manager_W_width);
-        mvwin(win, (LINES - manager_W_height) / 2, (COLS - manager_W_width) / 2);
-        DrawWindow(win, *active, functions, manager_W_width, manager_W_height, "Manager");
+    if(*manual_W == 0) DrawWindow(win, -1, manual, manual_W_width, manual_W_height, "Manual");
+
+    if(*manual_W == 8) {
+        mvwprintw(stdscr, LINES/2, (COLS - 22) / 2, "press enter to return!");
+        int ch = getch();
+        if(ch == KEY_ENTER) {
+            *active = -1;
+            *manual_W = 1;
+        }
     }
+
+    if(*manual_W == 1) {
+        wresize(win, cashier_W_height, cashier_W_width);
+        mvwin(win, (LINES - cashier_W_height) / 2, (COLS - cashier_W_width) / 2);
+        DrawWindow(win, *active, functions, cashier_W_width, cashier_W_height, "Cashier");
+    }
+
+    if(*manual_W == 9) {
+        int trash;
+        db.displayTable("SELECT * FROM " + table + ";", &trash);
+        int ch = getch();
+        if(ch == KEY_ENTER) {
+            *manual_W = 8;
+        }
+    }
+
+    if(*manual_W == 2) {
+        C.CheckoutCustomer(db);
+        *manual_W = 8;
+
+//        if(SC.ShowExpiredProducts(db)) {
+//            table = "PRODUCTS WHERE EXPIRY_DATE < DATE('now')";
+//            *manual_W = 9;
+//        }
+//        else {
+//            clear();
+//            mvhline(0, 1, ACS_HLINE, COLS-2);
+//            attron(A_REVERSE);
+//            mvprintw(0, (COLS - 6) / 2, "MyMart");
+//            attroff(A_REVERSE);
+//            refresh();
+//            string hold = "No expired products! press enter to continue";
+//            mvprintw(LINES / 2, (COLS - (int)hold.size()) / 2, hold.c_str());
+//            int ch = getch();
+//            if(ch == KEY_ENTER) {
+//                *manual_W = 8;
+//            }
+//        }
+    }
+
+    if(*manual_W == 0 || *manual_W == 1) {
+        int ch = wgetch(win);
+
+        switch(ch) {
+            case '1':
+                if(*manual_W == 1) {
+                    *manual_W = 2;
+                }
+                break;
+            case '2':
+                if(*manual_W == 1) {
+                    *active = -1;
+                    *manual_W = 1;
+                    table = "";
+                    screens[Cashier_S] = false;
+                    screens[Select] = true;
+                }
+                break;
+            case KEY_ENTER:
+                if(*manual_W == 0) {
+                    *manual_W = 1;
+                }
+                else if(*manual_W == 1 && *active == 0) {
+                    *manual_W = 2;
+                }
+                else if(*manual_W == 1 && *active == 1) {
+                    *active = -1;
+                    *manual_W = 1;
+                    table = "";
+                    screens[Cashier_S] = false;
+                    screens[Select] = true;
+                }
+                break;
+            case KEY_UP:
+                if(*manual_W == 1) {
+                    if(*active > 0) {
+                        *active = (*active - 1);
+                    }
+                }
+                break;
+            case KEY_DOWN:
+                if(*manual_W == 1) {
+                    if(*active < N-1) {
+                        *active = (*active + 1);
+                    }
+                }
+                break;
+            case KEY_TAB:
+                if(*manual_W == 1) {
+                    *active = (*active + 1) % N;
+                }
+                break;
+            case KEY_BTAB:
+                if(*manual_W == 1) {
+                    *active = (*active - 1 + N) % N;
+                }
+                break;
+        }
+    }
+
 
     refresh();
-
-    int ch = wgetch(win);
-
-    switch(ch) {
-        case KEY_ENTER:
-            if(*manual_W) {
-                *manual_W = false;
-            }
-            break;
-        case KEY_UP:
-            if(!*manual_W) {
-                if(*active > 0) {
-                    *active = (*active - 1);
-                }
-            }
-            break;
-        case KEY_DOWN:
-            if(!*manual_W) {
-                if(*active < N-1) {
-                    *active = (*active + 1);
-                }
-            }
-            break;
-    }
 }
 
-void Ui::Show_Stock_Clerk(Database& db, StockClerk& SC, WINDOW* win, int *active, int *manual_W, string &table, const vector<string>& manual, const vector<string>& functions)
+void Ui::Show_Stock_Clerk(Database& db, StockClerk& SC, int *active, int *manual_W, string &table, const vector<string>& manual, const vector<string>& functions)
 {
     int N = functions.size();
     clear();
     mvhline(0, 1, ACS_HLINE, COLS-2);
-    attron(A_REVERSE);
     mvprintw(0, (COLS - 6) / 2, "MyMart");
-    attroff(A_REVERSE);
     refresh();
+
+    WINDOW* win = newwin(manual_W_height, manual_W_width, (LINES - manual_W_height) / 2, (COLS - manual_W_width) / 2);
+    keypad(win, TRUE);
 
     if(*manual_W == 0) DrawWindow(win, -1, manual, manual_W_width, manual_W_height, "Manual");
 
@@ -764,9 +838,9 @@ void Ui::Show_Stock_Clerk(Database& db, StockClerk& SC, WINDOW* win, int *active
         else {
             clear();
             mvhline(0, 1, ACS_HLINE, COLS-2);
-            attron(A_REVERSE);
             mvprintw(0, (COLS - 6) / 2, "MyMart");
-            attroff(A_REVERSE);
+            curs_set(0);
+            noecho();
             refresh();
             string hold = "No expired products! press enter to continue";
             mvprintw(LINES / 2, (COLS - (int)hold.size()) / 2, hold.c_str());
@@ -785,9 +859,9 @@ void Ui::Show_Stock_Clerk(Database& db, StockClerk& SC, WINDOW* win, int *active
         else {
             clear();
             mvhline(0, 1, ACS_HLINE, COLS-2);
-            attron(A_REVERSE);
             mvprintw(0, (COLS - 6) / 2, "MyMart");
-            attroff(A_REVERSE);
+            curs_set(0);
+            noecho();
             refresh();
             string hold = "No out of stock products! press enter to continue";
             mvprintw(LINES / 2, (COLS - (int)hold.size()) / 2, hold.c_str());
@@ -880,9 +954,5 @@ void Ui::Show_Stock_Clerk(Database& db, StockClerk& SC, WINDOW* win, int *active
                 break;
         }
     }
-
-
     refresh();
 }
-
-

@@ -50,7 +50,7 @@ bool Customer::GetCustomerByID(Database& db, int ID)
     }
     else {
         sqlite3_finalize(stmt);
-        cout << "No customer found with ID: " << ID << endl;
+        cerr << "No customer found with ID: " << ID << endl;
         return false;
     }
 
@@ -104,8 +104,7 @@ bool Customer::GenerateNewID(Database& db)
 bool Customer::UpdateTotalAmountSpent(Database& db)
 {
     string query = "UPDATE CUSTOMERS SET TOTAL_SPENT = " + to_string(TotalAmountSpent) + " WHERE ID = " + to_string(CustomerID) + ";";
-    if(!db.executeQuery(query))
-        cout << "Could not update customer's spending." << endl;
+    return db.executeQuery(query);
 }
 
 bool Customer::UpdateCustomerStatus(Database& db)
@@ -114,7 +113,6 @@ bool Customer::UpdateCustomerStatus(Database& db)
     if(TotalAmountSpent >= 10000) {
         string query = "UPDATE CUSTOMERS SET TYPE = 'LOYAL' WHERE ID = " + to_string(CustomerID) + ";";
         if(!db.executeQuery(query)) {
-            cout << "Could not update customer status." << endl;
             return false;
         }
 
@@ -124,16 +122,20 @@ bool Customer::UpdateCustomerStatus(Database& db)
 
         query = "UPDATE CUSTOMERS SET ID = " + newID + " WHERE ID = " + to_string(CustomerID) + ";";
         if(!db.executeQuery(query)) {
-            cout << "Could not update customer status." << endl;
             return false;
         }
     }
     return true;
 }
 
-void Customer::DisplayDetails()
+int Customer::DisplayDetails(int start_line)
 {
-    cout << "Customer ID: " << CustomerID << endl;
-    cout << "Customer name: " << CustomerName << endl;
-    cout << "Total Amount Spent: " << TotalAmountSpent << endl;
+    mvwprintw(stdscr, start_line, 2, "Customer ID: ");
+    mvwprintw(stdscr, start_line, 2 + 13, to_string(CustomerID).c_str());
+    mvwprintw(stdscr, start_line + 1, 2, "Customer name: ");
+    mvwprintw(stdscr, start_line + 1, 2 + 15, CustomerName.c_str());
+    mvwprintw(stdscr, start_line + 2, 2, "Total Amount Spent: ");
+    mvwprintw(stdscr, start_line + 2, 2 + 20, to_string(TotalAmountSpent).c_str());
+
+    return start_line + 3;
 }

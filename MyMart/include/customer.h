@@ -33,7 +33,7 @@ class Customer
 
         bool UpdateCustomerStatus(Database &db);
 
-        void DisplayDetails();
+        int DisplayDetails(int start_line);
 
     protected:
 

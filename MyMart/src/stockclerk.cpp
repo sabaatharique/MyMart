@@ -16,34 +16,6 @@ bool StockClerk::CheckExpiry(PerishableProducts* p, Date today)
     return *p < today;
 }
 
-void StockClerk::getinput(string &result, int Y, int X)
-{
-    clear();
-    mvwprintw(stdscr, Y, X, result.c_str());
-    refresh();
-    //int ch;
-    while(true) {
-        int ch = getch();
-        //if(ch == '\n') break;
-        curs_set(1);
-        wmove(stdscr, Y, X);
-        if(ch == 8) {
-            if (!result.empty()) {
-                result.pop_back();
-                int x, y;
-                getyx(stdscr, y, x);
-                if(x > 0) {
-                    mvaddch(y, x, ' ');
-                    move(y, x - 1);
-                }
-            }
-        }
-        else
-            result += ch;
-    }
-}
-
-
 bool StockClerk::UpdateExpiryDateByID(Database& db, int ID, string Exp)
 {
     string expDate = "'" + Exp + "'";
@@ -73,10 +45,12 @@ bool StockClerk::UpdateStockByID(Database& db, int ID, double amount)
 
 bool StockClerk::ShowExpiredProducts(Database& db)
 {
+
     int start_line;
     if(!db.displayTable("SELECT * FROM PRODUCTS WHERE EXPIRY_DATE < DATE('now');", &start_line)) {
         return false;
     }
+    refresh();
 
     string hold1 = "", hold2 = "", hold3 = "";
     int productID;

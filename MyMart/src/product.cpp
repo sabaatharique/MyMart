@@ -83,13 +83,20 @@ bool Product::GetProductByID(Database& db, int ID)
     return true;
 }
 
-void Product::DisplayDetails()
+int Product::DisplayDetails(int start_line)
 {
-    cout << "Product ID: " << ProductID << endl;
-    cout << "Product name: " << ProductName << endl;
-    cout << "Selling price: " << SellingPrice << endl;
-    cout << "Buying cost: " << BuyingCost << endl;
-    cout << "Quantity in stock: " << QuantityInStock << endl;
+    mvwprintw(stdscr, start_line, 2, "Product ID: ");
+    mvwprintw(stdscr, start_line, 2 + 12, to_string(ProductID).c_str());
+    mvwprintw(stdscr, start_line + 1, 2, "Product name: ");
+    mvwprintw(stdscr, start_line + 1, 2 + 14, ProductName.c_str());
+    mvwprintw(stdscr, start_line + 2, 2, "Selling price: ");
+    mvwprintw(stdscr, start_line + 2, 2 + 15, to_string(SellingPrice).c_str());
+    mvwprintw(stdscr, start_line + 3, 2, "Buying cost: ");
+    mvwprintw(stdscr, start_line + 3, 2 + 13, to_string(BuyingCost).c_str());
+    mvwprintw(stdscr, start_line + 4, 2, "Quantity in stock: ");
+    mvwprintw(stdscr, start_line + 4, 2 + 19, to_string(QuantityInStock).c_str());
+
+    return start_line + 5;
 }
 
 bool Product::AddProduct(Database& db)

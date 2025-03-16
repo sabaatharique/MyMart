@@ -35,7 +35,7 @@ class Product
         void SetQuantityInStock(double s);
 
         virtual bool GetProductByID(Database &db, int ID);
-        virtual void DisplayDetails();
+        virtual int DisplayDetails(int start_line);
         virtual bool AddProduct(Database &db);
         static bool IsProductInTable(Database& db, int ID, Table tbl);
 
