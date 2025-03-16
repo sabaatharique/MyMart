@@ -62,9 +62,9 @@ bool Database::initialiseDatabase()
     if(!executeQuery(sql))
         return false;
 
-    sql = "INSERT OR IGNORE INTO PRODUCTS VALUES(21000, 'APPLES RED', 150, 100, 50, '2025-06-19');"
+    sql = "INSERT OR IGNORE INTO PRODUCTS VALUES(21000, 'APPLES RED', 150, 100, 0, '2025-06-19');"
           "INSERT OR IGNORE INTO PRODUCTS VALUES(10001, 'SCISSORS', 500, 400, 0, NULL);"
-          "INSERT OR IGNORE INTO PRODUCTS VALUES(21001, 'BANANAS', 125, 95, 80, '2025-06-26');"
+          "INSERT OR IGNORE INTO PRODUCTS VALUES(21001, 'BANANAS', 125, 95, 0, '2025-06-26');"
           "INSERT OR IGNORE INTO PRODUCTS VALUES(10002, 'COLOUR PENCILS', 275, 240, 15, NULL);"
           "INSERT OR IGNORE INTO PRODUCTS VALUES(22001, 'MILK', 100, 80, 60, '2024-12-25');"
           "INSERT OR IGNORE INTO PRODUCTS VALUES(10003, 'BLACK PEN 12 PACK', 120, 100, 18, NULL);"
@@ -112,49 +112,50 @@ void Database::display(const vector<string>& columnNames, const vector<vector<st
 {
     int numCols = columnNames.size();
     int numRows = tableContents.size();
-    int screenWidth = COLS;  // Get terminal width
+    int screenWidth = COLS - 2;  // Get terminal width
     int colWidth = screenWidth / numCols; // Distribute column widths evenly
+    int offset = ((screenWidth - colWidth*numCols) + 1) / 2;
 
     // Function to draw horizontal lines
     auto drawHorizontalLine = [&](int y) {
         //mvaddch(y, 0, '+'); // Left border
         for (int col = 0; col < numCols; ++col) {
             for (int i = 0; i < colWidth - 1; ++i) {
-                mvaddch(y, col * colWidth + i + 1, '-');
+                mvaddch(y, col * colWidth + i + offset + 1, '-');
             }
             //mvaddch(y, (col + 1) * colWidth - 1, '+'); // Vertical separator
         }
     };
 
     // Draw top border
-    drawHorizontalLine(0);
+    drawHorizontalLine(1);
 
     // Print column names with vertical borders
     for (int col = 0; col < numCols; ++col) {
-        mvprintw(1, col * colWidth, "| %-*s", colWidth - 2, columnNames[col].c_str());
+        mvprintw(2, col * colWidth + offset, "| %-*s", colWidth - 2, columnNames[col].c_str());
     }
-    mvaddch(1, screenWidth - 1, '|'); // Right border
+    mvaddch(2, screenWidth - offset, '|'); // Right border
 
     // Draw separator line under headers
-    drawHorizontalLine(2);
+    drawHorizontalLine(3);
 
     // Print table contents
     for (int row = 0; row < numRows; ++row) {
         for (int col = 0; col < numCols; ++col) {
-            mvprintw(row + 3, col * colWidth, "| %-*s", colWidth - 2, tableContents[row][col].c_str());
+            mvprintw(row + 4, col * colWidth + offset, "| %-*s", colWidth - 2, tableContents[row][col].c_str());
         }
-        mvaddch(row + 3, screenWidth - 1, '|'); // Right border
+        mvaddch(row + 4, screenWidth - offset, '|'); // Right border
     }
 
     // Draw bottom border
-    drawHorizontalLine(numRows + 3);
+    drawHorizontalLine(numRows + 4);
 }
 
 
 // used to display all results of a table after query
 bool Database::displayTable(string query, int *next_line)
 {
-    clear();
+    //clear();
 
     sqlite3_stmt *stmt;
     int exitCode = sqlite3_prepare_v2(DB, query.c_str(),-1, &stmt, NULL);
@@ -192,9 +193,12 @@ bool Database::displayTable(string query, int *next_line)
 //        cout << endl;
     }
     sqlite3_finalize(stmt);
-    display(columnNames, contents);
     *next_line = contents.size() + 5;
-    refresh();
+    if(contents.empty()) {
+        return false;
+    }
+    display(columnNames, contents);
+    //refresh();
     return true;
 }
 

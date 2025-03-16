@@ -38,14 +38,15 @@ void Manager::SetTotalBalance(const double b)
 
 bool Manager::SetSalary(Database& db, int start_line)
 {
+    string hold = "";
     int choice;
     int emp_salary;
     string emp_type;
     bool first = true;
 
     mvwprintw(stdscr, start_line, 2, "Enter employee type:");
-    mvwprintw(stdscr, start_line+1, 2, "1. Cashier");
-    mvwprintw(stdscr, start_line+2, 2, "2. Stock Clerk");
+    mvwprintw(stdscr, start_line + 1, 2, "1. Cashier");
+    mvwprintw(stdscr, start_line + 2, 2, "2. Stock Clerk");
 
     //cout << "Enter employee type:\n1.Cashier\n2.Stock Clerk\n " << endl;
     do{
@@ -57,20 +58,36 @@ bool Manager::SetSalary(Database& db, int start_line)
 
     } while(choice != '1' && choice != '2');
 
+    if(choice == '1') {
+            attron(A_REVERSE);
+            mvwprintw(stdscr, start_line + 1, 2, "1. Cashier");
+            attroff(A_REVERSE);
+    }
+    else if(choice == '2') {
+        attron(A_REVERSE);
+        mvwprintw(stdscr, start_line + 2, 2, "2. Stock Clerk");
+        attroff(A_REVERSE);
+    }
+
     if(choice == '1')
         emp_type = "'CASHIER'";
     else if(choice == '2')
         emp_type = "'STOCK CLERK'";
 
-    mvwprintw(stdscr, start_line+4, 2, "Enter new salary : ");
+    hold = "Enter new salary : ";
+    mvwprintw(stdscr, start_line + 4, 2, hold.c_str());
     curs_set(1);
     echo();
     //cout << "Enter new salary : " << endl;
     first = true;
     do{
-        if(!first)
-            mvwprintw(stdscr, start_line+4, 2, "Invalid input , try again: ");
+        if(!first) {
+            hold = "Invalid input , try again: ";
+            mvwprintw(stdscr, start_line + 4, 2, hold.c_str());
+        }
             //cout << "Invalid input , try again." << endl;
+        move(start_line + 4, 2 + hold.size());
+        clrtoeol();
         char temp[200];
         getnstr(temp, sizeof(temp) - 1);
         emp_salary = stoi(string(temp));
@@ -82,7 +99,7 @@ bool Manager::SetSalary(Database& db, int start_line)
     noecho();
 
     string query = "UPDATE EMPLOYEES SET SALARY = " + to_string(emp_salary) + " WHERE TYPE = " + emp_type + ";";
-    refresh();
+    //refresh();
     return db.executeQuery(query);
 }
 
@@ -121,10 +138,11 @@ bool Manager::IsEmployeePassValid(Database& db, string& id, string& password, in
 
 bool Manager::AddNewProducts(Database& db)
 {
-    clear();
+    //clear();
 
+    string hold1 = "";
     Product* prdct;
-    int type,p_id;
+    int type = 0,p_id;
     string p_name;
     const char* date;
     double sell_price, buying_cost,stock;
@@ -138,6 +156,17 @@ bool Manager::AddNewProducts(Database& db)
     //echo();
     type = getch();
 
+    if(type == '1') {
+            attron(A_REVERSE);
+            mvwprintw(stdscr, 3, 2, "1. Non-Perishable");
+            attroff(A_REVERSE);
+    }
+    else if(type == '2') {
+        attron(A_REVERSE);
+        mvwprintw(stdscr, 4, 2, "2. Perishable");
+        attroff(A_REVERSE);
+    }
+
     //cout << "Enter Product Type: \n1.Non-Perishable\n2.Perishable\n" << endl;
 //    cin >> type;
     if(type == '2')
@@ -150,6 +179,18 @@ bool Manager::AddNewProducts(Database& db)
             choice = getch();
         } while(choice != '1' && choice != '2');
         //cin >> choice;
+
+        if(choice == '1') {
+            attron(A_REVERSE);
+            mvwprintw(stdscr, 7, 2, "1. Sold in units");
+            attroff(A_REVERSE);
+        }
+        else if(choice == '2') {
+            attron(A_REVERSE);
+            mvwprintw(stdscr, 8, 2, "2. Sold in kilograms");
+            attroff(A_REVERSE);
+        }
+
         if(choice == '1')
         {
             string query = "SELECT ID FROM PRODUCTS WHERE ID LIKE '21%' ORDER BY ID DESC LIMIT 1";
@@ -254,22 +295,28 @@ bool Manager::AddNewProducts(Database& db)
     else {
         return false;
     }
-    refresh();
+    //refresh();
     return true;
 }
 
 bool Manager::DeleteProduct(Database& db, int start_line)
 {
+    string hold = "";
     int productID;
     bool first = true;
-    mvwprintw(stdscr, start_line, 2, "Enter product ID to delete: ");
+    hold = "Enter product ID to delete: ";
+    mvwprintw(stdscr, start_line + 1, 2, hold.c_str());
     //cout << "Enter product ID to delete: " << endl;
     do{
-        if(!first)
-            mvwprintw(stdscr, start_line, 2, "Product ID not found, enter again: ");
+        if(!first) {
+            hold = "Product ID not found, enter again: ";
+            mvwprintw(stdscr, start_line + 1, 2, hold.c_str());
+        }
 //            cout << "Product ID not found, enter again: " << endl;
         curs_set(1);
         echo();
+        move(start_line + 1, 2 + hold.size());
+        clrtoeol();
         char temp[200];
         getnstr(temp, sizeof(temp) - 1);
         productID = stoi(string(temp));
@@ -279,13 +326,13 @@ bool Manager::DeleteProduct(Database& db, int start_line)
     noecho();
 
     string query = "DELETE FROM PRODUCTS WHERE ID = " + to_string(productID) + ";";
-    refresh();
+    //refresh();
     return db.executeQuery(query);
 }
 
 bool Manager::AddNewEmployee(Database& db)
 {
-    clear();
+    //clear();
 
     Employee* emp;
     int e_type,e_id;
@@ -299,6 +346,17 @@ bool Manager::AddNewEmployee(Database& db)
 //    cout << "Enter Employee Name: " << endl;
 //    cout << "Enter Salary: " << endl;
     e_type = getch();
+
+    if(e_type == '1') {
+        attron(A_REVERSE);
+        mvwprintw(stdscr, 3, 2, "1. Cashier");
+        attroff(A_REVERSE);
+    }
+    else if(e_type == '2') {
+        attron(A_REVERSE);
+        mvwprintw(stdscr, 4, 2, "2. Stock Clerk");
+        attroff(A_REVERSE);
+    }
 
     mvwprintw(stdscr, 6, 2, "Enter Employee Name: ");
     curs_set(1);
@@ -354,24 +412,31 @@ bool Manager::AddNewEmployee(Database& db)
     else {
         return false;
     }
-    refresh();
+    //refresh();
     return true;
 }
 
 bool Manager::RemoveEmployee(Database& db, int start_line)
 {
+    string hold = "";
     int employeeID;
     bool first = true;
 
-    mvwprintw(stdscr, start_line, 2, "Enter employee ID to remove: ");
+    hold = "Enter employee ID to remove: ";
+    mvwprintw(stdscr, start_line + 1, 2, hold.c_str());
     //cout << "Enter employee ID to remove: " << endl;
     do{
-        if(!first)
-            mvwprintw(stdscr, start_line, 2, "employee ID not found, enter again: ");
+        if(!first) {
+            hold = "employee ID not found, enter again: ";
+            mvwprintw(stdscr, start_line + 1, 2, hold.c_str());
+        }
             //cout << "employee ID not found, enter again: " << endl;
 
         curs_set(1);
         echo();
+
+        move(start_line + 1, 2 + hold.size());
+        clrtoeol();
         char temp[200];
         getnstr(temp, sizeof(temp) - 1);
         employeeID = stoi(string(temp));
@@ -382,13 +447,13 @@ bool Manager::RemoveEmployee(Database& db, int start_line)
     noecho();
 
     string query = "DELETE FROM EMPLOYEES WHERE ID = " + to_string(employeeID) + ";";
-    refresh();
+    //refresh();
     return db.executeQuery(query);
 }
 
 bool Manager::showFeedback()
 {
-    clear();
+    //clear();
 
     ifstream infile("Feedback.txt");
     if(!infile) {
@@ -403,6 +468,6 @@ bool Manager::showFeedback()
         mvprintw(y++, 2, "%s", line.c_str());
     }
 
-    refresh();
+    //refresh();
     return true;
 }

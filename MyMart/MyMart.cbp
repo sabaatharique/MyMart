@@ -14,11 +14,13 @@
 				<Compiler>
 					<Add option="-g" />
 					<Add directory="include" />
-					<Add directory="D:/Git/MyMart/MyMart/PDCurses-3.9/PDCurses-3.9" />
+					<Add directory="PDCurses-3.9/PDCurses-3.9" />
 				</Compiler>
 				<Linker>
-					<Add library="D:/Git/MyMart/MyMart/PDCurses-3.9/PDCurses-3.9/wincon/pdcurses.a" />
-					<Add directory="D:/Git/MyMart/MyMart/PDCurses-3.9/PDCurses-3.9/wincon" />
+					<Add library="PDCurses-3.9/PDCurses-3.9/wincon/pdcurses.a" />
+					<Add library="C:/msys64/mingw64/lib/libbcrypt.a" />
+					<Add directory="PDCurses-3.9/PDCurses-3.9/wincon" />
+					<Add directory="C:/msys64/mingw64/lib" />
 				</Linker>
 			</Target>
 			<Target title="Release">

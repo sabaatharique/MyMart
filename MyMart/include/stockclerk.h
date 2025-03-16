@@ -6,6 +6,7 @@
 #include <perishableproducts.h>
 #include <manager.h>
 #include <cmath>
+#include <cstring>
 #include <iostream>
 
 using namespace std;
@@ -21,12 +22,14 @@ class StockClerk : public Employee
 
         bool CheckExpiry(PerishableProducts *p, Date today);
 
-        void UpdateExpiryDate();
-        void UpdateStockByID(Database &db, int ID, float amount);
-        void UpdateExpiryDateByID(Database& db, PerishableProducts &Exp, int ID);
-        void ShowExpiredProducts(Database &db);
-        void ShowOutOfStockProducts(Database &db);
-        void ShowAllProducts(Database &db);
+        void getinput(string &result, int Y, int X);
+
+        bool UpdateExpiryDateByID(Database& db, int ID, string Exp);
+        bool UpdateExpiryDateByID(Database& db, PerishableProducts &Exp, int ID);
+        bool UpdateStockByID(Database &db, int ID, double amount);
+        bool ShowExpiredProducts(Database &db);
+        bool ShowOutOfStockProducts(Database &db);
+        bool ShowAllProducts(Database &db);
 
         double GetExpiredStockAmount(Database &db, int ID);
 

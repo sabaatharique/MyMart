@@ -6,6 +6,7 @@
 #include <bcrypt.h>
 #include <curses.h>
 #include <vector>
+#include <cstring>
 #include <string>
 #include <manager.h>
 #include <cashier.h>
@@ -31,7 +32,11 @@ using namespace std;
 #define manual_W_width 80
 #define manual_W_height 28
 #define manager_W_width 40
-#define manager_W_height 15
+#define manager_W_height 17
+#define cashier_W_width 40
+#define cashier_W_height 15
+#define stock_clerk_W_width 40
+#define stock_clerk_W_height 11
 // Button positions
 #define MY_MART_BUTTON_X (COLS - 33)/2
 #define MY_MART_BUTTON_Y (LINES-5)/2
@@ -62,7 +67,7 @@ class Ui
         void BackgroundClr(WINDOW* win, short fg, short bg);
         bool IsInBox(const int val_x, const int val_y, const int x, const int y, const int length);
         void DrawBox(WINDOW* win, const int x, const int y, string line, const bool active);
-        void DrawWindow(WINDOW* win, int highlight, const vector<string>& choices, int width, int height, const string title, short fg, short bg, int line_ch);
+        void DrawWindow(WINDOW* win, int highlight, const vector<string>& choices, int width, int height, const string title, bool prft);
         void DrawLogin(WINDOW* win, int wrong, int width, int height);
 
         void Engine(Database& db, Manager &M, Cashier &C, StockClerk &SC);
@@ -70,9 +75,9 @@ class Ui
         void Show_Select(WINDOW* win, int *active, int *login_type, const vector<string>& choices);
         string hashPassword(const string &password);
         void Show_Login(Database& db, Manager &M, WINDOW* win, int *active, int *wrong, int *login_type, string &id, string &password, string &encrypted);
-        void Show_Manager(Database& db, Manager &M, WINDOW* win, int *active, int *manual_W, string &table, const vector<string>& manual, const vector<string>& functions);
+        void Show_Manager(Database& db, Manager &M, WINDOW* win, WINDOW* prft_win, int *active, int *manual_W, string &table, const vector<string>& manual, const vector<string>& functions);
         void Show_Cashier(Database& db, Cashier& C, WINDOW* win, int *active, bool *manual_W, const vector<string>& manual, const vector<string>& functions);
-        void Show_Stock_Clerk(Database& db, StockClerk& SC, WINDOW* win, int *active, bool *manual_W, const vector<string>& manual, const vector<string>& functions);
+        void Show_Stock_Clerk(Database& db, StockClerk& SC, WINDOW* win, int *active, int *manual_W, string &table, const vector<string>& manual, const vector<string>& functions);
 
     protected:
 
