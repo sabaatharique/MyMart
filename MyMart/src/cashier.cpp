@@ -164,7 +164,7 @@ ShoppingCart Cashier::ProcessCart(Database& db)
             }
 
             if(perishableProduct->GetQuantityInStock() == 0) {
-                mvwprintw(stdscr, 4, 2, "product out of stock, press enter to buy a different one");
+                mvwprintw(stdscr, 4, 2, "Product out of stock, press enter to continue");
                 delete perishableProduct;
 
                 while(true) {
@@ -434,7 +434,7 @@ Customer* Cashier::OpenCustomerAccount(Database& db)
                     curs_set(0);
                     noecho();
 
-                    mvprintw(next_line, 2, "Press enter to process cart!");
+                    mvprintw(next_line + 1, 2, "Press enter to process cart!");
                     refresh();
 
                     while(true) {
@@ -446,7 +446,7 @@ Customer* Cashier::OpenCustomerAccount(Database& db)
                 }
                 // if no loyal customer with id found, loop
             }
-            hold1 = "ID not found! please give a existing id: ";
+            hold1 = "ID not found! please give an existing id: ";
         }
 
     }

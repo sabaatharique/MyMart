@@ -35,7 +35,7 @@
 	<iostream>
 	<database.h>
 
-1742156107 source:c:\users\user\desktop\mymart\mymart\src\stockclerk.cpp
+1742186392 source:c:\users\user\desktop\mymart\mymart\src\stockclerk.cpp
 	"stockclerk.h"
 	"perishableproducts.h"
 	"Date.h"
@@ -290,7 +290,7 @@
 1742166716 source:d:\git\mymart\mymart\src\date.cpp
 	"Date.h"
 
-1742150084 source:c:\users\user\desktop\mymart\mymart\src\date.cpp
+1742186392 source:c:\users\user\desktop\mymart\mymart\src\date.cpp
 	"Date.h"
 
 1742150084 c:\users\user\desktop\mymart\mymart\include\date.h
@@ -718,6 +718,6 @@
 	<stockclerk.h>
 	<iostream>
 
-1742161408 source:c:\users\user\desktop\mymart\mymart\src\ui.cpp
+1742186392 source:c:\users\user\desktop\mymart\mymart\src\ui.cpp
 	"ui.h"
 
