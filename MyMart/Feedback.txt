@@ -2,4 +2,10 @@
 10000001: apples out of stock today
 10000005: Good customer service
 10000001: only had 5 apples left, i needed 8 :(
-10000004: Would recommend to others
+10000004: Would recommend to others10000004: bad
+20000003: yes
+20000003: yes
+20000004: 
+20000004: good
+20000004: and
+10000004: Good

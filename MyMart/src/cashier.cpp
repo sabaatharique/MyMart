@@ -64,11 +64,16 @@ ShoppingCart Cashier::ProcessCart(Database& db)
 
             if(product->GetQuantityInStock() == 0) {
                 mvwprintw(stdscr, 4, 2, "product out of stock, press enter to buy a different one");
+                int next_line = product->DisplayDetails(5);
                 delete product;
 
                 while(true) {
                     int ch = getch();
                     if(ch == '\n') break;
+                }
+                for(int i=0; i<5; i++) {
+                    move(next_line - i - 1, 2);
+                    clrtoeol();
                 }
                 move(4, 2);
                 clrtoeol();
@@ -165,11 +170,16 @@ ShoppingCart Cashier::ProcessCart(Database& db)
 
             if(perishableProduct->GetQuantityInStock() == 0) {
                 mvwprintw(stdscr, 4, 2, "Product out of stock, press enter to continue");
+                int next_line = perishableProduct->DisplayDetails(5);
                 delete perishableProduct;
 
                 while(true) {
                     int ch = getch();
                     if(ch == '\n') break;
+                }
+                for(int i=0; i<6; i++) {
+                    move(next_line - i - 1, 2);
+                    clrtoeol();
                 }
                 move(4, 2);
                 clrtoeol();
@@ -183,11 +193,16 @@ ShoppingCart Cashier::ProcessCart(Database& db)
             today.GetTodaysDate();
             if (*perishableProduct < today){
                 mvwprintw(stdscr, 4, 2, "Product expired, press enter to continue");
+                int next_line = perishableProduct->DisplayDetails(5);
                 delete perishableProduct;
 
                 while(true) {
                     int ch = getch();
                     if(ch == '\n') break;
+                }
+                for(int i=0; i<6; i++) {
+                    move(next_line - i - 1, 2);
+                    clrtoeol();
                 }
                 move(4, 2);
                 clrtoeol();
@@ -304,12 +319,12 @@ void Cashier::MakeReceipt(ShoppingCart& shoppingCart, Customer *customer)
     int row = 2; // Start row position for printing
     int col = 5; // Start column position
 
-    mvwprintw(stdscr, row++, col, "%s RECEIPT %s", std::string(30, '-').c_str(), std::string(30, '-').c_str());
+    mvwprintw(stdscr, row++, col, "%s RECEIPT %s", std::string(33, '-').c_str(), std::string(33, '-').c_str());
     row++; // Move down for better spacing
 
     mvwprintw(stdscr, row, col, "%-7s %-27s %-7s %-8s %-10s %-10s", "No.", "Product Name", "ID", "Qty", "Price", "Subtotal");
     row++;
-    mvwprintw(stdscr, row++, col, "%s", std::string(69, '-').c_str());
+    mvwprintw(stdscr, row++, col, "%s", std::string(75, '-').c_str());
 
     int i = 1;
     for (auto& prod : cart) {
@@ -330,7 +345,7 @@ void Cashier::MakeReceipt(ShoppingCart& shoppingCart, Customer *customer)
                   quantity * product->GetSellingPrice());
     }
 
-    mvwprintw(stdscr, row++, col, "%s", std::string(69, '-').c_str());
+    mvwprintw(stdscr, row++, col, "%s", std::string(75, '-').c_str());
     mvwprintw(stdscr, row++, col, "%-50s %-19.2f", "Amount: ", totalBill);
 
     // Handle loyal customer discount
@@ -339,7 +354,7 @@ void Cashier::MakeReceipt(ShoppingCart& shoppingCart, Customer *customer)
         double discountAmount = totalBill * loyalCustomer->CalculateDiscount();
         double netAmount = totalBill - discountAmount;
 
-        mvwprintw(stdscr, row++, col, "%-50s %-18.2f%%", "Discount: ", loyalCustomer->CalculateDiscount() * 100);
+        mvwprintw(stdscr, row++, col, "%-50s %-20.2f%%", "Discount: ", loyalCustomer->CalculateDiscount() * 100);
         mvwprintw(stdscr, row++, col, "%-50s %-19.2f", "Net Amount: ", netAmount);
 
         // Update manager profit
@@ -347,7 +362,7 @@ void Cashier::MakeReceipt(ShoppingCart& shoppingCart, Customer *customer)
         Manager::SetProfit(cur_profit - discountAmount);
     }
 
-    mvwprintw(stdscr, row++, col, "%s", std::string(69, '-').c_str());
+    mvwprintw(stdscr, row++, col, "%s", std::string(75, '-').c_str());
 
     // Display prompt for user input
     row += 2; // Move down a bit for better spacing
@@ -540,6 +555,10 @@ void Cashier::GiveFeedback(Customer* customer)
     getnstr(temp, sizeof(temp) - 1);
     feedback = string(temp);
     ofstream outfile("Feedback.txt", ios:: app);
+    if (!outfile.is_open()) {
+        cerr << "Error: Unable to open file!" << endl;
+        return;
+    }
     outfile  << id << ": " << feedback << '\n';
 
     outfile.close();

@@ -2,49 +2,109 @@
 <CodeBlocks_layout_file>
 	<FileVersion major="1" minor="0" />
 	<ActiveTarget name="Debug" />
-	<File name="src\sqlite3.c" open="1" top="0" tabpos="25" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="include\customer.h" open="1" top="0" tabpos="17" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="0" topLine="0" />
+			<Cursor1 position="528" topLine="7" />
 		</Cursor>
 	</File>
-	<File name="src\Date.cpp" open="1" top="0" tabpos="12" split="0" active="1" splitpos="0" zoom_1="3" zoom_2="0">
+	<File name="src\manager.cpp" open="1" top="0" tabpos="2" split="0" active="1" splitpos="0" zoom_1="2" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="15538" topLine="516" />
+		</Cursor>
+	</File>
+	<File name="src\cashier.cpp" open="1" top="0" tabpos="26" split="0" active="1" splitpos="0" zoom_1="3" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="11694" topLine="345" />
+		</Cursor>
+	</File>
+	<File name="src\product.cpp" open="1" top="0" tabpos="19" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="1810" topLine="58" />
+		</Cursor>
+	</File>
+	<File name="src\Date.cpp" open="1" top="0" tabpos="11" split="0" active="1" splitpos="0" zoom_1="3" zoom_2="0">
 		<Cursor>
 			<Cursor1 position="1325" topLine="35" />
 		</Cursor>
 	</File>
 	<File name="main.cpp" open="1" top="0" tabpos="1" split="0" active="1" splitpos="0" zoom_1="1" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="270" topLine="0" />
+			<Cursor1 position="268" topLine="2" />
 		</Cursor>
 	</File>
-	<File name="src\customer.cpp" open="1" top="0" tabpos="21" split="0" active="1" splitpos="0" zoom_1="1" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="1557" topLine="74" />
-		</Cursor>
-	</File>
-	<File name="include\loyalcustomer.h" open="1" top="0" tabpos="14" split="0" active="1" splitpos="0" zoom_1="1" zoom_2="0">
+	<File name="include\loyalcustomer.h" open="1" top="0" tabpos="13" split="0" active="1" splitpos="0" zoom_1="1" zoom_2="0">
 		<Cursor>
 			<Cursor1 position="244" topLine="0" />
 		</Cursor>
 	</File>
-	<File name="include\database.h" open="1" top="0" tabpos="19" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="include\product.h" open="1" top="0" tabpos="15" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="469" topLine="16" />
+		</Cursor>
+	</File>
+	<File name="src\shoppingcart.cpp" open="1" top="0" tabpos="22" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="844" topLine="0" />
+		</Cursor>
+	</File>
+	<File name="include\sqlite3.h" open="1" top="0" tabpos="25" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="0" topLine="153" />
+		</Cursor>
+	</File>
+	<File name="src\ui.cpp" open="1" top="0" tabpos="10" split="0" active="1" splitpos="0" zoom_1="3" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="21376" topLine="719" />
+		</Cursor>
+	</File>
+	<File name="include\employee.h" open="1" top="0" tabpos="5" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="367" topLine="6" />
+		</Cursor>
+	</File>
+	<File name="src\database.cpp" open="1" top="0" tabpos="8" split="0" active="1" splitpos="0" zoom_1="2" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="7891" topLine="224" />
+		</Cursor>
+	</File>
+	<File name="include\perishableproducts.h" open="1" top="0" tabpos="12" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="472" topLine="6" />
+		</Cursor>
+	</File>
+	<File name="src\stockclerk.cpp" open="1" top="1" tabpos="6" split="0" active="1" splitpos="0" zoom_1="3" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="3467" topLine="66" />
+		</Cursor>
+	</File>
+	<File name="src\sqlite3.c" open="1" top="0" tabpos="24" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="0" topLine="0" />
+		</Cursor>
+	</File>
+	<File name="include\stockclerk.h" open="1" top="0" tabpos="7" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="713" topLine="12" />
+		</Cursor>
+	</File>
+	<File name="include\ui.h" open="1" top="0" tabpos="9" split="0" active="1" splitpos="0" zoom_1="5" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="131" topLine="52" />
+		</Cursor>
+	</File>
+	<File name="src\employee.cpp" open="1" top="0" tabpos="4" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="205" topLine="0" />
+		</Cursor>
+	</File>
+	<File name="src\customer.cpp" open="1" top="0" tabpos="20" split="0" active="1" splitpos="0" zoom_1="1" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="1557" topLine="74" />
+		</Cursor>
+	</File>
+	<File name="include\database.h" open="1" top="0" tabpos="18" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
 			<Cursor1 position="597" topLine="0" />
-		</Cursor>
-	</File>
-	<File name="include\cashier.h" open="1" top="0" tabpos="4" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="265" topLine="0" />
-		</Cursor>
-	</File>
-	<File name="include\shoppingcart.h" open="1" top="0" tabpos="17" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="95" topLine="0" />
-		</Cursor>
-	</File>
-	<File name="src\employee.cpp" open="1" top="0" tabpos="5" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="1893" topLine="11" />
 		</Cursor>
 	</File>
 	<File name="include\manager.h" open="1" top="0" tabpos="3" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
@@ -52,89 +112,29 @@
 			<Cursor1 position="459" topLine="23" />
 		</Cursor>
 	</File>
-	<File name="include\sqlite3.h" open="1" top="0" tabpos="26" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="src\loyalcustomer.cpp" open="1" top="0" tabpos="21" split="0" active="1" splitpos="0" zoom_1="2" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="0" topLine="153" />
+			<Cursor1 position="528" topLine="9" />
 		</Cursor>
 	</File>
-	<File name="src\loyalcustomer.cpp" open="1" top="0" tabpos="22" split="0" active="1" splitpos="0" zoom_1="2" zoom_2="0">
+	<File name="include\cashier.h" open="0" top="0" tabpos="4" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="525" topLine="0" />
+			<Cursor1 position="265" topLine="0" />
 		</Cursor>
 	</File>
-	<File name="src\stockclerk.cpp" open="1" top="0" tabpos="7" split="0" active="1" splitpos="0" zoom_1="-2" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="3467" topLine="96" />
-		</Cursor>
-	</File>
-	<File name="src\ui.cpp" open="1" top="0" tabpos="11" split="0" active="1" splitpos="0" zoom_1="3" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="21376" topLine="719" />
-		</Cursor>
-	</File>
-	<File name="include\perishableproducts.h" open="1" top="0" tabpos="13" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="484" topLine="0" />
-		</Cursor>
-	</File>
-	<File name="src\shoppingcart.cpp" open="1" top="0" tabpos="23" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="844" topLine="0" />
-		</Cursor>
-	</File>
-	<File name="include\stockclerk.h" open="1" top="0" tabpos="8" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="900" topLine="1" />
-		</Cursor>
-	</File>
-	<File name="src\cashier.cpp" open="1" top="1" tabpos="27" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="14889" topLine="469" />
-		</Cursor>
-	</File>
-	<File name="include\employee.h" open="1" top="0" tabpos="6" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="490" topLine="0" />
-		</Cursor>
-	</File>
-	<File name="src\product.cpp" open="1" top="0" tabpos="20" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="1810" topLine="58" />
-		</Cursor>
-	</File>
-	<File name="include\customer.h" open="1" top="0" tabpos="18" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="528" topLine="7" />
-		</Cursor>
-	</File>
-	<File name="src\database.cpp" open="1" top="0" tabpos="9" split="0" active="1" splitpos="0" zoom_1="2" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="2717" topLine="48" />
-		</Cursor>
-	</File>
-	<File name="include\Date.h" open="1" top="0" tabpos="15" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="511" topLine="9" />
-		</Cursor>
-	</File>
-	<File name="src\perishableproducts.cpp" open="1" top="0" tabpos="24" split="0" active="1" splitpos="0" zoom_1="2" zoom_2="0">
+	<File name="src\perishableproducts.cpp" open="1" top="0" tabpos="23" split="0" active="1" splitpos="0" zoom_1="2" zoom_2="0">
 		<Cursor>
 			<Cursor1 position="251" topLine="0" />
 		</Cursor>
 	</File>
-	<File name="include\product.h" open="1" top="0" tabpos="16" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="include\shoppingcart.h" open="1" top="0" tabpos="16" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="754" topLine="13" />
+			<Cursor1 position="95" topLine="0" />
 		</Cursor>
 	</File>
-	<File name="src\manager.cpp" open="1" top="0" tabpos="2" split="0" active="1" splitpos="0" zoom_1="2" zoom_2="0">
+	<File name="include\Date.h" open="1" top="0" tabpos="14" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="13926" topLine="425" />
-		</Cursor>
-	</File>
-	<File name="include\ui.h" open="1" top="0" tabpos="10" split="0" active="1" splitpos="0" zoom_1="5" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="131" topLine="52" />
+			<Cursor1 position="635" topLine="0" />
 		</Cursor>
 	</File>
 </CodeBlocks_layout_file>
